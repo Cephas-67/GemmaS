@@ -1,0 +1,28 @@
+/* Numérotation des items du menu mobile.
+   Utilise la police d'affichage du projet (Outfit) via la stack du <body>.
+   L'opacité est pilotée par GSAP via la variable --num-opacity, ce qui
+   permet de l'animer en cascade sans toucher au style inline. */
+
+.mobile-menu-item::after {
+  content: attr(data-num);
+  position: absolute;
+  top: 0.55em;
+  right: 0.4em;
+  font-family: "Outfit", ui-sans-serif, sans-serif;
+  font-size: 0.22em;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--menu-accent, hsl(25 92% 54%));
+  opacity: var(--num-opacity, 0);
+  pointer-events: none;
+  user-select: none;
+}
+
+.mobile-menu-item {
+  color: hsl(var(--foreground));
+  transition: color 0.25s ease;
+}
+
+.mobile-menu-item:hover {
+  color: var(--menu-accent, hsl(25 92% 54%));
+}

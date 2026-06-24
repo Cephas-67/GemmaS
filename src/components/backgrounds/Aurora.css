@@ -1,0 +1,88 @@
+/* Aurora — fond animé multi-blobs façon reactbits.
+   3 blobs en mix-blend-screen sur fond sombre, dérivant en boucle.
+   Pas de WebGL : transform + filter blur, GPU-friendly, sans coût bundle. */
+
+.zl-aurora-root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0a0b14;
+}
+
+.zl-aurora-inner {
+  position: absolute;
+  inset: -20%;
+  filter: saturate(1.15);
+}
+
+.zl-aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.75;
+  mix-blend-mode: screen;
+  will-change: transform;
+  animation: zl-aurora-drift 22s ease-in-out infinite;
+}
+
+.zl-aurora-blob.is-1 {
+  top: 5%;
+  left: 8%;
+  width: 55%;
+  height: 55%;
+  background: hsl(244 75% 53%); /* brand-blue */
+  animation-delay: 0s;
+}
+
+.zl-aurora-blob.is-2 {
+  top: 25%;
+  right: -5%;
+  width: 50%;
+  height: 50%;
+  background: hsl(280 70% 55%); /* violet pivot logo */
+  animation-delay: -7s;
+  animation-duration: 26s;
+}
+
+.zl-aurora-blob.is-3 {
+  bottom: -5%;
+  left: 28%;
+  width: 55%;
+  height: 50%;
+  background: hsl(25 92% 54%); /* brand-orange */
+  animation-delay: -14s;
+  animation-duration: 30s;
+}
+
+.zl-aurora-blob.is-4 {
+  top: 40%;
+  left: 35%;
+  width: 35%;
+  height: 35%;
+  background: hsl(265 85% 60%);
+  animation-delay: -3s;
+  animation-duration: 18s;
+  opacity: 0.55;
+}
+
+@keyframes zl-aurora-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(12%, -8%) scale(1.08);
+  }
+  50% {
+    transform: translate(-8%, 12%) scale(0.95);
+  }
+  75% {
+    transform: translate(-12%, -4%) scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zl-aurora-blob {
+    animation: none;
+  }
+}

@@ -1,0 +1,31 @@
+# Dépendances
+node_modules
+
+# Build output
+dist
+dist-ssr
+.vercel
+
+# Env
+*.local
+.env
+.env.*
+!.env.example
+
+# OS / éditeurs
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Artefacts Claude Code (sessions locales, pas pour le repo)
+.claude/
+
+# Notes brutes / scratch
+Bonh je viens de comprendre que c'e.txt

@@ -1,0 +1,266 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   Tokens Zara Labs (palette inspirée BDE : blanc/noir purs,
+   accents marque issus du logo en pointillé, jamais en aplat).
+   ========================================================= */
+@layer base {
+  :root {
+    /* Couleurs de marque, conservées pour les accents typographiques
+       (mots clés, hover discrets). Pas pour les aplats de fond. */
+    --brand-blue: 244 75% 53%;
+    --brand-blue-deep: 246 78% 38%;
+    --brand-orange: 25 92% 54%;
+    --brand-orange-soft: 30 96% 64%;
+
+    /* Surfaces (light) */
+    --background: 0 0% 100%;
+    --foreground: 222 30% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 30% 8%;
+
+    --primary: 222 30% 8%;
+    --primary-foreground: 0 0% 100%;
+
+    --accent: 0 0% 0%;
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 8% 46%;
+
+    --border: 220 14% 92%;
+    --input: 220 14% 92%;
+    --ring: 222 30% 8%;
+
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
+
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 0%;
+
+    --muted: 0 0% 8%;
+    --muted-foreground: 220 8% 64%;
+
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 0 0% 100%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    /* Scrollbar masquée — IE/Edge & Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  /* Scrollbar masquée — Chromium / WebKit */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  /* Pendant un switch de thème : on coupe TOUTES les transitions
+     pour éviter l'effet "mi-clair, mi-sombre" qui dure 300ms. */
+  html.theme-instant,
+  html.theme-instant *,
+  html.theme-instant *::before,
+  html.theme-instant *::after {
+    transition: none !important;
+    animation-duration: 0s !important;
+  }
+
+  /* View Transitions API : on désactive le crossfade par défaut,
+     l'animation custom (cercle qui s'agrandit depuis le clic)
+     est pilotée par animateThemeToggle.ts. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+  ::view-transition-new(root) {
+    z-index: 2;
+  }
+}
+
+@layer components {
+  /* ──────────────────────────────────────────────────────────
+     Liquid glass — effet bulle d'eau / verre liquide style visionOS.
+     Combine : backdrop-blur fort, saturation, highlight intérieur
+     en haut, ombre interne en bas, et un voile radial pour donner
+     la sensation de matière. À appliquer sur un élément déjà arrondi.
+     ────────────────────────────────────────────────────────── */
+  .liquid-glass {
+    position: relative;
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.85),
+      inset 0 -1px 0 0 rgba(255, 255, 255, 0.25),
+      inset 0 0 24px 0 rgba(255, 255, 255, 0.18),
+      0 10px 30px -10px rgba(0, 0, 0, 0.18),
+      0 2px 4px -2px rgba(0, 0, 0, 0.08);
+  }
+  /* Voile radial doux qui donne la sensation de courbure de la goutte. */
+  .liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(
+        120% 80% at 50% 0%,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0) 55%
+      ),
+      radial-gradient(
+        120% 80% at 50% 100%,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0) 60%
+      );
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+  /* Variante sombre — verre fumé pour le dark mode. */
+  .dark .liquid-glass {
+    background: rgba(20, 20, 22, 0.45);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 0 rgba(0, 0, 0, 0.4),
+      inset 0 0 24px 0 rgba(255, 255, 255, 0.04),
+      0 10px 30px -10px rgba(0, 0, 0, 0.5),
+      0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  }
+  .dark .liquid-glass::before {
+    background:
+      radial-gradient(
+        120% 80% at 50% 0%,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0) 55%
+      ),
+      radial-gradient(
+        120% 80% at 50% 100%,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0) 60%
+      );
+    mix-blend-mode: normal;
+  }
+
+  /* ──────────────────────────────────────────────────────────
+     Glass icon button — technique React Bits GlassIcons :
+       · couche back : pastille colorée rotatée 15deg (gradient HSL)
+       · couche front : verre frosted (backdrop-blur + inset highlight)
+       · au hover : back rotate plus + translate diagonale,
+                    front translate Z (sort de l'écran)
+     Échelle réduite pour usage inline dans la nav.
+     ────────────────────────────────────────────────────────── */
+  .glass-btn {
+    position: relative;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    perspective: 24em;
+    transform-style: preserve-3d;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .glass-btn__back,
+  .glass-btn__front {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    transition: transform 0.3s cubic-bezier(0.83, 0, 0.17, 1);
+    will-change: transform;
+  }
+  .glass-btn__back {
+    transform: rotate(15deg);
+    transform-origin: 100% 100%;
+    box-shadow: 0.25em -0.25em 0.5em rgba(0, 0, 0, 0.18);
+  }
+  .glass-btn__front {
+    background-color: rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transform-origin: 80% 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .glass-btn__icon {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    color: hsl(0 0% 100%);
+  }
+  .glass-btn:hover .glass-btn__back,
+  .glass-btn:focus-visible .glass-btn__back {
+    transform: rotate(25deg) translate3d(-0.25em, -0.25em, 0.25em);
+  }
+  .glass-btn:hover .glass-btn__front,
+  .glass-btn:focus-visible .glass-btn__front {
+    transform: translate3d(0, 0, 1em);
+  }
+
+  /* Champ de formulaire partagé. */
+  .field {
+    @apply block w-full rounded-md border border-input bg-background px-3.5 py-2.5
+           text-sm text-foreground placeholder:text-muted-foreground/60
+           transition-colors duration-200
+           focus:outline-none focus:border-foreground focus:ring-2 focus:ring-foreground/15;
+  }
+
+  /* Kicker discret (gris muted, pas de point coloré). */
+  .eyebrow {
+    @apply inline-block text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground;
+  }
+
+  /* Champ pour les sections fond sombre (Contact, Footer-form).
+     Bordure subtile blanche, focus blanc franc. */
+  .dark-field {
+    @apply block w-full rounded-md border border-white/15 bg-white/[0.03] px-3.5 py-3
+           text-sm text-white placeholder:text-white/35
+           transition-colors duration-200
+           focus:outline-none focus:border-white focus:ring-2 focus:ring-white/20;
+  }
+}
