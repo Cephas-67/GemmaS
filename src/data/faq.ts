@@ -1,4 +1,4 @@
-// FAQ Zara Labs — questions adaptées au contexte conseil + tech.
+// FAQ GemmaS · questions adaptées à l'offre agence digitale.
 // Réponses courtes, ton direct, jamais de tiret cadratin.
 export type FAQItem = {
   q: string;
@@ -9,51 +9,51 @@ export type FAQItem = {
 
 export const faqs: FAQItem[] = [
   {
-    q: "Comment démarrer un projet avec Zara Labs ?",
-    qEn: "How do I start a project with Zara Labs?",
-    a: "Un premier échange de 30 minutes pour cadrer le besoin, puis une note de cadrage sous 48h avec périmètre, livrables et budget indicatif.",
-    aEn: "A 30-minute discovery call to scope the need, followed by a written brief within 48h covering scope, deliverables and indicative budget.",
+    q: "Comment démarrer un projet avec GemmaS ?",
+    qEn: "How do I start a project with GemmaS?",
+    a: "Un premier appel de 30 minutes pour comprendre votre besoin, puis une proposition écrite sous 48h avec périmètre, délai et budget.",
+    aEn: "A 30-minute call to understand your need, then a written proposal within 48h covering scope, timeline and budget.",
   },
   {
-    q: "Quels secteurs accompagnez-vous ?",
-    qEn: "Which sectors do you work with?",
-    a: "Santé, agriculture, énergie, logistique, éducation, finance, administration publique et ONG. Notre méthode reste la même : terrain d'abord, code ensuite.",
-    aEn: "Healthcare, agriculture, energy, logistics, education, finance, public administration and NGOs. The method stays the same: fieldwork first, code second.",
+    q: "Combien de temps pour livrer un site vitrine ?",
+    qEn: "How long does a showcase site take?",
+    a: "5 jours en moyenne une fois le contenu reçu. Notre maîtrise des outils modernes nous permet de livrer en une semaine ce qu'une agence classique fait en trois.",
+    aEn: "5 days on average once we have the content. Our modern toolchain lets us ship in a week what a traditional agency takes three to deliver.",
   },
   {
-    q: "Quel est le délai moyen d'un audit ?",
-    qEn: "How long does an audit take on average?",
-    a: "Entre 2 et 4 semaines selon la complexité. L'audit inclut entretiens, revue de l'existant et restitution sous forme d'un rapport actionnable.",
-    aEn: "Between 2 and 4 weeks depending on complexity. The audit covers interviews, review of existing systems, and a final actionable report.",
-  },
-  {
-    q: "Travaillez-vous en dehors du Bénin ?",
-    qEn: "Do you work outside Benin?",
-    a: "Oui, notamment en Afrique de l'Ouest et auprès d'ONG internationales. Nos équipes se déplacent ou opèrent à distance selon le besoin.",
-    aEn: "Yes, particularly across West Africa and with international NGOs. Our teams travel on-site or operate remotely depending on the need.",
-  },
-  {
-    q: "Proposez-vous de l'incubation pour startups ?",
-    qEn: "Do you offer startup incubation?",
-    a: "Oui, via un parcours de 3 à 6 mois : diagnostic, mentorat tech et stratégique, accès à notre réseau partenaire et accompagnement à la levée.",
-    aEn: "Yes, through a 3 to 6-month program: diagnostic, tech and strategic mentoring, partner network access, and fundraising support.",
-  },
-  {
-    q: "Comment se passe la facturation ?",
-    qEn: "How does billing work?",
-    a: "Forfait pour un livrable défini, ou régie au mois pour un accompagnement continu. Devis sans engagement après la phase de cadrage.",
-    aEn: "Fixed-price for defined deliverables, or monthly retainer for ongoing support. No-commitment quote after the scoping phase.",
+    q: "Vous travaillez avec qui ?",
+    qEn: "Who are your clients?",
+    a: "PME béninoises, startups, indépendants, diaspora africaine, ONG. Toute structure qui veut une présence numérique sérieuse, sans usine à gaz.",
+    aEn: "Beninese SMEs, startups, freelancers, African diaspora, NGOs. Anyone who wants a serious digital presence without the bloat.",
   },
   {
     q: "Quelles technologies utilisez-vous ?",
     qEn: "Which technologies do you use?",
-    a: "Stack moderne et pérenne : TypeScript, React, Node, Python pour la data et l'IA, Postgres pour le stockage. Le choix dépend du contexte, jamais d'un effet de mode.",
-    aEn: "Modern and durable stack: TypeScript, React, Node, Python for data and AI, Postgres for storage. The choice depends on context, never trends.",
+    a: "Stack moderne : React, Next.js, TypeScript pour le web, React Native pour le mobile, Python et Supabase côté backend. Le choix dépend du contexte, jamais d'un effet de mode.",
+    aEn: "Modern stack: React, Next.js, TypeScript for web, React Native for mobile, Python and Supabase on the backend. The choice depends on context, never trends.",
   },
   {
-    q: "Êtes-vous une agence ou un cabinet de conseil ?",
-    qEn: "Are you an agency or a consulting firm?",
-    a: "Les deux. Zara Labs croise ingénierie produit et conseil stratégique : on diagnostique, on recommande, puis on construit avec le client.",
-    aEn: "Both. Zara Labs blends product engineering and strategic consulting: we diagnose, advise, then build alongside the client.",
+    q: "Vous faites aussi de l'IA ?",
+    qEn: "Do you work with AI?",
+    a: "Oui, c'est même un de nos pôles. Agents conversationnels, automatisations n8n, intégrations OpenAI ou Anthropic dans vos outils internes.",
+    aEn: "Yes, it's one of our core areas. Chatbots, n8n automations, OpenAI or Anthropic integrations into your internal tools.",
+  },
+  {
+    q: "Travaillez-vous en dehors du Bénin ?",
+    qEn: "Do you work outside Benin?",
+    a: "Oui. Nos clients sont en Afrique de l'Ouest, mais aussi dans la diaspora en France, Belgique et Canada. Tout se fait à distance, avec des points réguliers.",
+    aEn: "Yes. Our clients are in West Africa, but also in the diaspora in France, Belgium and Canada. Everything happens remotely, with regular check-ins.",
+  },
+  {
+    q: "Comment se passe la facturation ?",
+    qEn: "How does billing work?",
+    a: "Forfait pour un livrable défini, ou abonnement mensuel pour la maintenance et les évolutions. Devis sans engagement après l'appel de découverte.",
+    aEn: "Fixed-price for a defined deliverable, or monthly subscription for maintenance and updates. No-commitment quote after the discovery call.",
+  },
+  {
+    q: "Êtes-vous une agence ou un studio ?",
+    qEn: "Are you an agency or a studio?",
+    a: "Une petite équipe de 5 co-fondateurs basés à Cotonou. Agilité, rapidité, proximité directe avec ceux qui codent : ce qu'on perd en taille on le gagne en réactivité.",
+    aEn: "A small team of 5 co-founders based in Cotonou. Agility, speed, direct access to the people writing the code: what we lack in size we make up in responsiveness.",
   },
 ];

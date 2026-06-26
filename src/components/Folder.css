@@ -1,5 +1,6 @@
-/* Folder — composant reactbits, port TypeScript.
-   Variables locales (--folder-color, etc.) passées via style inline. */
+/* Folder · composant reactbits, port TypeScript.
+   Variables locales (--folder-color, etc.) passées via style inline.
+   Étendu à 5 papiers pour l'équipe GemmaS (5 co-fondateurs). */
 
 .zl-folder {
   transition: all 0.2s ease-in;
@@ -26,35 +27,52 @@
   transform: translateY(-8px);
 }
 
+/* Éventail de 5 papiers ouvert · de gauche à droite, angles croissants. */
 .zl-folder.open .zl-paper:nth-child(1) {
-  transform: translate(-120%, -70%) rotateZ(-15deg)
+  transform: translate(-170%, -55%) rotateZ(-22deg)
     translate(var(--magnet-x, 0), var(--magnet-y, 0));
 }
-
 .zl-folder.open .zl-paper:nth-child(1):hover {
-  transform: translate(-120%, -70%) rotateZ(-15deg) scale(1.05)
+  transform: translate(-170%, -55%) rotateZ(-22deg) scale(1.05)
     translate(var(--magnet-x, 0), var(--magnet-y, 0));
 }
 
 .zl-folder.open .zl-paper:nth-child(2) {
-  transform: translate(10%, -70%) rotateZ(15deg)
+  transform: translate(-110%, -85%) rotateZ(-10deg)
     translate(var(--magnet-x, 0), var(--magnet-y, 0));
   height: 80%;
 }
-
 .zl-folder.open .zl-paper:nth-child(2):hover {
-  transform: translate(10%, -70%) rotateZ(15deg) scale(1.05)
+  transform: translate(-110%, -85%) rotateZ(-10deg) scale(1.05)
     translate(var(--magnet-x, 0), var(--magnet-y, 0));
 }
 
 .zl-folder.open .zl-paper:nth-child(3) {
-  transform: translate(-50%, -100%) rotateZ(5deg)
+  transform: translate(-50%, -100%) rotateZ(0deg)
+    translate(var(--magnet-x, 0), var(--magnet-y, 0));
+  height: 85%;
+}
+.zl-folder.open .zl-paper:nth-child(3):hover {
+  transform: translate(-50%, -100%) rotateZ(0deg) scale(1.05)
+    translate(var(--magnet-x, 0), var(--magnet-y, 0));
+}
+
+.zl-folder.open .zl-paper:nth-child(4) {
+  transform: translate(10%, -85%) rotateZ(10deg)
     translate(var(--magnet-x, 0), var(--magnet-y, 0));
   height: 80%;
 }
+.zl-folder.open .zl-paper:nth-child(4):hover {
+  transform: translate(10%, -85%) rotateZ(10deg) scale(1.05)
+    translate(var(--magnet-x, 0), var(--magnet-y, 0));
+}
 
-.zl-folder.open .zl-paper:nth-child(3):hover {
-  transform: translate(-50%, -100%) rotateZ(5deg) scale(1.05)
+.zl-folder.open .zl-paper:nth-child(5) {
+  transform: translate(70%, -55%) rotateZ(22deg)
+    translate(var(--magnet-x, 0), var(--magnet-y, 0));
+}
+.zl-folder.open .zl-paper:nth-child(5):hover {
+  transform: translate(70%, -55%) rotateZ(22deg) scale(1.05)
     translate(var(--magnet-x, 0), var(--magnet-y, 0));
 }
 
@@ -101,17 +119,11 @@
   box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.2);
 }
 
-.zl-paper:nth-child(2) {
-  background: var(--paper-2);
-  width: 80%;
-  height: 70%;
-}
-
-.zl-paper:nth-child(3) {
-  background: var(--paper-3);
-  width: 90%;
-  height: 60%;
-}
+/* Variantes de papiers · alternance de tons blancs pour profondeur. */
+.zl-paper:nth-child(2) { background: var(--paper-2); width: 80%; height: 70%; }
+.zl-paper:nth-child(3) { background: var(--paper-3); width: 90%; height: 60%; }
+.zl-paper:nth-child(4) { background: var(--paper-2); width: 80%; height: 70%; }
+.zl-paper:nth-child(5) { background: var(--paper-1); width: 70%; height: 80%; }
 
 .zl-folder__front {
   position: absolute;

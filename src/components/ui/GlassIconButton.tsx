@@ -1,11 +1,11 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-// Gradients HSL pour la couche back colorée — alignés avec la palette Zara
-// (brand-blue, brand-orange) + neutres utiles dans une UI dark/light.
+// Gradients HSL pour la couche back colorée · alignés sur la palette GemmaS
+// (brand-blue, brand-green, brand-amber) + neutres utiles dans une UI dark/light.
 const gradients: Record<string, string> = {
-  brand: "linear-gradient(hsl(244 75% 53%), hsl(280 70% 55%))",
-  orange: "linear-gradient(hsl(25 92% 54%), hsl(15 92% 50%))",
+  brand: "linear-gradient(hsl(220 33% 46%), hsl(122 39% 49%))",
+  orange: "linear-gradient(hsl(45 100% 51%), hsl(35 100% 47%))",
   ink: "linear-gradient(hsl(222 30% 18%), hsl(222 30% 8%))",
   light: "linear-gradient(hsl(0 0% 96%), hsl(0 0% 86%))",
 };

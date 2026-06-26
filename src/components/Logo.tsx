@@ -7,52 +7,50 @@ type Props = {
   size?: "md" | "lg";
 };
 
-// Logo Zara Labs — SVG inline, couleurs marque depuis les tokens HSL.
-// Quand showLabel : wordmark "Zara" en haut, "Labs" en bas, à droite du
-// symbole — comme une marque déposée.
+// Logo GemmaS · monogramme G. Deux SVG officiels fournis par le client,
+// l'un pour le thème clair (anneau bleu marque), l'autre pour le thème
+// sombre (anneau blanc). On ne touche pas aux fichiers, on bascule via les
+// classes Tailwind `dark:` qui s'appuient sur la classe sur <html>, ce qui
+// évite tout flash d'hydratation.
 export function Logo({ className, showLabel = true, size = "md" }: Props) {
   const isLg = size === "lg";
+  const imgClasses = cn(
+    "block w-auto shrink-0",
+    isLg ? "h-12 sm:h-14" : "h-7 sm:h-8",
+  );
+
   return (
     <a
       href="#top"
-      aria-label="Zara Labs"
+      aria-label="GemmaS"
       className={cn(
         "inline-flex items-center",
         isLg ? "gap-3" : "gap-2",
         className,
       )}
     >
-      <svg
-        aria-hidden
-        viewBox="0 0 178.5 126.2"
-        className={cn(
-          "block w-auto shrink-0",
-          isLg ? "h-14 sm:h-16" : "h-7 sm:h-8",
-        )}
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g transform="translate(0.5 0.5)">
-          <path
-            d="M0 125L71.5 125L71.5 125.2L39 90L39 0L0 0"
-            fill="hsl(var(--brand-orange))"
-            fillRule="evenodd"
-            transform="translate(106 0)"
-          />
-          <path
-            d="M0 0L0 31.5L57 31.5L0 92L0 125L106 125L106 84.9999L57 84.2L106 35.4L106 0.199982L0 0Z"
-            fill="hsl(var(--brand-blue))"
-            fillRule="evenodd"
-          />
-        </g>
-      </svg>
+      {/* Light · anneau du G en bleu marque #4F679E */}
+      <img
+        src="/logo-gemmas.svg"
+        alt=""
+        draggable={false}
+        className={cn(imgClasses, "dark:hidden")}
+      />
+      {/* Dark · anneau du G en blanc (#FFFFFF) pour rester lisible sur fond noir */}
+      <img
+        src="/logo-gemmas-dark.svg"
+        alt=""
+        draggable={false}
+        className={cn(imgClasses, "hidden dark:block")}
+      />
       {showLabel && (
-        <span className="flex flex-col leading-none font-display font-semibold tracking-tight">
-          <span className={isLg ? "text-[26px] sm:text-[28px]" : "text-[13px] sm:text-sm"}>
-            Zara
-          </span>
-          <span className={isLg ? "text-[26px] sm:text-[28px]" : "text-[13px] sm:text-sm"}>
-            Labs
-          </span>
+        <span
+          className={cn(
+            "font-display font-semibold tracking-tight leading-none",
+            isLg ? "text-[26px] sm:text-[28px]" : "text-[15px] sm:text-base",
+          )}
+        >
+          GemmaS
         </span>
       )}
     </a>

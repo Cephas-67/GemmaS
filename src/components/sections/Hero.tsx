@@ -1,21 +1,24 @@
+"use client";
+
 import { motion } from "framer-motion";
 import Strands from "@/components/backgrounds/Strands";
 import { useInViewport } from "@/hooks/useInViewport";
+import { useLang } from "@/contexts/LanguageContext";
 
-// Grain — SVG feTurbulence inline répété (équivalent du .webp de micro1).
+// Grain · SVG feTurbulence inline répété (équivalent d'un .webp répété).
 const NOISE_SVG =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(
     `<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'>
        <filter id='n'>
          <feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/>
-         <feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/>
+         <feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0'/>
        </filter>
        <rect width='100%' height='100%' filter='url(#n)'/>
      </svg>`,
   );
 
-// Hero — disposition micro1 (.h_h_main + .h_h_wrap) :
+// Hero · disposition de référence (.h_h_main + .h_h_wrap) :
 // - section min-h-screen, flex center, padding vertical asymétrique (5vh top, 20vh bottom)
 // - colonne centrée, max-w 53rem (≈848px), text-center
 // - H1 grand "thin" : font-weight 400, tracking serré, line-height 1.3, taille fluide
@@ -23,6 +26,7 @@ const NOISE_SVG =
 // - 3 couches de fond : strands animé · grain · voile lisibilité bas
 export function Hero() {
   const ease = [0.16, 1, 0.3, 1] as const;
+  const { t } = useLang();
   // Strands est un canvas WebGL. `once: true` → une fois monté il reste vivant
   // (sur mobile certains navigateurs perdent le contexte WebGL lors d'un
   // remount rapide via IO, ce qui rendait le fond invisible). On préfère
@@ -33,13 +37,13 @@ export function Hero() {
     <section
       ref={ref}
       id="top"
-      aria-label="Zara Labs"
+      aria-label="GemmaS"
       className="relative min-h-[100dvh] w-full overflow-hidden bg-background"
     >
       {/* z-0 — fond animé, éclat tempéré */}
       <div className="absolute inset-0 z-0 opacity-70" aria-hidden>
         {inView && <Strands
-          colors={["#3D2EE0", "#7C3AED", "#F57F1F", "#FFB36B"]}
+          colors={["#4F679E", "#4CAF50", "#FFC107", "#FFD54F"]}
           count={5}
           speed={0.4}
           amplitude={1.2}
@@ -55,14 +59,15 @@ export function Hero() {
         />}
       </div>
 
-      {/* z-[1] — grain répété */}
+      {/* z-[1] · grain répété, version atténuée : on garde la texture mais
+          sans charger la lecture du titre. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-[1] opacity-50 mix-blend-soft-light sm:opacity-40 sm:mix-blend-overlay"
+        className="pointer-events-none absolute inset-0 z-[1] opacity-25 mix-blend-soft-light sm:opacity-20 sm:mix-blend-overlay"
         style={{
           backgroundImage: `url("${NOISE_SVG}")`,
           backgroundRepeat: "repeat",
-          backgroundSize: "200px 200px",
+          backgroundSize: "240px 240px",
         }}
       />
 
@@ -74,7 +79,7 @@ export function Hero() {
 
       {/* CONTENU — Mobile-first :
           - mobile : flex column simple, titre + pitch + CTA empilés, padding fluide.
-          - md+    : on bascule sur la maquette micro1 (titre poussé à 42vh,
+          - md+    : on bascule sur la maquette de référence (titre poussé à 42vh,
                      pitch+CTA flottants en bas à droite). */}
 
       {/* TITRE — centré, padding fluide.
@@ -89,13 +94,13 @@ export function Hero() {
                      text-[clamp(2rem,8.5vw,3rem)] leading-[1.1]
                      md:text-[clamp(2.5rem,5vw,4rem)] md:leading-[1.15]"
         >
-          Innovation tech, conseil et impact, depuis le Bénin.
+          {t("hero.title")}
         </motion.h1>
       </div>
 
       {/* PITCH + CTA :
           - mobile : flot normal sous le titre, centré, padding bas confortable
-          - md+    : absolute bottom-right comme la maquette micro1 */}
+          - md+    : absolute bottom-right comme la maquette de référence */}
       <div className="relative z-10 px-5 pb-12 sm:px-6 md:absolute md:bottom-0 md:right-0 md:px-[5%] md:pb-10">
         <div className="mx-auto flex max-w-md flex-col items-start gap-5 text-left md:ml-auto md:mr-0">
           <motion.p
@@ -104,13 +109,11 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.25, ease }}
             className="text-sm leading-relaxed text-muted-foreground sm:text-base"
           >
-            Nous concevons des plateformes numériques, des solutions IA et des
-            outils HealthTech · AgriTech, et nous accompagnons PME, startups et
-            acteurs publics dans leur transformation.
+            {t("hero.pitch")}
           </motion.p>
 
           <motion.a
-            href={`mailto:${"contact@zaralabs.bj"}`}
+            href={`mailto:${"contact@gemmas.africa"}`}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45, ease }}
@@ -118,7 +121,7 @@ export function Hero() {
                        py-1 pl-5 pr-1 text-sm font-medium text-background
                        transition-all duration-300 ease-smooth hover:gap-3 sm:text-base"
           >
-            Démarrer un projet
+            {t("hero.cta")}
             <span
               aria-hidden
               className="flex h-9 w-9 items-center justify-center rounded-full bg-background text-foreground transition-transform group-hover:scale-110 sm:h-10 sm:w-10"

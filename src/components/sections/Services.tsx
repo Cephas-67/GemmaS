@@ -1,8 +1,11 @@
+"use client";
+
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/contexts/LanguageContext";
 
-// Services — section "Intelligence" de micro1, version Zara Labs.
+// Services · section "Intelligence" de la maquette de référence, version GemmaS.
 // Sticky-scroll : titre EN HAUT (horizontal), puis 2 colonnes (texte gauche
 // qui translate Y · visuels droite qui cross-fade au scroll).
 
@@ -14,32 +17,34 @@ type ServiceFamily = {
   image?: string; // WebP détouré · sert le visuel droite quand présent
 };
 
-const families: ServiceFamily[] = [
+// Familles structurelles (id, gradient, image) figées. Les libellés
+// (title, description) sont résolus à l'usage via t() pour suivre la langue.
+type FamilySpec = Pick<ServiceFamily, "id" | "gradient" | "image">;
+
+const familySpecs: FamilySpec[] = [
   {
     id: "tech",
-    title: "Tech & Innovation",
-    description:
-      "Plateformes web et mobile, applications logistiques, solutions IA, R&D produit. Des architectures sobres, scalables, pensées pour le terrain.",
-    gradient: "from-[#3D2EE0] via-[#5B45E8] to-[#7C3AED]",
+    gradient: "from-[#4F679E] via-[#5C7AB8] to-[#4CAF50]",
     image: "/services/tech.webp",
   },
   {
     id: "conseil",
-    title: "Conseil & Accompagnement",
-    description:
-      "Audits techniques, ingénierie de projets, coaching et incubation. Nous écoutons avant de coder : diagnostic, cartographie, plan d'action.",
-    gradient: "from-[#7C3AED] via-[#A14BD0] to-[#F57F1F]",
+    gradient: "from-[#4CAF50] via-[#7DC97F] to-[#FFC107]",
     image: "/services/conseil.webp",
   },
   {
     id: "impact",
-    title: "HealthTech · AgriTech",
-    description:
-      "Outils de gestion médicale, suivi des cultures, économie circulaire, transition énergétique. L'innovation au service des terrains qui transforment.",
-    gradient: "from-[#F57F1F] via-[#FFA255] to-[#FFB36B]",
+    gradient: "from-[#FFC107] via-[#FFD54F] to-[#FF9800]",
     image: "/services/impact.webp",
   },
 ];
+
+// Mapping id → clés de dictionnaire. Évite les conditions à chaque rendu.
+const FAMILY_KEYS: Record<ServiceFamily["id"], { title: string; desc: string }> = {
+  tech: { title: "services.tech.title", desc: "services.tech.desc" },
+  conseil: { title: "services.ai.title", desc: "services.ai.desc" },
+  impact: { title: "services.studio.title", desc: "services.studio.desc" },
+};
 
 // Flèche dégradée — bleu (--brand-blue) → bleu deep → orange (--brand-orange).
 // Translate-X au hover via la classe parente .group → group-hover:translate-x-1.
@@ -95,7 +100,7 @@ function ServiceVisual({
   active: boolean;
 }) {
   // Image cadrée au centre, scale 1.4 pour déborder, et translateY -8% pour
-  // remonter vers le haut du conteneur (placement micro1).
+  // remonter vers le haut du conteneur (placement de référence).
   const common = "absolute inset-0 h-full w-full object-contain scale-[1.4] -translate-y-[8%] transition-opacity duration-300 ease-in-out";
 
   if (item.image) {
@@ -126,7 +131,15 @@ function ServiceVisual({
 }
 
 export function Services() {
+  const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
+
+  // Résolution des familles à partir des specs + dictionnaire courant.
+  const families: ServiceFamily[] = familySpecs.map((s) => ({
+    ...s,
+    title: t(FAMILY_KEYS[s.id].title as never),
+    description: t(FAMILY_KEYS[s.id].desc as never),
+  }));
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
@@ -159,19 +172,20 @@ export function Services() {
       <div ref={ref} className="relative hidden h-[450vh] md:block">
         <div className="sticky top-0 h-screen overflow-hidden">
           <div className="relative mx-auto h-full w-full max-w-[1300px] px-[5%]">
-            {/* ── TITRE CENTRÉ EN HAUT (équivalent .section-title-wraper.is-h-ip) ── */}
-            <div className="absolute left-1/2 top-[10%] z-10 w-full max-w-[45rem] -translate-x-1/2 px-[5%] text-center">
-              <h2 className="font-display text-[clamp(2rem,4vw,3.25rem)] font-normal leading-[1.15] tracking-[-0.02em] text-foreground">
-                Ce que nous construisons et accompagnons.
+            {/* ── TITRE CENTRÉ EN HAUT · titre court, intro compacte, on
+                colle au top pour donner plus d'air aux visuels en dessous. ── */}
+            <div className="absolute left-1/2 top-[7%] z-10 w-full max-w-[42rem] -translate-x-1/2 px-[5%] text-center">
+              <h2 className="font-display text-[clamp(2rem,4vw,3.25rem)] font-normal leading-[1.05] tracking-[-0.02em] text-foreground">
+                {t("services.title")}
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
-                Trois familles d'expertise, une seule méthode : écouter le
-                terrain, livrer petit, mesurer l'impact.
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
+                {t("services.intro")}
               </p>
             </div>
 
-            {/* ── 2 COLONNES PLEINE HAUTEUR ── */}
-            <div className="grid h-full grid-cols-2 items-center gap-12 pt-[28vh]">
+            {/* ── 2 COLONNES PLEINE HAUTEUR · grid démarre plus haut maintenant
+                que le titre tient sur une ligne · visuels et items remontent. ── */}
+            <div className="grid h-full grid-cols-2 items-center gap-12 pt-[22vh]">
               {/* col gauche : 3 items positionnés au CENTRE du conteneur,
                   chacun translaté selon son propre useTransform → l'item 1
                   commence centré, scroll → item 2 vient au centre, etc. */}
@@ -216,10 +230,10 @@ export function Services() {
       <div className="md:hidden px-4 py-20 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-display text-[clamp(1.75rem,7vw,2.5rem)] font-normal leading-[1.15] tracking-[-0.02em] text-foreground">
-            Ce que nous construisons et accompagnons.
+            {t("services.title")}
           </h2>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-            Trois familles d'expertise, une seule méthode.
+            {t("services.introShort")}
           </p>
         </div>
 

@@ -1,12 +1,56 @@
+"use client";
+
 import { useRef, useState } from "react";
 import { Linkedin, Twitter, Youtube, Instagram } from "lucide-react";
 import { site } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/Logo";
+import { useLang } from "@/contexts/LanguageContext";
 
-// Wordmark géant avec effet "torche" : deux couches de texte superposées,
-// la couche révélée par un radial-gradient suit le curseur.
-function TorchWordmark({ text }: { text: string }) {
+// Colonnes du footer construites à partir de clés de dictionnaire.
+// `headingKey` et `links[].labelKey` sont résolus via t() à l'usage,
+// pour que le contenu suive la langue active sans dupliquer la structure.
+type FooterCol = { headingKey: string; links: { labelKey: string; href: string }[] };
+
+const FOOTER_COLS: FooterCol[] = [
+  {
+    headingKey: "footer.col.services",
+    links: [
+      { labelKey: "footer.link.web", href: "#services" },
+      { labelKey: "footer.link.mobile", href: "#services" },
+      { labelKey: "footer.link.custom", href: "#services" },
+      { labelKey: "footer.link.aiAuto", href: "#services" },
+    ],
+  },
+  {
+    headingKey: "footer.col.method",
+    links: [
+      { labelKey: "footer.link.how", href: "#how" },
+      { labelKey: "footer.link.poles", href: "#poles" },
+      { labelKey: "footer.link.impact", href: "#impact" },
+    ],
+  },
+  {
+    headingKey: "footer.col.studio",
+    links: [
+      { labelKey: "footer.link.team", href: "#about" },
+      { labelKey: "footer.link.manifesto", href: "#manifesto" },
+      { labelKey: "footer.link.faq", href: "#faq" },
+    ],
+  },
+];
+
+const LEGAL_KEYS: { labelKey: string; href: string }[] = [
+  { labelKey: "footer.legal.terms", href: "#" },
+  { labelKey: "footer.legal.privacy", href: "#" },
+  { labelKey: "footer.legal.sitemap", href: "#" },
+];
+
+// Wordmark géant GemmaS · SVG fourni par le client, posé en bas du footer.
+// Effet "torche" : deux exemplaires du même SVG superposés, le bas reste dimmé,
+// le haut (en pleine opacité) est révélé par un radial-gradient qui suit le
+// curseur. Aucun rendu texte ici, c'est le tracé SVG officiel de la marque.
+function TorchWordmark() {
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: -9999, y: -9999, active: false });
 
@@ -18,26 +62,31 @@ function TorchWordmark({ text }: { text: string }) {
 
   const onLeave = () => setPos((p) => ({ ...p, active: false, x: -9999, y: -9999 }));
   const mask = `radial-gradient(circle 360px at ${pos.x}px ${pos.y}px, black 0%, black 35%, transparent 85%)`;
-
-  const wordmarkClasses = cn(
-    "font-display font-bold tracking-[-0.05em]",
-    "whitespace-nowrap text-center block",
-    "text-[clamp(3.5rem,19vw,18rem)] leading-[0.78]",
-  );
+  const imgBase = "block h-auto w-full select-none";
 
   return (
     <div
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className="relative w-full select-none"
+      className="relative w-full"
       aria-hidden
     >
-      <span className={cn(wordmarkClasses, "text-foreground/[0.12]")}>{text}</span>
-      <span
+      {/* Couche basse · wordmark dimmé, présence constante. */}
+      <img
+        src="/wordmark-gemmas.svg"
+        alt=""
+        draggable={false}
+        className={cn(imgBase, "opacity-[0.18] dark:opacity-[0.22]")}
+      />
+      {/* Couche haute · même SVG, plus dense, révélée par la torche. */}
+      <img
+        src="/wordmark-gemmas.svg"
+        alt=""
+        draggable={false}
         className={cn(
-          wordmarkClasses,
-          "absolute inset-0 text-foreground/90 transition-opacity duration-300",
+          imgBase,
+          "absolute inset-0 transition-opacity duration-300",
           pos.active ? "opacity-100" : "opacity-0",
         )}
         style={{
@@ -46,9 +95,7 @@ function TorchWordmark({ text }: { text: string }) {
           WebkitMaskRepeat: "no-repeat",
           maskRepeat: "no-repeat",
         }}
-      >
-        {text}
-      </span>
+      />
     </div>
   );
 }
@@ -62,6 +109,7 @@ const socialIcons: Record<string, typeof Linkedin> = {
 };
 
 export function Footer() {
+  const { t } = useLang();
   return (
     <footer className="relative w-full overflow-hidden bg-background text-foreground/80">
       <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10 pt-16 sm:pt-20 lg:pt-24 pb-6">
@@ -82,20 +130,20 @@ export function Footer() {
             </a>
           </div>
 
-          {/* COL 2/3/4 — chaque catégorie du site */}
-          {site.footerColumns.map((col) => (
-            <div key={col.heading}>
+          {/* COL 2/3/4 · chaque catégorie résolue depuis t(). */}
+          {FOOTER_COLS.map((col) => (
+            <div key={col.headingKey}>
               <p className="mb-5 text-[15px] font-medium text-foreground/55">
-                {col.heading}
+                {t(col.headingKey as never)}
               </p>
               <ul className="space-y-3.5">
                 {col.links.map((l) => (
-                  <li key={l.label}>
+                  <li key={l.labelKey}>
                     <a
                       href={l.href}
                       className="text-[15px] text-foreground transition-colors hover:text-foreground/60"
                     >
-                      {l.label}
+                      {t(l.labelKey as never)}
                     </a>
                   </li>
                 ))}
@@ -108,13 +156,13 @@ export function Footer() {
         <div className="mt-16 flex flex-col gap-6 border-t border-foreground/10 pt-6 text-[13px] text-foreground/55 sm:mt-20 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <span>© {site.year} {site.name}</span>
-            {site.legal.map((l) => (
+            {LEGAL_KEYS.map((l) => (
               <a
-                key={l.label}
+                key={l.labelKey}
                 href={l.href}
                 className="transition-colors hover:text-foreground"
               >
-                {l.label}
+                {t(l.labelKey as never)}
               </a>
             ))}
           </div>
@@ -142,7 +190,7 @@ export function Footer() {
 
       {/* Wordmark collé au bord bas — padding latéral uniquement */}
       <div className="px-4 sm:px-6 lg:px-10">
-        <TorchWordmark text="ZaraLabs" />
+        <TorchWordmark />
       </div>
     </footer>
   );

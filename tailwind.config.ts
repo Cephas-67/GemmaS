@@ -3,7 +3,7 @@ import animate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
-  content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  content: ["./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   theme: {
     container: {
       center: true,
@@ -28,6 +28,8 @@ export default {
       colors: {
         brand: {
           blue: "hsl(var(--brand-blue))",
+          green: "hsl(var(--brand-green))",
+          amber: "hsl(var(--brand-amber))",
           orange: "hsl(var(--brand-orange))",
         },
         background: "hsl(var(--background))",
@@ -57,9 +59,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Outfit"', "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ['"Outfit"', "ui-sans-serif", "sans-serif"],
-        mono: ['"Geist Mono"', "ui-monospace", "monospace"],
+        sans: ["var(--font-outfit)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-outfit)", "ui-sans-serif", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
       },
       borderRadius: {
         lg: "var(--radius)",

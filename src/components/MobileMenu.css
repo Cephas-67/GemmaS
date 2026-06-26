@@ -1,18 +1,21 @@
 /* Numérotation des items du menu mobile.
-   Utilise la police d'affichage du projet (Outfit) via la stack du <body>.
-   L'opacité est pilotée par GSAP via la variable --num-opacity, ce qui
-   permet de l'animer en cascade sans toucher au style inline. */
+   Utilise la police d'affichage du projet via la variable CSS exposée par
+   Next (`--font-outfit`). En littéral "Outfit" la famille n'était pas
+   reconnue et le navigateur fallbackait sur sans-serif système, ce qui
+   donnait des chiffres qui ne ressemblaient pas au reste de l'app.
+   L'opacité est pilotée par GSAP via --num-opacity pour cascade contrôlée. */
 
 .mobile-menu-item::after {
   content: attr(data-num);
   position: absolute;
   top: 0.55em;
   right: 0.4em;
-  font-family: "Outfit", ui-sans-serif, sans-serif;
+  font-family: var(--font-outfit), ui-sans-serif, sans-serif;
   font-size: 0.22em;
   font-weight: 400;
   letter-spacing: 0;
-  color: var(--menu-accent, hsl(25 92% 54%));
+  /* --menu-accent est injecté par MobileMenu.tsx (défaut : ambre GemmaS) */
+  color: var(--menu-accent, hsl(var(--brand-amber)));
   opacity: var(--num-opacity, 0);
   pointer-events: none;
   user-select: none;
@@ -24,5 +27,5 @@
 }
 
 .mobile-menu-item:hover {
-  color: var(--menu-accent, hsl(25 92% 54%));
+  color: var(--menu-accent, hsl(var(--brand-amber)));
 }

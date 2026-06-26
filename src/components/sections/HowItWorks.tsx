@@ -1,7 +1,10 @@
+"use client";
+
 import { useRef } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Silk } from "@/components/backgrounds/Silk";
 import { useInViewport } from "@/hooks/useInViewport";
+import { useLang } from "@/contexts/LanguageContext";
 import diagnosticImg from "@/commentcamarche/diagnostic.webp";
 import cadrageImg from "@/commentcamarche/cadrage.webp";
 import conceptionImg from "@/commentcamarche/conception-design.webp";
@@ -18,12 +21,17 @@ type Step = {
   image: string;
 };
 
-const steps: Step[] = [
-  { n: "01.", label: "Diagnostic du besoin", image: diagnosticImg },
-  { n: "02.", label: "Cadrage du projet", image: cadrageImg },
-  { n: "03.", label: "Conception & design", image: conceptionImg },
-  { n: "04.", label: "Build itératif et MVP", image: iterationImg },
-  { n: "05.", label: "Mesure d'impact et suite", image: impactImg },
+// Step structurel · numéro + image figés. Le libellé est résolu via t() pour
+// suivre la langue active. `.src` parce qu'un import statique Next renvoie
+// un StaticImageData (objet avec width/height/src) et on rend en <img>.
+type StepSpec = { n: string; labelKey: string; image: string };
+
+const stepSpecs: StepSpec[] = [
+  { n: "01.", labelKey: "how.step1", image: diagnosticImg.src },
+  { n: "02.", labelKey: "how.step2", image: cadrageImg.src },
+  { n: "03.", labelKey: "how.step3", image: conceptionImg.src },
+  { n: "04.", labelKey: "how.step4", image: iterationImg.src },
+  { n: "05.", labelKey: "how.step5", image: impactImg.src },
 ];
 
 function StepRow({
@@ -69,6 +77,13 @@ function StepRow({
 }
 
 export function HowItWorks() {
+  const { t } = useLang();
+  // Steps résolus depuis les specs + dictionnaire courant.
+  const steps: Step[] = stepSpecs.map((s) => ({
+    n: s.n,
+    label: t(s.labelKey as never),
+    image: s.image,
+  }));
   const ref = useRef<HTMLDivElement>(null);
   // `once: true` → une fois monté, Silk reste vivant. Combiné à `paused`,
   // on coupe juste l'animation hors viewport sans démonter le canvas
@@ -128,7 +143,7 @@ export function HowItWorks() {
               <div className="relative flex h-full items-center justify-center px-[10%]">
                 <div className="relative w-full max-w-[29rem]">
                   <h2 className="absolute -top-20 left-0 font-display text-[clamp(2rem,3.5vw,3rem)] font-normal leading-[1.15] tracking-[-0.02em] text-white">
-                    Comment ça marche ?
+                    {t("how.title")}
                   </h2>
 
                   <ol className="flex flex-col gap-[1.7rem] pt-4">

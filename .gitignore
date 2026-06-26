@@ -5,6 +5,9 @@ node_modules
 dist
 dist-ssr
 .vercel
+.next
+out
+next-env.d.ts
 
 # Env
 *.local
@@ -30,3 +33,12 @@ yarn-error.log*
 # Notes brutes / scratch
 Bonh je viens de comprendre que c'e.txt
 My_ui_components/
+
+# Assets source du client GemmaS · servent à extraire logos/avatars,
+# pas à versionner. Ancrés à la racine pour ne pas masquer public/founders/
+# sur les FS Windows case-insensitive.
+/Founders/
+/GemmaSinformation/
+
+# TypeScript incremental build info
+tsconfig.tsbuildinfo

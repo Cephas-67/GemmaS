@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 
 // Observe un élément et bascule `inView` selon sa visibilité.

@@ -128,6 +128,21 @@
 
 @layer components {
   /* ──────────────────────────────────────────────────────────
+     Shimmer · balayage diagonal qui glisse pour skeletons.
+     Translate de -100% à 200%, doux et lent, en boucle.
+     ────────────────────────────────────────────────────────── */
+  @keyframes shimmer-sweep {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+  }
+  .shimmer-sweep {
+    animation: shimmer-sweep 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shimmer-sweep { animation: none; opacity: 0.4; }
+  }
+
+  /* ──────────────────────────────────────────────────────────
      Liquid glass — effet bulle d'eau / verre liquide style visionOS.
      Combine : backdrop-blur fort, saturation, highlight intérieur
      en haut, ombre interne en bas, et un voile radial pour donner

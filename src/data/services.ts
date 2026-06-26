@@ -5,80 +5,82 @@ export type Service = {
   description: string;
 };
 
+// Catégories conservées telles quelles pour ne pas casser les filtres
+// existants de la section Services. Le contenu reflète l'offre GemmaS.
 export const services: Service[] = [
-  // Tech & Innovation
+  // Tech & dev
   {
-    id: "platforms",
+    id: "websites",
     category: "tech",
-    title: "Plateformes numériques",
-    description: "Web, mobile, back-office. Architectures cloud, scalables, sécurisées.",
+    title: "Sites web & vitrines",
+    description: "Site rapide, sobre, livré en 5 jours. Pensé mobile d'abord, optimisé pour le référencement.",
   },
   {
-    id: "logistics",
+    id: "mobile",
     category: "tech",
-    title: "Applications logistiques",
-    description: "Suivi de flotte, gestion d'inventaire, traçabilité terrain.",
+    title: "Applications mobiles natives",
+    description: "Android et iOS, avec un vrai souci de l'expérience locale : connexion lente, devices d'entrée de gamme.",
   },
   {
-    id: "ai",
+    id: "custom",
     category: "tech",
-    title: "Solutions IA",
-    description: "Vision, NLP, prédiction. Modèles entraînés sur données métier locales.",
+    title: "Logiciels sur mesure",
+    description: "Plateformes web, back-offices, outils internes. Architecture sobre, code maintenable.",
   },
   {
-    id: "rd",
+    id: "automation",
     category: "tech",
-    title: "R&D produit",
-    description: "Prototypage rapide, MVP testables, expérimentations contrôlées.",
+    title: "Automatisation IA",
+    description: "Workflows n8n, Make, intégrations LLM. Vous récupérez les heures perdues sur les tâches répétitives.",
   },
-  // Conseil
+  // Conseil & accompagnement
+  {
+    id: "agents",
+    category: "conseil",
+    title: "Agents IA & chatbots",
+    description: "Assistants conversationnels branchés sur vos données. Service client, qualification de prospects, support interne.",
+  },
   {
     id: "audit",
     category: "conseil",
-    title: "Audits techniques",
-    description: "Diagnostic d'existant, cartographie risques, plan de remédiation.",
+    title: "Audit digital",
+    description: "État des lieux de votre présence en ligne et de vos outils. Plan d'action priorisé, sans jargon.",
   },
   {
-    id: "engineering",
+    id: "portfolios",
     category: "conseil",
-    title: "Ingénierie de projets",
-    description: "Cadrage, planification, livrables. De l'idée au déploiement.",
+    title: "Portfolios & CV pro",
+    description: "Pour indépendants, créatifs et porteurs de projets. Un vrai support de candidature, pas juste un CV.",
   },
   {
-    id: "coaching",
+    id: "maintenance",
     category: "conseil",
-    title: "Coaching & incubation",
-    description: "Mentorat fondateurs, structuration produit, accès aux marchés.",
+    title: "Maintenance & évolutions",
+    description: "Contrats mensuels pour garder votre site à jour, sécurisé et performant.",
   },
+  // Impact (placeholders alimentés au fur et à mesure)
   {
-    id: "strategy",
-    category: "conseil",
-    title: "Stratégie opérationnelle",
-    description: "Accompagnement long terme pour PME, startups, porteurs de projets.",
-  },
-  // Impact
-  {
-    id: "healthtech",
+    id: "training",
     category: "impact",
-    title: "Outils HealthTech",
-    description: "Gestion médicale, dossiers patients, télémédecine adaptée au contexte local.",
+    title: "Formation outils numériques",
+    description: "Sessions courtes pour vos équipes : prise en main d'un CMS, bonnes pratiques IA, hygiène numérique.",
   },
   {
-    id: "agritech",
+    id: "branding",
     category: "impact",
-    title: "Solutions AgriTech",
-    description: "Suivi cultures, prévision, traçabilité chaîne de valeur agricole.",
+    title: "Identité de marque",
+    description: "Logo, charte couleurs, typographie, gabarits réseaux. La base visuelle d'une présence cohérente.",
   },
   {
-    id: "circular",
+    id: "content",
     category: "impact",
-    title: "Économie circulaire",
-    description: "Outils de mesure, valorisation des flux, modèles éco-responsables.",
+    title: "Production de contenu",
+    description: "Visuels IA, vidéos courtes, posts LinkedIn et Instagram pensés pour votre audience.",
   },
   {
-    id: "energy",
+    id: "ecommerce",
     category: "impact",
-    title: "Transition énergétique",
-    description: "Pilotage consommation, énergies renouvelables, optimisation des usages.",
+    title: "E-commerce local",
+    description: "Boutique en ligne adaptée aux moyens de paiement africains, livraison locale incluse.",
   },
 ];

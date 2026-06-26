@@ -1,7 +1,7 @@
 import "./Aurora.css";
 import { cn } from "@/lib/utils";
 
-// Aurora — fond animé coloré, palette marque Zara Labs.
+// Aurora · fond animé coloré, palette marque GemmaS.
 // Usage : <Aurora /> en absolute dans un parent relative + overflow-hidden.
 export function Aurora({ className }: { className?: string }) {
   return (

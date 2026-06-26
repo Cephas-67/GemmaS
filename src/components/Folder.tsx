@@ -1,3 +1,5 @@
+"use client";
+
 import {
   useState,
   type CSSProperties,
@@ -8,10 +10,11 @@ import {
 import "./Folder.css";
 import { cn } from "@/lib/utils";
 
-// Folder reactbits + extension Zara Labs :
+// Folder reactbits + extension GemmaS :
 //   - click sur le dossier → ouverture / fermeture (animation papiers déployés)
 //   - click sur un papier ouvert → ce papier se centre + grossit, les autres
 //     reculent et perdent en opacité. Re-click → retour fan.
+// Extension à 5 papiers pour accueillir l'équipe des 5 co-fondateurs.
 type Props = {
   color?: string;
   size?: number;
@@ -19,7 +22,7 @@ type Props = {
   className?: string;
 };
 
-const MAX_ITEMS = 3;
+const MAX_ITEMS = 5;
 
 function darkenColor(hex: string, percent: number) {
   let color = hex.startsWith("#") ? hex.slice(1) : hex;

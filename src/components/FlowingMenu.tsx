@@ -1,3 +1,5 @@
+"use client";
+
 // FlowingMenu, issu de React Bits.
 // Adapté en TSX : marquee continu en hover, edge-aware (le voile entre par
 // l'arête la plus proche du curseur, sort par la même).

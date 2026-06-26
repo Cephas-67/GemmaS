@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { gsap } from "gsap";
@@ -26,8 +28,10 @@ export function MobileMenu({
   open,
   onClose,
   items,
-  layers = ["hsl(244 75% 53%)", "hsl(0 0% 0%)"],
-  accent = "hsl(25 92% 54%)",
+  // Défauts alignés sur la charte GemmaS · couche bleue marque puis noire,
+  // accent ambre pour la numérotation des items.
+  layers = ["hsl(220 33% 46%)", "hsl(0 0% 0%)"],
+  accent = "hsl(45 100% 51%)",
 }: Props) {
   const { t } = useLang();
   const panelRef = useRef<HTMLDivElement>(null);

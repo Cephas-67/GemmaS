@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { Menu } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,8 +35,8 @@ export function Navbar() {
   const links = [
     { key: "nav.services", href: "#services" },
     { key: "nav.how", href: "#how" },
-    { key: "nav.impact", href: "#impact" },
     { key: "nav.about", href: "#about" },
+    { key: "nav.poles", href: "#poles" },
   ] as const;
 
   useEffect(() => {

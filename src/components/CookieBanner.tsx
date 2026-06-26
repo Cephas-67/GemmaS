@@ -1,9 +1,11 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Settings2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/contexts/LanguageContext";
 
-const STORAGE_KEY = "zara-cookies-accepted";
+const STORAGE_KEY = "gemmas-cookies-accepted";
 
 // Bandeau cookies en pill noire, en bas centré. Disparaît après acceptation.
 export function CookieBanner() {
@@ -55,4 +57,3 @@ export function CookieBanner() {
     </div>
   );
 }
-

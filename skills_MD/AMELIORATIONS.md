@@ -28,6 +28,33 @@ Journal ouvert : 2026-06-23
 
 ## Entrées
 
+### [2026-06-26] · Migration Zara Labs → GemmaS (rebrand complet)
+
+**Contexte** : Céphas a réutilisé la base Zara Labs pour son agence réelle, GemmaS (Cotonou, 5 co-fondateurs : Prudence CEO, Enock CTO, Siméon CMO, Duvalier CSO, Gaby COO). Migration sans toucher à la structure du site, uniquement contenu + charte + équipe.
+
+**Sources** : `GemmaSinformation/gemmas-portfolio.pdf` (architecture du site), `Roles_5_Fondateurs_Drive.docx.pdf` (équipe), `20_03_2026.docx` (PV), avatars dans `Founders/`. Documents lus, `gemmas_proposition_partenariat.pdf` et `tp_cycle_de_vie...pdf` ignorés à la demande.
+
+**Ce qui a été fait** :
+- **Charte** : tokens HSL bleu+orange → bleu marque (220 33% 46%), vert (122 39% 49%), ambre (45 100% 51%). `--brand-orange` conservé en alias pour ne pas casser les refs. `tailwind.config.ts` ajoute `brand.green` et `brand.amber`.
+- **Logo** : `Logo.tsx` réécrit avec le SVG monogramme G GemmaS (anneau bleu, barre verte, deux points ambre). Wordmark "GemmaS" en simple ligne au lieu de "Zara"/"Labs" empilés. Favicon remplacé.
+- **Wordmark footer** : `TorchWordmark text="GemmaS"`.
+- **Contenus data** : `site.ts`, `services.ts`, `poles.ts`, `faq.ts` réécrits pour l'offre GemmaS (sites en 5j, applis mobiles, sur mesure, IA, portfolios). Stats : 5j délai, 5 fondateurs, 100% Cotonou, 0 bug toléré.
+- **Sections** : Hero (tagline, pitch, mailto, Strands palette GemmaS), About (récit + 5 fondateurs), Services (3 familles renommées), Manifesto, Poles. Aucun changement de structure.
+- **Équipe** : `Folder.tsx` MAX_ITEMS 3 → 5, `Folder.css` étendue avec :nth-child(4) et (5). Éventail rééquilibré sur 5 papiers (angles -22°/-10°/0°/10°/22°). Avatars `public/founders/` mappés sur les 5 co-fondateurs.
+- **Shimmer** : `src/components/ui/Shimmer.tsx` + keyframes `shimmer-sweep` dans globals.css. Sobre, balayage diagonal blanc translucide, `prefers-reduced-motion` géré. Prêt à poser sur les zones encore vides quand besoin.
+- **Divers** : `gemmas-lang` storage key, `gemmas-cookies-accepted`, commentaires Strands/Aurora/GlassIconButton rafraîchis.
+
+**Pièges** :
+- `Folder.css` hardcodait `:nth-child(1..3)`. Bumper `MAX_ITEMS` sans étendre la CSS aurait fait que les papiers 4 et 5 restent empilés au centre, invisibles. Solution : ajout des positions CSS pour 4 et 5, élargissement de l'éventail.
+- Le PV nomme "Enock" alors que l'avatar s'appelle "Marth". Marth = Marthelly = surnom d'Enock (confirmé par Céphas).
+- Aucun tiret cadratin `—` toléré : tous les commentaires retouchés utilisent `·`.
+
+**Type-check** : `npx tsc --noEmit` exit 0, aucune erreur.
+
+**Fichiers** : `app/{layout,globals.css}`, `tailwind.config.ts`, `src/index.css`, `src/data/{site,services,poles,faq}.ts`, `src/contexts/LanguageContext.tsx`, `src/components/{Logo,Footer,CookieBanner,Folder,Folder.css}.tsx?`, `src/components/sections/{Hero,About,Services,Manifesto,Poles}.tsx`, `src/components/backgrounds/{Strands,Aurora}.tsx`, `src/components/ui/{GlassIconButton,Shimmer}.tsx`, `public/{favicon.svg,logo-gemmas.svg,logo-gemmas-dark.svg,wordmark-gemmas.svg,founders/*}`.
+
+---
+
 ### [2026-06-24] · Pass mobile-first (patterns Amoussouportfolio)
 
 **Contexte** : Céphas a constaté que le mobile n'était pas vraiment opérationnel sur certaines sections. Il m'a demandé de m'inspirer de Amoussouportfolio (E:\\Amoussouportfolio) pour les conventions mobile-first.

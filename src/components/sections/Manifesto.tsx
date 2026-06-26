@@ -1,7 +1,10 @@
+"use client";
+
 import { Silk } from "@/components/backgrounds/Silk";
 import { useInViewport } from "@/hooks/useInViewport";
+import { useLang } from "@/contexts/LanguageContext";
 
-// Manifesto — réplique stricte du banner .h_l_main de micro1.
+// Manifesto · réplique stricte du banner .h_l_main de la maquette de référence.
 // Le canvas Silk n'est monté qu'une fois la section dans le viewport
 // (rootMargin 300px en avance) puis démonté quand on s'éloigne :
 // économise ~60fps quand l'utilisateur est ailleurs sur la page.
@@ -18,6 +21,7 @@ const NOISE_SVG =
   );
 
 export function Manifesto() {
+  const { t } = useLang();
   // `once: true` → mount-one-shot du canvas Silk. Sans ça, un démontage/
   // remontage rapide pendant le scroll laisse 1-3 frames blanches le temps
   // que le shader recompile → "le bg disparaît parfois".
@@ -50,8 +54,7 @@ export function Manifesto() {
       {/* z:1 → voile noir 15% pour asseoir le texte */}
       <div className="relative z-[1] flex items-center justify-center bg-black/15 px-[5%] py-20 sm:py-28 md:py-32">
         <h2 className="mx-auto max-w-[41rem] text-center font-display text-[clamp(1.75rem,4vw,3rem)] font-normal leading-[1.2] tracking-[-0.02em] text-white">
-          La tech béninoise qui accélère les terrains, du diagnostic à
-          l'impact mesuré.
+          {t("manifesto.text")}
         </h2>
       </div>
 

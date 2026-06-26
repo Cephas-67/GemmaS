@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export default function NotFound() {
   return (
@@ -9,7 +9,7 @@ export default function NotFound() {
         </p>
         <h1 className="font-display text-4xl font-bold">Page introuvable</h1>
         <Link
-          to="/"
+          href="/"
           className="inline-block text-brand-blue underline-offset-4 hover:underline"
         >
           Retour à l'accueil

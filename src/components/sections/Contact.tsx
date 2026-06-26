@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client";
+
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -6,29 +8,41 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/contexts/LanguageContext";
 
-const schema = z.object({
-  name: z.string().min(2, "Au moins 2 caractères."),
-  email: z.string().email("Email invalide."),
-  org: z.string().optional(),
-  source: z.enum(["linkedin", "google", "recommandation", "evenement", "autre"]).optional(),
-  message: z.string().min(20, "Au moins 20 caractères."),
-});
-type FormValues = z.infer<typeof schema>;
-
-const sources = [
-  { value: "linkedin", label: "LinkedIn" },
-  { value: "google", label: "Google" },
-  { value: "recommandation", label: "Recommandation" },
-  { value: "evenement", label: "Événement" },
-  { value: "autre", label: "Autre" },
+// Specs des sources (valeurs stables, labels résolus via t()).
+const SOURCE_SPECS = [
+  { value: "linkedin", labelKey: "contact.src.linkedin" },
+  { value: "google", labelKey: "contact.src.google" },
+  { value: "recommandation", labelKey: "contact.src.reco" },
+  { value: "evenement", labelKey: "contact.src.event" },
+  { value: "autre", labelKey: "contact.src.other" },
 ] as const;
 
-// Contact : section "Get in touch" plein écran centré, fond très sombre,
-// gros titre, sous-titre court, puis form compact en dessous (centré, max ~640px).
-// Pattern micro1 : un seul CTA fort, ambiance presque conversationnelle.
+// Contact · section "Get in touch" plein écran centré, fond très sombre,
+// gros titre, sous-titre court, puis form compact en dessous (centré, max 640px).
+// Pattern de référence · un seul CTA fort, ambiance presque conversationnelle.
 export function Contact() {
+  const { t } = useLang();
   const [sending, setSending] = useState(false);
+
+  // Schéma Zod recalculé quand la langue change, pour que les messages
+  // d'erreur basculent eux aussi (sinon Zod garde la première version).
+  const schema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(2, t("contact.err.short")),
+        email: z.string().email(t("contact.err.email")),
+        org: z.string().optional(),
+        source: z.enum(["linkedin", "google", "recommandation", "evenement", "autre"]).optional(),
+        message: z.string().min(20, t("contact.err.msg")),
+      }),
+    [t],
+  );
+  type FormValues = z.infer<typeof schema>;
+
+  const sources = SOURCE_SPECS.map((s) => ({ value: s.value, label: t(s.labelKey as never) }));
+
   const {
     register,
     handleSubmit,
@@ -46,8 +60,8 @@ export function Contact() {
     await new Promise((r) => setTimeout(r, 900));
     setSending(false);
     reset();
-    toast.success("Message envoyé. Nous revenons vers vous sous 48h.", {
-      description: `Merci ${values.name.split(" ")[0]}.`,
+    toast.success(t("contact.success"), {
+      description: `${t("contact.thanks")} ${values.name.split(" ")[0]}.`,
     });
   };
 
@@ -66,7 +80,7 @@ export function Contact() {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/50"
         >
-          Contact
+          {t("contact.eyebrow")}
         </motion.p>
 
         <motion.h2
@@ -76,7 +90,7 @@ export function Contact() {
           transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           className="mt-6 font-display font-bold tracking-tight text-white text-[clamp(2.5rem,7vw,5.5rem)] leading-[1.02]"
         >
-          Parlons de votre projet.
+          {t("contact.title")}
         </motion.h2>
 
         <motion.p
@@ -86,8 +100,7 @@ export function Contact() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="mt-6 text-base sm:text-lg text-white/65 leading-relaxed max-w-xl mx-auto"
         >
-          Une idée, un audit à mener, un MVP à prototyper ? Décrivez
-          brièvement votre besoin, nous revenons vers vous sous 48h ouvrées.
+          {t("contact.intro")}
         </motion.p>
 
         <motion.form
@@ -100,33 +113,33 @@ export function Contact() {
           className="mt-12 sm:mt-14 text-left space-y-5"
         >
           <div className="grid gap-5 sm:grid-cols-2">
-            <DarkField label="Nom complet" error={errors.name?.message} htmlFor="name">
+            <DarkField label={t("contact.field.name")} error={errors.name?.message} htmlFor="name" optionalLabel={t("contact.field.optional")}>
               <input
                 id="name"
                 type="text"
                 autoComplete="name"
-                placeholder="Prénom Nom"
+                placeholder={t("contact.field.namePh")}
                 {...register("name")}
                 className="dark-field"
               />
             </DarkField>
-            <DarkField label="Email" error={errors.email?.message} htmlFor="email">
+            <DarkField label={t("contact.field.email")} error={errors.email?.message} htmlFor="email" optionalLabel={t("contact.field.optional")}>
               <input
                 id="email"
                 type="email"
                 autoComplete="email"
-                placeholder="vous@entreprise.com"
+                placeholder={t("contact.field.emailPh")}
                 {...register("email")}
                 className="dark-field"
               />
             </DarkField>
           </div>
 
-          <DarkField label="Organisation" htmlFor="org" optional>
+          <DarkField label={t("contact.field.org")} htmlFor="org" optional optionalLabel={t("contact.field.optional")}>
             <input
               id="org"
               type="text"
-              placeholder="Nom de votre structure"
+              placeholder={t("contact.field.orgPh")}
               {...register("org")}
               className="dark-field"
             />
@@ -134,7 +147,7 @@ export function Contact() {
 
           <div>
             <p className="text-[11px] uppercase tracking-[0.18em] text-white/45 mb-3">
-              Comment nous avez-vous trouvés ?
+              {t("contact.field.source")}
             </p>
             <div className="flex flex-wrap gap-2">
               {sources.map((s) => {
@@ -158,11 +171,11 @@ export function Contact() {
             </div>
           </div>
 
-          <DarkField label="Votre message" error={errors.message?.message} htmlFor="message">
+          <DarkField label={t("contact.field.message")} error={errors.message?.message} htmlFor="message" optionalLabel={t("contact.field.optional")}>
             <textarea
               id="message"
               rows={5}
-              placeholder="Contexte, contraintes, objectifs."
+              placeholder={t("contact.field.messagePh")}
               {...register("message")}
               className="dark-field resize-none"
             />
@@ -170,7 +183,7 @@ export function Contact() {
 
           <div className="pt-4 flex justify-center">
             <CTAButton as="button" type="submit" disabled={sending} className="!bg-white !text-black">
-              {sending ? "Envoi en cours…" : "Envoyer"}
+              {sending ? t("contact.submitting") : t("contact.submit")}
             </CTAButton>
           </div>
         </motion.form>
@@ -184,19 +197,21 @@ function DarkField({
   htmlFor,
   error,
   optional,
+  optionalLabel,
   children,
 }: {
   label: string;
   htmlFor: string;
   error?: string;
   optional?: boolean;
+  optionalLabel?: string;
   children: React.ReactNode;
 }) {
   return (
     <div>
       <label htmlFor={htmlFor} className="flex items-baseline justify-between mb-2">
         <span className="text-[11px] uppercase tracking-[0.18em] text-white/45">{label}</span>
-        {optional && <span className="text-[10px] text-white/35">optionnel</span>}
+        {optional && optionalLabel && <span className="text-[10px] text-white/35">{optionalLabel}</span>}
       </label>
       {children}
       {error && (

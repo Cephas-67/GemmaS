@@ -1,48 +1,48 @@
-// Méta du site et coordonnées Zara Labs.
+// Méta du site et coordonnées GemmaS.
 export const site = {
-  name: "Zara Labs",
-  wordmark: "ZARA LABS",
-  tagline: "Innovation tech, conseil et impact.",
+  name: "GemmaS",
+  wordmark: "GEMMAS",
+  tagline: "Référence africaine du numérique. Conçue et livrée depuis Cotonou.",
   description:
-    "Start-up tech béninoise. Plateformes numériques, IA, accompagnement de PME et startups, HealthTech et AgriTech.",
+    "GemmaS est une agence digitale fondée à Cotonou. Elle conçoit, depuis l'Afrique, des sites web, applications mobiles natives, logiciels sur mesure et solutions d'intelligence artificielle pour les entreprises, institutions et porteurs de projets qui visent une présence numérique sérieuse.",
   country: "Bénin",
   year: new Date().getFullYear(),
   contact: {
-    email: "contact@zaralabs.bj",
+    email: "contact@gemmas.africa",
     phone: "+229 00 00 00 00",
     address: "Cotonou, Bénin",
   },
   nav: [
-    { label: "Pôles", href: "#poles" },
     { label: "Services", href: "#services" },
-    { label: "Impact", href: "#impact" },
-    { label: "À propos", href: "#about" },
+    { label: "Méthode", href: "#how" },
+    { label: "Équipe", href: "#about" },
+    { label: "Pôles", href: "#poles" },
   ],
-  // Colonnes du footer (pattern micro1 : 4 catégories + base bottom).
+  // Colonnes du footer · pattern 4 catégories + base bottom.
   footerColumns: [
-    {
-      heading: "Pôles",
-      links: [
-        { label: "Tech & Innovation", href: "#poles" },
-        { label: "Conseil & Accompagnement", href: "#poles" },
-        { label: "HealthTech & AgriTech", href: "#poles" },
-      ],
-    },
     {
       heading: "Services",
       links: [
-        { label: "Plateformes numériques", href: "#services" },
-        { label: "Solutions IA", href: "#services" },
-        { label: "Audits techniques", href: "#services" },
-        { label: "Coaching & incubation", href: "#services" },
+        { label: "Sites web & vitrines", href: "#services" },
+        { label: "Applications mobiles", href: "#services" },
+        { label: "Logiciels sur mesure", href: "#services" },
+        { label: "Automatisation IA", href: "#services" },
+      ],
+    },
+    {
+      heading: "Méthode",
+      links: [
+        { label: "Comment ça marche", href: "#how" },
+        { label: "Nos pôles", href: "#poles" },
+        { label: "Impact", href: "#impact" },
       ],
     },
     {
       heading: "Maison",
       links: [
-        { label: "À propos", href: "#about" },
-        { label: "Impact", href: "#impact" },
-        { label: "Comment ça marche", href: "#how" },
+        { label: "L'équipe", href: "#about" },
+        { label: "Manifeste", href: "#manifesto" },
+        { label: "FAQ", href: "#faq" },
       ],
     },
   ],
@@ -60,19 +60,19 @@ export const site = {
 };
 
 export const stats = [
-  { value: "3", suffix: "", label: "Pôles d'expertise" },
-  { value: "12", suffix: "+", label: "Services proposés" },
-  { value: "100", suffix: "%", label: "Ancrage Bénin" },
-  { value: "24", suffix: "/7", label: "Engagement client" },
+  { value: "5", suffix: "j", label: "Délai moyen site vitrine" },
+  { value: "5", suffix: "", label: "Co-fondateurs engagés" },
+  { value: "100", suffix: "%", label: "Basés à Cotonou" },
+  { value: "0", suffix: "", label: "Bug critique toléré" },
 ];
 
 export const sectors = [
-  "Santé",
-  "Agriculture",
-  "Énergie",
-  "Logistique",
-  "Éducation",
-  "Finance",
-  "Administration publique",
-  "ONG & développement",
+  "PME béninoises",
+  "Startups africaines",
+  "Diaspora",
+  "ONG & associations",
+  "Indépendants",
+  "Cabinets de conseil",
+  "Commerces locaux",
+  "Porteurs de projets",
 ];

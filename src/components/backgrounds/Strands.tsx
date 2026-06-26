@@ -1,6 +1,8 @@
-// Strands — composant WebGL (OGL) issu de React Bits, adapté en TSX.
+"use client";
+
+// Strands · composant WebGL (OGL) issu de React Bits, adapté en TSX.
 // Usage prévu : fond du Hero. Voir Hero.tsx pour l'instanciation et le réglage
-// des props (palette de marque : bleu + orange Zara Labs).
+// des props (palette de marque GemmaS : bleu, vert, ambre).
 import { useEffect, useRef } from "react";
 import { Renderer, Program, Mesh, Color, Triangle, RenderTarget } from "ogl";
 
