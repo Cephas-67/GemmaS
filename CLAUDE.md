@@ -1,4 +1,4 @@
-# 🧠 CLAUDE.md — Mémoire Persistante · Site Zara Labs
+# 🧠 CLAUDE.md — Mémoire Persistante · Site GemmaS
 
 > **INSTRUCTION CRITIQUE** : lire ce fichier EN PREMIER à chaque nouvelle session.
 > Puis lire `skills_MD/AMELIORATIONS.md` avant tout acte de code.
