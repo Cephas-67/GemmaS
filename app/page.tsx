@@ -7,6 +7,7 @@ import { Poles } from "@/components/sections/Poles";
 import { FAQ } from "@/components/sections/FAQ";
 import { HumanBrilliance } from "@/components/sections/HumanBrilliance";
 import { Manifesto, HowItWorks } from "./_components/DeferredWebGL";
+import Values from "@/components/sections/Values";
 
 // Ordre des sections · hero → services → équipe → recherche →
 // manifesto → impact → comment ça marche → pôles → FAQ → human brilliance.
@@ -15,6 +16,7 @@ export default function Page() {
   return (
     <main>
       <Hero />
+      <Values />
       <Services />
       <About />
       <Research />
