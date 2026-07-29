@@ -9,16 +9,16 @@ export function ValuesConnector() {
       <Image
         src="/shapes/connection-arc.svg"
         alt=""
-        width={328}
-        height={92}
-        className="absolute left-[17%] top-[-3.75rem] h-auto w-[30%]"
+        width={321}
+        height={84}
+        className="absolute left-[22%] top-[-5.2rem] h-auto"
       />
       <Image
         src="/shapes/connection-arc.svg"
         alt=""
-        width={328}
-        height={92}
-        className="absolute right-[17%] top-[9.75rem] h-auto w-[30%] rotate-180"
+        width={321}
+        height={84}
+        className="absolute right-[22%] bottom-[-5.2rem] h-auto rotate-180 scale-x-[-1]"
       />
     </div>
   );

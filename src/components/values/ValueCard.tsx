@@ -9,7 +9,12 @@ export function ValueCard({ value }: ValueCardProps) {
   const Icon = value.icon;
 
   return (
-    <article className="relative z-10 flex aspect-square w-[min(12rem,72vw)] shrink-0 items-center justify-center text-card-foreground sm:w-48 lg:w-[clamp(11.5rem,17vw,12rem)]">
+    <article className="relative z-10 flex aspect-square w-[min(12rem,72vw)] shrink-0 items-center justify-center text-card-foreground sm:w-48 lg:w-[clamp(11.5rem,17vw,15rem)] isolate overflow-hidden rounded-full">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 rounded-full bg-background/90 backdrop-blur-[48px]"
+      />
+
       <Image
         src="/shapes/circle-glass.svg"
         alt=""
@@ -27,7 +32,7 @@ export function ValueCard({ value }: ValueCardProps) {
         <h3 className="max-w-40 text-[0.98rem] font-medium leading-[1.42] tracking-[-0.01em]">
           {value.title}
         </h3>
-      </div>
+      </div> 
     </article>
   );
 }
