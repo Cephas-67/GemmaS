@@ -1,68 +1,95 @@
+"use client";
+
+import { useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { CTAButton } from "@/components/ui/CTAButton";
-import { FeaturedProject } from "@/components/projects/FeaturedProject";
-import { ProjectThumbnail } from "@/components/projects/ProjectThumbnail";
+import { ProjectCard } from "@/components/projects/ProjectCard";
 import { ProjectPagination } from "@/components/projects/ProjectPagination";
 import { defaultProjects } from "@/components/projects/data";
 import type { Project } from "@/components/projects/types";
 
 type RecentProjectsProps = {
-    title?: string;
-    projects?: Project[];
-    activeIndex?: number;
-    ctaLabel?: string;
-    ctaHref?: string;
+  title?: string;
+  projects?: Project[];
+  ctaLabel?: string;
+  ctaHref?: string;
 };
 
-// Section "Projets récents" · grande carte du projet actif à gauche,
-// colonne de miniatures à droite, pagination sous la carte principale.
+// Section "Projets récents" · une seule ProjectCard par projet visible,
+// jamais démontée. Cliquer une miniature échange sa place avec la featured :
+// state = quel id occupe le slot "featured" + quels ids occupent les 3 slots
+// "thumb-N". Comme chaque carte garde la même clé react à travers les
+// rendus, `layout` (voir ProjectCard) anime le déplacement en douceur.
 export default function RecentProjects({
-    title = "Projets récents",
-    projects = defaultProjects,
-    activeIndex = 0,
-    ctaLabel = "Explorer le portfolio",
-    ctaHref = "#",
+  title = "Projets récents",
+  projects = defaultProjects,
+  ctaLabel = "Explorer le portfolio",
+  ctaHref = "#",
 }: RecentProjectsProps) {
-    const featured = projects[activeIndex] ?? projects[0];
-    const thumbnails = projects.filter((_, index) => index !== activeIndex).slice(0, 3);
+  const [featuredId, setFeaturedId] = useState(projects[0]?.id);
+  const [thumbIds, setThumbIds] = useState(() => projects.slice(1, 4).map((p) => p.id));
 
-    return (
-        <section
-            id="recent-projects"
-            aria-labelledby="recent-projects-title"
-            className="bg-background py-20 text-foreground sm:py-24 lg:py-28"
+  const featured = projects.find((p) => p.id === featuredId) ?? projects[0];
+  const activeIndex = projects.findIndex((p) => p.id === featured.id);
+
+  const visible = [featuredId, ...thumbIds]
+    .map((id) => projects.find((p) => p.id === id))
+    .filter((p): p is Project => Boolean(p));
+
+  function selectThumbnail(clickedId: string) {
+    setThumbIds((prev) => prev.map((id) => (id === clickedId ? featuredId : id)));
+    setFeaturedId(clickedId);
+  }
+
+  return (
+    <section
+      id="recent-projects"
+      aria-labelledby="recent-projects-title"
+      className="bg-background py-20 text-foreground sm:py-24 lg:py-28"
+    >
+      <Container size="wide">
+        <h2
+          id="recent-projects-title"
+          className="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-medium tracking-[-0.025em]"
         >
-            <Container size="wide">
-                <h2
-                    id="recent-projects-title"
-                    className="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-medium tracking-[-0.025em]"
-                >
-                    {title}
-                </h2>
+          {title}
+        </h2>
 
-                <div className="mt-10 grid gap-5 lg:grid-cols-[1fr_320px] lg:gap-6">
-                    <div className="flex flex-col gap-5">
-                        <FeaturedProject project={featured} />
-                        {/* <ProjectPagination total={projects.length} activeIndex={activeIndex} label={featured.name} /> */}
-                    </div>
+        <div className="recent-projects-grid mt-10">
+          {visible.map((project) => {
+            const isFeatured = project.id === featuredId;
+            return (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                variant={isFeatured ? "featured" : "thumbnail"}
+                onSelect={() => selectThumbnail(project.id)}
+                style={{
+                  gridArea: isFeatured ? "featured" : `thumb-${thumbIds.indexOf(project.id)}`,
+                  order: isFeatured ? 0 : 2,
+                }}
+              />
+            );
+          })}
 
-                    <div className="flex flex-col gap-4">
-                        {thumbnails.map((project) => (
-                            <ProjectThumbnail key={project.id} project={project} />
-                        ))}
+          <ProjectPagination
+            total={projects.length}
+            activeIndex={activeIndex}
+            label={featured.name}
+            style={{ gridArea: "pagination", order: 1 }}
+          />
+        </div>
 
-                    </div>
-                </div>
-                <div className="mt-10 flex gap-5 w-full">
-                    <CTAButton
-                        as="a"
-                        href={ctaHref}
-                        className="mt-1 ml-auto bg-brand-green text-white hover:bg-brand-green-deep"
-                    >
-                        {ctaLabel}
-                    </CTAButton>
-                </div>
-            </Container>
-        </section>
-    );
+        <div className="mt-10 flex w-full gap-5">
+          <CTAButton
+            as="a"
+            href={ctaHref}
+            className="mt-1 ml-auto bg-brand-green text-white hover:bg-brand-green-deep"
+          >
+            {ctaLabel}
+          </CTAButton>
+        </div>
+      </Container>
+    </section>
+  );
 }
