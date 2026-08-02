@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
@@ -54,7 +54,25 @@ export function TeamSection() {
   // (celui qui sort de la card remonte en haut, celui qu'on vient de cliquer
   // sort de la pile pour prendre sa place).
   const [previousId, setPreviousId] = useState<string | null>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const selected = team.find((member) => member.id === selectedId) ?? null;
+
+  // Clic en dehors de la zone (ronds + card) → referme, retour à l'état
+  // idle. `previousId` n'a pas besoin d'être réinitialisé ici : au prochain
+  // clic depuis l'état idle, `selectMember` le remplace de toute façon par
+  // `selectedId` (donc `null`).
+  useEffect(() => {
+    if (!selectedId) return;
+
+    function handlePointerDown(e: PointerEvent) {
+      if (stageRef.current && !stageRef.current.contains(e.target as Node)) {
+        setSelectedId(null);
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [selectedId]);
   const otherIds = selected
     ? [
         ...(previousId && previousId !== selected.id ? [previousId] : []),
@@ -92,6 +110,7 @@ export function TeamSection() {
         </div>
 
         <div
+          ref={stageRef}
           className="relative mx-auto mt-16"
           style={{ width: stageWidth, height: stackHeight }}
         >
@@ -186,7 +205,7 @@ export function TeamSection() {
                 alt=""
                 width={141}
                 height={60}
-                className="absolute left-0 top-4 h-auto -scale-x-100"
+                className="absolute left-10 top-2 h-auto"
               />
             </div>
           )}

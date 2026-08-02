@@ -16,10 +16,12 @@ type RecentProjectsProps = {
 };
 
 // Section "Projets récents" · une seule ProjectCard par projet visible,
-// jamais démontée. Cliquer une miniature échange sa place avec la featured :
-// state = quel id occupe le slot "featured" + quels ids occupent les 3 slots
-// "thumb-N". Comme chaque carte garde la même clé react à travers les
-// rendus, `layout` (voir ProjectCard) anime le déplacement en douceur.
+// jamais démontée. Cliquer une miniature ne fait pas un simple échange de
+// place : le projet featured sortant remonte toujours en thumb-0 (même
+// rotation que les cartes de l'équipe, cf. TeamSection · `previousId` en
+// tête de pile), les autres miniatures gardent leur ordre relatif. Comme
+// chaque carte garde la même clé react à travers les rendus, `layout` (voir
+// ProjectCard) anime le déplacement en douceur.
 export default function RecentProjects({
   title = "Projets récents",
   projects = defaultProjects,
@@ -37,8 +39,10 @@ export default function RecentProjects({
     .filter((p): p is Project => Boolean(p));
 
   function selectThumbnail(clickedId: string) {
-    setThumbIds((prev) => prev.map((id) => (id === clickedId ? featuredId : id)));
+    if (clickedId === featuredId) return;
+    const previousFeaturedId = featuredId;
     setFeaturedId(clickedId);
+    setThumbIds((prev) => [previousFeaturedId, ...prev.filter((id) => id !== clickedId)]);
   }
 
   return (
