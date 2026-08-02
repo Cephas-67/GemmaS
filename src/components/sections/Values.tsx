@@ -19,7 +19,9 @@ export default function Values() {
         height={352}
         className="pointer-events-none absolute inset-x-0 top-[650px] h-auto w-full scale-[125%] select-none"
       />
-      <GlassG />
+      <span className="absolute bottom-0 right-0 w-fit h-fit translate-x-[10vw] translate-y-[25vh] ">
+        <GlassG />
+      </span>
 
       <div className="relative z-10 mx-auto w-full max-w-page">
         <h2

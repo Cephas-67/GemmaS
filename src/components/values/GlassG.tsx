@@ -1,5 +1,6 @@
-import Image from "next/image";
 import type { CSSProperties } from "react";
+
+const RIM_FILTER_ID = "glass-g-rim";
 
 const shapeMask: CSSProperties = {
   WebkitMaskImage: "url('/shapes/translucide-g-mask.svg')",
@@ -12,78 +13,72 @@ const shapeMask: CSSProperties = {
   maskSize: "contain",
 };
 
-const edgeMasks = {
-  main: {
-    WebkitMaskImage:
-      "linear-gradient(135deg, black 0%, black 30%, transparent 52%, transparent 100%)",
-    maskImage:
-      "linear-gradient(135deg, black 0%, black 30%, transparent 52%, transparent 100%)",
-  },
-  cool: {
-    WebkitMaskImage:
-      "linear-gradient(145deg, black 3%, black 20%, transparent 38%, transparent 100%)",
-    maskImage:
-      "linear-gradient(145deg, black 3%, black 20%, transparent 38%, transparent 100%)",
-  },
-  warm: {
-    WebkitMaskImage:
-      "linear-gradient(315deg, transparent 48%, black 64%, black 78%, transparent 94%)",
-    maskImage:
-      "linear-gradient(315deg, transparent 48%, black 64%, black 78%, transparent 94%)",
-  },
-  bar: {
-    WebkitMaskImage:
-      "radial-gradient(ellipse 18% 2.5% at 66% 62.5%, black 0%, black 45%, transparent 100%)",
-    maskImage:
-      "radial-gradient(ellipse 18% 2.5% at 66% 62.5%, black 0%, black 45%, transparent 100%)",
-  },
-} satisfies Record<string, CSSProperties>;
-
-const edgeImageProps = {
-  src: "/shapes/translucide-g-edge.svg",
-  alt: "",
-  fill: true,
-  sizes: "(min-width: 890px) 44.5rem, 80vw",
-} as const;
-
 export function GlassG() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute left-[1200px] top-[300px] z-[1] aspect-square w-[min(80vw,58rem)] select-none"
+      className="pointer-events-none z-[1] aspect-square w-[min(80vw,58rem,100vh)] select-none"
     >
+      <svg width="0" height="0" className="absolute" aria-hidden="true">
+        <defs>
+          {/*
+            Highlight = un anneau dérivé de la géométrie du masque lui-même
+            (érosion + soustraction), pas d'un tracé dessiné à la main qui ne
+            suit que certains arcs. feSpecularLighting relit cet anneau flouté
+            (= une pente, comme un chanfrein) avec une lumière directionnelle,
+            ce qui donne un reflet qui longe tout le contour, intérieur et
+            extérieur compris, comme le fait l'effet Glass natif de Figma.
+          */}
+          <filter
+            id={RIM_FILTER_ID}
+            x="0%"
+            y="0%"
+            width="100%"
+            height="100%"
+            colorInterpolationFilters="sRGB"
+          >
+            <feImage
+              href="/shapes/translucide-g-mask.svg"
+              x="0"
+              y="0"
+              width="100%"
+              height="100%"
+              result="shape"
+              preserveAspectRatio="xMidYMid meet"
+            />
+
+            <feMorphology in="shape" operator="erode" radius="1.3" result="eroded" />
+            <feComposite in="shape" in2="eroded" operator="out" result="ring" />
+            <feGaussianBlur in="ring" stdDeviation="10" result="bump" />
+
+            <feSpecularLighting
+              in="bump"
+              surfaceScale="6"
+              specularConstant="1.1"
+              specularExponent="14"
+              lightingColor="#ffffff"
+              result="specular"
+            >
+              <feDistantLight azimuth="225" elevation="35" />
+            </feSpecularLighting>
+            <feComposite in="specular" in2="shape" operator="in" result="specularClipped" />
+
+            {/* fin filet visible partout, sous le reflet directionnel */}
+            <feColorMatrix
+              in="ring"
+              type="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.35 0"
+              result="ringDim"
+            />
+            <feBlend in="specularClipped" in2="ringDim" mode="screen" />
+          </filter>
+        </defs>
+      </svg>
+
       <div
-        style={shapeMask}
-        className="absolute inset-0 bg-white/[0.015] backdrop-blur-[10px] backdrop-saturate-150"
+        style={{ ...shapeMask, backgroundColor: "white" }}
+        className="absolute inset-0 opacity-30 [filter:url(#glass-g-rim)]"
       />
-
-      <div style={edgeMasks.cool} className="absolute inset-0 opacity-25">
-        <Image
-          {...edgeImageProps}
-          className="translate-x-[1.5px] [filter:sepia(1)_saturate(7)_hue-rotate(175deg)]"
-        />
-      </div>
-
-      <div style={edgeMasks.warm} className="absolute inset-0 opacity-25">
-        <Image
-          {...edgeImageProps}
-          className="-translate-x-[1.5px] [filter:sepia(1)_saturate(7)_hue-rotate(350deg)]"
-        />
-      </div>
-
-      <div style={edgeMasks.main} className="absolute inset-0 opacity-65">
-        <Image
-          {...edgeImageProps}
-          className="drop-shadow-[0_1px_2px_rgba(255,255,255,0.24)]"
-        />
-      </div>
-
-      <div style={edgeMasks.bar} className="absolute inset-0 opacity-45">
-        <Image
-          {...edgeImageProps}
-          className="drop-shadow-[0_1px_2px_rgba(255,255,255,0.2)]"
-        />
-      </div>
     </div>
   );
 }
