@@ -9,6 +9,7 @@ import { HumanBrilliance } from "@/components/sections/HumanBrilliance";
 import { Manifesto, HowItWorks } from "./_components/DeferredWebGL";
 import Values from "@/components/sections/Values";
 import RecentProjects from "@/components/sections/RecentProjects";
+import { TeamSection } from "@/components/team/TeamSection";
 
 // Ordre des sections · hero → services → équipe → recherche →
 // manifesto → impact → comment ça marche → pôles → FAQ → human brilliance.
@@ -18,13 +19,14 @@ export default function Page() {
     <main>
       <Hero />
       <Values />
-      <Services />
+      {/* <Services /> */}
       <RecentProjects />
-      <About />
+      <TeamSection />
+      {/* <About /> */}
       <Research />
       <Manifesto />
-      <Impact />
-      <HowItWorks />
+      {/* <Impact /> */}
+      {/* <HowItWorks /> */}
       <Poles />
       <FAQ />
       <HumanBrilliance />
