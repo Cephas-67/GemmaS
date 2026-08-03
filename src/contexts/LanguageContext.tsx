@@ -29,7 +29,7 @@ const dictionaries: Record<Lang, Dict> = {
     "lang.switchTo": "Passer en anglais",
 
     // Hero · positionnement référence africaine
-    "hero.title": "Concevoir, depuis Cotonou, les solutions numériques que l'Afrique mérite.",
+    "hero.title": "Human Brilliance Worths everything",
     "hero.pitch": "GemmaS construit ses propres méthodes pour concevoir des sites, des applications mobiles natives, des logiciels sur mesure et des solutions d'intelligence artificielle. Pensés en Afrique, livrés en Afrique, pour les structures qui voient loin.",
     "hero.cta": "Démarrer un projet",
 
@@ -160,7 +160,7 @@ const dictionaries: Record<Lang, Dict> = {
     "lang.switchTo": "Switch to French",
 
     // Hero
-    "hero.title": "Building, from Cotonou, the digital solutions Africa deserves.",
+    "hero.title": "Human Brilliance Worths everything",
     "hero.pitch": "GemmaS builds its own methods to design websites, native mobile apps, custom software and applied AI solutions. Conceived in Africa, delivered from Africa, for organizations that look long-term.",
     "hero.cta": "Start a project",
 

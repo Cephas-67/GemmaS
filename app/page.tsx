@@ -7,6 +7,7 @@ import { Poles } from "@/components/sections/Poles";
 import { FAQ } from "@/components/sections/FAQ";
 import { HumanBrilliance } from "@/components/sections/HumanBrilliance";
 import { Manifesto, HowItWorks } from "./_components/DeferredWebGL";
+import GamifiedHowItWorks from "@/components/sections/GamifiedHowItWorks";
 
 // Ordre des sections · hero → services → équipe → recherche →
 // manifesto → impact → comment ça marche → pôles → FAQ → human brilliance.
@@ -20,7 +21,7 @@ export default function Page() {
       <Research />
       <Manifesto />
       <Impact />
-      <HowItWorks />
+      <GamifiedHowItWorks />
       <Poles />
       <FAQ />
       <HumanBrilliance />

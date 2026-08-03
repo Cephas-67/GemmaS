@@ -4,6 +4,10 @@ import { motion } from "framer-motion";
 import Strands from "@/components/backgrounds/Strands";
 import { useInViewport } from "@/hooks/useInViewport";
 import { useLang } from "@/contexts/LanguageContext";
+import BgNeon from "../ui/BgNeon";
+import GLogo from "../ui/G_Logo";
+import LiquidGlass from "liquid-glass-react";
+import GlassPOC from "../ui/GlassPOC";
 
 // Grain · SVG feTurbulence inline répété (équivalent d'un .webp répété).
 const NOISE_SVG =
@@ -38,25 +42,29 @@ export function Hero() {
       ref={ref}
       id="top"
       aria-label="GemmaS"
-      className="relative min-h-[100dvh] w-full overflow-hidden bg-background"
+      className="relative min-h-[100dvh] w-full overflow-hidden bg-background bg-cover"
+      // style={{backgroundImage: "url(/founders/DuvIllustrated.png)"}}
     >
-      {/* z-0 — fond animé, éclat tempéré */}
-      <div className="absolute inset-0 z-0 opacity-70" aria-hidden>
-        {inView && <Strands
-          colors={["#4F679E", "#4CAF50", "#FFC107", "#FFD54F"]}
-          count={5}
-          speed={0.4}
-          amplitude={1.2}
-          waviness={1}
-          thickness={0.85}
-          glow={1.8}
-          taper={2.4}
-          spread={1.1}
-          intensity={0.45}
-          saturation={1.15}
-          opacity={0.85}
-          scale={1.4}
-        />}
+
+      {/* Filter */}
+      <svg width="0" height="0" style={{ position: 'absolute' }}>
+        <defs>
+          <filter id="liquid-glass" x="-50%" y="-50%" width="200%" height="200%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="40" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
+
+
+
+      <div className="absolute w-[50vw] h-screen flex flex-col items-center justify-center z-0 right-0 translate-x-1/2 opacity-90" aria-hidden>
+        <BgNeon />
+      </div>
+
+      <div className="absolute w-[50vw] h-screen flex flex-col top-1/2 left-1/2 -translate-y-1/2 items-center justify-center z-100 right-[45vw]">
+        {/* <GLogo size={300}/> */}
+        {/* <GlassPOC /> */}
       </div>
 
       {/* z-[1] · grain répété, version atténuée : on garde la texture mais
@@ -85,7 +93,7 @@ export function Hero() {
       {/* TITRE — centré, padding fluide.
           Mobile : pt-[20vh] pb-12, taille clamp pour lisibilité.
           Desktop : pt-[42vh] pb-[20vh] (retour à la compo desktop). */}
-      <div className="relative z-10 mx-auto flex w-full max-w-[53rem] flex-col items-center px-5 pt-[32vh] pb-10 text-center sm:px-6 sm:pt-[28vh] md:pt-[42vh] md:pb-[20vh] md:text-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-[53rem] flex-col items-center px-5 pt-[32vh] text-center sm:px-6 sm:pt-[28vh] md:pt-[42vh] pb-10 md:text-center">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -101,17 +109,8 @@ export function Hero() {
       {/* PITCH + CTA :
           - mobile : flot normal sous le titre, centré, padding bas confortable
           - md+    : absolute bottom-right comme la maquette de référence */}
-      <div className="relative z-10 px-5 pb-12 sm:px-6 md:absolute md:bottom-0 md:right-0 md:px-[5%] md:pb-10">
-        <div className="mx-auto flex max-w-md flex-col items-start gap-5 text-left md:ml-auto md:mr-0">
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.25, ease }}
-            className="text-sm leading-relaxed text-muted-foreground sm:text-base"
-          >
-            {t("hero.pitch")}
-          </motion.p>
-
+      <div className="relative z-10 px-5 sm:px-6">
+        <div className="mx-auto flex max-w-md flex-col items-center gap-5 text-left ">
           <motion.a
             href={`mailto:${"contact@gemmas.africa"}`}
             initial={{ opacity: 0, y: 16 }}
