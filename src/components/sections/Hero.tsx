@@ -43,7 +43,6 @@ export function Hero() {
       id="top"
       aria-label="GemmaS"
       className="relative min-h-[100dvh] w-full overflow-hidden bg-background bg-cover"
-      // style={{backgroundImage: "url(/founders/DuvIllustrated.png)"}}
     >
 
       {/* Filter */}
@@ -58,7 +57,10 @@ export function Hero() {
 
 
 
-      <div className="absolute w-[50vw] h-screen flex flex-col items-center justify-center z-0 right-0 translate-x-1/2 opacity-90" aria-hidden>
+      <div className="absolute w-[50vw] h-screen flex flex-col items-center justify-center z-0 right-0 translate-x-1/2" aria-hidden>
+        <BgNeon />
+      </div>
+      <div className="absolute w-[50vw] h-screen flex flex-col items-center justify-center z-0 left-0 -translate-x-1/2" aria-hidden>
         <BgNeon />
       </div>
 
@@ -68,10 +70,10 @@ export function Hero() {
       </div>
 
       {/* z-[1] · grain répété, version atténuée : on garde la texture mais
-          sans charger la lecture du titre. */}
+          sans charger la lecture du titre. si ce n'est plus "Ancien* chez toi c'est a cause de ce noise que t'avais mis avant. Je l'ai desactivé/}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-[1] opacity-25 mix-blend-soft-light sm:opacity-20 sm:mix-blend-overlay"
+        className="pointer-events-none hidden absolute inset-0 z-[1] opacity-25 mix-blend-soft-light sm:opacity-20 sm:mix-blend-overlay"
         style={{
           backgroundImage: `url("${NOISE_SVG}")`,
           backgroundRepeat: "repeat",
