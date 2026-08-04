@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Bouton signature : pill noir (light) / blanc (dark), cercle interne inversé
@@ -36,10 +36,9 @@ export function CTAButton(props: AsAnchor | AsButton) {
         aria-hidden
         className={cn(
           "grid h-9 w-9 sm:h-10 sm:w-10 place-items-center rounded-full transition-transform duration-300 ease-smooth group-hover:scale-110",
-          isPrimary ? "bg-background text-foreground" : "bg-foreground text-background",
         )}
       >
-        <ArrowRight className="h-4 w-4" />
+        <ArrowUpRight className="h-4 w-4" />
       </span>
     </>
   );

@@ -143,6 +143,33 @@
   }
 
   /* ──────────────────────────────────────────────────────────
+     Grille "Projets récents" · featured (col 1) occupe les 3 lignes
+     de miniatures (col 2). Hauteur fixe pour que les lignes 1fr aient
+     une base à répartir · évite le conflit stretch/aspect-ratio qui
+     ferait sauter les cartes quand elles changent de zone.
+     Mobile : simple pile (l'ordre source place déjà featured en tête).
+     ────────────────────────────────────────────────────────── */
+  .recent-projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  @media (min-width: 1024px) {
+    .recent-projects-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr 320px;
+      grid-template-rows: repeat(3, 1fr) auto;
+      grid-template-areas:
+        "featured   thumb-0"
+        "featured   thumb-1"
+        "featured   thumb-2"
+        "pagination .";
+      height: 34.5rem;
+    }
+  }
+
+  /* ──────────────────────────────────────────────────────────
      Liquid glass — effet bulle d'eau / verre liquide style visionOS.
      Combine : backdrop-blur fort, saturation, highlight intérieur
      en haut, ombre interne en bas, et un voile radial pour donner
