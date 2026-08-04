@@ -28,6 +28,28 @@ Journal ouvert : 2026-06-23
 
 ## Entrées
 
+### [2026-08-04] · Intégration branche `gaby` + travaux `main` (MarthEly514)
+
+**Contexte** : le travail local de Céphas (Hero GemmaS, Workflow, portfolio, TeamGemmaS…) n'était plus d'actualité. Objectif : repartir des contributions de Gaby (branche `gaby`, 7 commits) et de MarthEly514 (`main`, commits `94c1fb4` + `f9ac39c`).
+
+**Ce qui a été fait** :
+- Travail local (14 fichiers modifiés + 11 non suivis) mis en sécurité : `git stash push -u -m "sauvegarde local Cephas avant recup gaby+main (2026-08-04)"`. Rien supprimé.
+- `main` fast-forward vers `f9ac39c`, puis merge de `origin/gaby`.
+- Apports de gaby : `sections/{PolesExcellence,Values,RecentProjects}`, dossiers `team/`, `projects/`, `values/`, assets `public/shapes/`, grille `.recent-projects-grid` dans `globals.css`, pages de test `/poles-test`, `/team-test`, `/glass-test`.
+- Apports de main : `sections/GamifiedHowItWorks`, `ui/{BgNeon,G_Logo,GlassPOC}`.
+- Remote mis à jour : le repo GitHub a été renommé `zara-labs-site` → `GemmaS`.
+
+**Pièges** :
+- Conflit unique sur `app/page.tsx`, mais **structurel** et non textuel : gaby avait commenté Services/About/Impact et remplacé `Poles` par `PolesExcellence`, pendant que main ajoutait `GamifiedHowItWorks`. Résolu par l'intention (structure de gaby + composant de main placé après `Manifesto`), jamais par `--ours`/`--theirs`.
+- `src/index.css` n'existe plus : supprimé par gaby (commit `2838ceb`). C'était un reliquat Vite mort, aucun import côté code. **La source de vérité des tokens est désormais `app/globals.css`** · les docs `skills_MD/*.md` et `CLAUDE.md` pointent encore sur l'ancien chemin, à corriger.
+- Fichiers parasites commités à la racine par gaby : `background.svg`, `big.png`, `green-blue-gradient.svg`, `translucide-g.svg` (doublons de `public/shapes/`). `public/shapes/p.png` pèse 9 Mo, à convertir en WebP/AVIF avant mise en prod (LCP).
+
+**Type-check** : `npx tsc --noEmit` exit 0, aucune erreur.
+
+**Fichiers** : `app/page.tsx` (résolution), merge `d86255e` poussé sur `origin/main`.
+
+---
+
 ### [2026-06-26] · Migration Zara Labs → GemmaS (rebrand complet)
 
 **Contexte** : Céphas a réutilisé la base Zara Labs pour son agence réelle, GemmaS (Cotonou, 5 co-fondateurs : Prudence CEO, Enock CTO, Siméon CMO, Duvalier CSO, Gaby COO). Migration sans toucher à la structure du site, uniquement contenu + charte + équipe.
