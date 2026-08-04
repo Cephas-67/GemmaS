@@ -70,7 +70,7 @@ export function Hero() {
       </div>
 
       {/* z-[1] · grain répété, version atténuée : on garde la texture mais
-          sans charger la lecture du titre. si ce n'est plus "Ancien* chez toi c'est a cause de ce noise que t'avais mis avant. Je l'ai desactivé/}
+          sans charger la lecture du titre. si ce n'est plus "Ancien* chez toi c'est a cause de ce noise que t'avais mis avant. Je l'ai desactivé avec "hidden"*/}
       <div
         aria-hidden
         className="pointer-events-none hidden absolute inset-0 z-[1] opacity-25 mix-blend-soft-light sm:opacity-20 sm:mix-blend-overlay"
