@@ -1,10 +1,15 @@
+"use client";
+
 import { ValueCard } from "@/components/values/ValueCard";
 import { ValuesConnector } from "@/components/values/ValuesConnector";
-import { values } from "@/components/values/data";
+import { values } from "@/data/values";
 import { GlassG } from "@/components/values/GlassG";
 import Image from "next/image";
+import { useLang } from "@/contexts/LanguageContext";
 
 export default function Values() {
+  const { t } = useLang();
+
   return (
     <section
       id="values"
@@ -28,7 +33,7 @@ export default function Values() {
           id="value-title"
           className="text-center font-display text-[clamp(1.75rem,3vw,2.25rem)] font-medium leading-tight tracking-[-0.025em]"
         >
-          L&apos;exigence de la performance
+          {t("values.title")}
         </h2>
 
         <div className="relative mx-auto mt-20 lg:mt-[12rem]">

@@ -5,11 +5,13 @@ import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { animateThemeToggle } from "@/lib/animateThemeToggle";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/contexts/LanguageContext";
 
 // Bouton sun/moon nu — pas de carte derrière, juste l'icône avec hover
 // discret (couleur qui passe au foreground plein).
 export function ThemeToggle({ className = "" }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
+  const { t } = useLang();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -24,7 +26,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
     <button
       type="button"
       onClick={onClick}
-      aria-label={isDark ? "Activer le mode clair" : "Activer le mode sombre"}
+      aria-label={isDark ? t("theme.toLight") : t("theme.toDark")}
       className={cn(
         "grid size-8 place-items-center rounded-full text-foreground/60 transition-colors hover:text-foreground",
         className,

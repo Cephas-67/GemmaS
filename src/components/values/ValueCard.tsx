@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import type { ValueItem } from "./types";
+import type { ValueItem } from "@/data/values";
+import { useLang } from "@/contexts/LanguageContext";
 
 type ValueCardProps = {
   value: ValueItem;
@@ -7,6 +10,8 @@ type ValueCardProps = {
 
 export function ValueCard({ value }: ValueCardProps) {
   const Icon = value.icon;
+  const { lang } = useLang();
+  const title = lang === "en" ? value.titleEn : value.title;
 
   return (
     <article className="relative z-10 flex aspect-square w-[min(12rem,72vw)] shrink-0 items-center justify-center text-card-foreground sm:w-48 lg:w-[clamp(11.5rem,17vw,15rem)] isolate overflow-hidden rounded-full">
@@ -30,7 +35,7 @@ export function ValueCard({ value }: ValueCardProps) {
           className="mb-3 h-11 w-11 text-muted-foreground"
         />
         <h3 className="max-w-40 text-[0.98rem] font-medium leading-[1.42] tracking-[-0.01em]">
-          {value.title}
+          {title}
         </h3>
       </div> 
     </article>

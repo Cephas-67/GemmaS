@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { Project } from "./types";
+import type { Project } from "@/data/projects";
 
 type ProjectCardProps = {
   project: Project;

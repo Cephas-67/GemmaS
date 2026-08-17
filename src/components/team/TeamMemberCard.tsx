@@ -1,9 +1,12 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CTAButton } from "@/components/ui/CTAButton";
-import type { TeamMember } from "./types";
+import type { TeamMember } from "@/data/team";
+import { useLang } from "@/contexts/LanguageContext";
 
 export function TeamMemberCard({ member }: { member: TeamMember }) {
+  const { t } = useLang();
+
   return (
     <div className="flex h-full w-full flex-col gap-4 p-4">
       <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-2xl bg-black/20">
@@ -35,7 +38,7 @@ export function TeamMemberCard({ member }: { member: TeamMember }) {
         rel="noopener noreferrer"
         className="mt-auto self-start"
       >
-        Visiter le portfolio
+        {t("teamCard.portfolio")}
       </CTAButton>
     </div>
   );

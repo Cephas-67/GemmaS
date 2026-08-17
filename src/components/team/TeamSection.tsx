@@ -5,9 +5,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
-import { team } from "./data";
+import { team } from "@/data/team";
 import { TeamCircle } from "./TeamCircle";
 import { TeamMemberCard } from "./TeamMemberCard";
+import { useLang } from "@/contexts/LanguageContext";
 
 const SPRING = { type: "spring", stiffness: 300, damping: 30, mass: 0.9 } as const;
 const LAYOUT_TRANSITION = { layout: SPRING };
@@ -47,6 +48,7 @@ const stageWidth = Math.max(rowWidth, CARD_WIDTH + CARD_TO_STACK_GAP + CIRCLE);
 const rowTop = (stackHeight - CIRCLE) / 2;
 
 export function TeamSection() {
+  const { t, lang } = useLang();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   // Le membre qu'on vient de quitter est mémorisé à part pour être replacé
   // en haut de la pile (stackIndex 0) plutôt que retomber à sa place dans
@@ -100,12 +102,10 @@ export function TeamSection() {
             id="team-title"
             className="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-medium leading-tight tracking-[-0.025em]"
           >
-            GemmaS : Team
+            {t("team.title")}
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-            GemmaS repose sur l&apos;alliance de 5 fondateurs aux compétences
-            synergiques et complémentaires. Un collectif d&apos;experts
-            mobilisés pour concevoir des produits numériques d&apos;exception.
+            {t("team.intro")}
           </p>
         </div>
 
@@ -154,7 +154,13 @@ export function TeamSection() {
                 onKeyDown={handleKeyDown}
                 role={!isSelected ? "button" : undefined}
                 tabIndex={!isSelected ? 0 : undefined}
-                aria-label={!isSelected ? `Voir le profil de ${member.name}` : undefined}
+                aria-label={
+                  !isSelected
+                    ? lang === "en"
+                      ? `View ${member.name}'s profile`
+                      : `Voir le profil de ${member.name}`
+                    : undefined
+                }
                 style={{ position: "absolute", ...box }}
                 className={cn(
                   "overflow-hidden transition-colors duration-300",
@@ -187,6 +193,29 @@ export function TeamSection() {
                     </motion.div>
                   )}
                 </AnimatePresence>
+
+                {/* Miniature statique, enfant du noeud `layout` plutôt qu'un
+                    frère positionné en double : ainsi elle suit gratuitement
+                    tout déplacement pur (translation) du rond, sans code de
+                    synchronisation, sans jamais avoir sa propre transition.
+                    Elle ne se déforme pas non plus pendant le FLIP rond→card
+                    puisqu'elle est démontée (`!isSelected`) avant même que
+                    ce changement de taille ne démarre. */}
+                {!isSelected && (
+                  <Image
+                    src={member.avatar}
+                    alt=""
+                    fill
+                    sizes="4rem"
+                    aria-hidden="true"
+                    className={cn(
+                      "pointer-events-none absolute inset-0 object-cover",
+                      member.focus === "top" && "object-top",
+                      member.focus === "topZoom" && "object-top scale-125",
+                      member.focus === "center" && "object-center",
+                    )}
+                  />
+                )}
               </motion.div>
             );
           })}
@@ -198,7 +227,7 @@ export function TeamSection() {
               style={{ left: 0, top: rowTop + CIRCLE + 24, width: rowWidth }}
             >
               <p className="text-center text-sm text-muted-foreground">
-                Cliquez pour en voir plus
+                {t("team.hint")}
               </p>
               <Image
                 src="/shapes/team-hint-arrow.svg"

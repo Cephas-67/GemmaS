@@ -28,6 +28,60 @@ Journal ouvert : 2026-06-23
 
 ## Entrées
 
+### [2026-08-17] · Centralisation du contenu dans `src/data/`
+
+**Contexte** : deux composants activement rendus définissaient encore leurs données en dur dans le fichier composant (`PolesExcellence.tsx`, `GamifiedHowItWorks.tsx`), et un second pattern de centralisation coexistait en parallèle de `src/data/` : données co-localisées dans `src/components/{team,projects,values}/{data,types}.ts`. Décision : un seul centre de données pour tout le site.
+
+**Ce qui a été fait** :
+- `src/data/polesExcellence.ts` créé (type `PoleExcellence`, `Accent`, tableau `polesExcellence`) ; `PolesExcellence.tsx` importe désormais ce tableau, ne garde localement que les tables de classes Tailwind (`accentGlow`/`accentBorder`, présentation, pas contenu).
+- `src/data/gamifiedHowItWorks.ts` créé (type `Step`, tableau `steps`) ; `GamifiedHowItWorks.tsx` importe depuis ce fichier.
+- Fusion des 3 paires `types.ts` + `data.ts` co-localisées en fichiers uniques dans `src/data/` : `team.ts`, `projects.ts`, `values.ts`. Les 6 anciens fichiers (`src/components/{team,projects,values}/{data,types}.ts`) supprimés après migration de tous les imports (`TeamSection`, `TeamMemberCard`, `RecentProjects`, `ProjectCard`, `Values`, `ValueCard`).
+- Composants désactivés dans `app/page.tsx` (`About.tsx`, `Services.tsx`, `HowItWorks.tsx`) volontairement exclus de la centralisation (pas de valeur à traiter du contenu non affiché) : `About.tsx` duplique encore `team.ts` en dur, à corriger si le composant est un jour réactivé.
+- Système i18n (`LanguageContext.tsx` / `t()`) non touché, restait hors périmètre par décision explicite.
+
+**Pièges** :
+- `src/data/poles.ts` exporte déjà un type `Pole` (pôles commerciaux Tech/IA/Studio) sans rapport avec les pôles techniques de `PolesExcellence.tsx` (web/mobile/IA) : le nouveau type a été appelé `PoleExcellence` pour éviter toute confusion/collision.
+- Les 3 items de `steps` dans `gamifiedHowItWorks.ts` partagent le même texte `content` ("Analyse approfondie de vos enjeux…") : placeholder pré-existant, pas une erreur introduite ici. À signaler côté copywriting.
+- L'outil `rm` du shell est aliasé (`exec_scmb_expand_args`) et échoue silencieusement (exit 127) dans ce contexte non interactif ; utiliser `/usr/bin/rm` directement pour supprimer des fichiers en session agent.
+
+**Solution appliquée** : voir "Ce qui a été fait".
+
+**Leçon retenue** : avant toute nouvelle section avec données répétées (icônes, titres, images), créer directement le fichier dans `src/data/` plutôt qu'un tableau local dans le composant — évite la resynchronisation a posteriori faite ici.
+
+**Fichiers** : `src/data/{polesExcellence,gamifiedHowItWorks,team,projects,values}.ts` (créés), `src/components/sections/{PolesExcellence,GamifiedHowItWorks,RecentProjects,Values}.tsx`, `src/components/team/{TeamSection,TeamMemberCard}.tsx`, `src/components/projects/ProjectCard.tsx`, `src/components/values/ValueCard.tsx` (imports mis à jour), `src/components/{team,projects,values}/{data,types}.ts` (supprimés).
+
+**Complément même jour** : ajout du support i18n sur `PoleExcellence` (`titleEn`/`descriptionEn`, même pattern que `poles.ts`). `PolesExcellence.tsx` passé en `"use client"` et branché sur `useLang()` (comme `Poles.tsx`) pour choisir FR/EN. Le `<h2>` "Nos pôles d'excellence" reste en dur en FR pour l'instant (pas encore passé par `t()`), à traiter si besoin plus tard.
+
+Même traitement appliqué à `ValueItem` (`titleEn`) : résolution FR/EN faite directement dans `ValueCard.tsx` (passé en `"use client"` + `useLang()`). Le `<h2>` "L'exigence de la performance" dans `Values.tsx` reste en dur en FR, même remarque que pour `PolesExcellence`.
+
+**Piège** : passer `ValueCard` en `"use client"` sans faire pareil pour son parent `Values.tsx` casse au runtime → "Only plain objects can be passed to Client Components from Server Components", car `Values.tsx` (resté composant serveur) passait `value` (contenant `icon: LucideIcon`, une référence de composant) en prop à travers la frontière serveur/client. Un composant React n'est pas sérialisable à travers cette frontière. Solution : `Values.tsx` passé en `"use client"` lui aussi, comme `PolesExcellence.tsx`. **Leçon** : dès qu'un composant enfant qui reçoit un item de données avec un champ `icon`/composant devient client, vérifier que tous ses parents jusqu'à la racine du composant serveur le sont aussi (ou déplacer le hook plus haut).
+
+---
+
+### [2026-08-17] · Balayage i18n complet, texte en dur → `t()` / champs `*En`
+
+**Contexte** : suite à la centralisation, plusieurs textes visibles restaient en dur en français uniquement (jamais passés par `t()`/`LanguageContext`, ou par un champ `*En` dans `src/data/`), repérés au fil de la session (`ThemeToggle`, `TeamSection`, `TeamMemberCard`, `RecentProjects`, `Values`, `PolesExcellence`, `app/not-found.tsx`, `GamifiedHowItWorks`). Décision : balayage complet plutôt que correctifs isolés.
+
+**Ce qui a été fait** :
+- Nouvelles clés FR/EN dans `LanguageContext.tsx` : `theme.toLight/toDark`, `team.title/intro/hint`, `teamCard.portfolio`, `recentProjects.title/cta`, `values.title`, `polesExcellence.title`, `notFound.title/cta`, `workflow.title`.
+- `ThemeToggle.tsx`, `TeamSection.tsx`, `TeamMemberCard.tsx`, `Values.tsx`, `PolesExcellence.tsx`, `GamifiedHowItWorks.tsx` (heading uniquement) : textes routés via `useLang().t(...)`.
+- `RecentProjects.tsx` : les props `title`/`ctaLabel` n'ont plus de valeur par défaut française en dur ; résolues via `title ?? t("recentProjects.title")` (même logique pour `ctaLabel`), pour rester overridable si un jour la section est appelée avec des props explicites.
+- `app/not-found.tsx` : passé en `"use client"` (rendu à l'intérieur de `<Providers><LanguageProvider>`, donc `useLang()` y fonctionne) pour router titre + lien retour.
+- `src/data/gamifiedHowItWorks.ts` : `Step` gagne `titleEn`/`contentEn`, même pattern que `PoleExcellence`/`ValueItem`. `StepItem` (dans `GamifiedHowItWorks.tsx`) résout via `useLang()`.
+- Aria-label dynamique `Voir le profil de ${member.name}` (TeamSection) : résolu par `lang === "en" ? ... : ...` directement dans le composant plutôt que par une clé `t()`, car le dictionnaire ne supporte pas l'interpolation.
+
+**Volontairement laissé de côté** :
+- `Folder.tsx` (aria-label "Fermer/Ouvrir le dossier") : seul consommateur est `About.tsx`, désactivé dans `app/page.tsx` → cohérent avec la décision antérieure d'ignorer les composants inactifs.
+- `app/layout.tsx` (metadata `title`/`description`) : l'API `Metadata` de Next tourne côté serveur avant tout hook client, `useLang()` n'y est pas utilisable tel quel ; nécessiterait un mécanisme de détection de langue côté serveur (cookie/header), hors périmètre de ce balayage.
+- `member.role` dans `src/data/team.ts` (ex. "CSO · Commercial & Clients") : texte éditorial en dur non signalé dans cette passe, candidat pour un futur `roleEn` sur le modèle `PoleExcellence`/`ValueItem` si besoin.
+- `ProjectPagination.tsx` : aria-label déjà jugé acceptable dans l'audit (embarque `project.name`, un nom propre), pas retouché.
+
+**Type-check** : `npx tsc --noEmit` exit 0 après chaque étape.
+
+**Fichiers** : `src/contexts/LanguageContext.tsx`, `src/components/{ThemeToggle,team/TeamSection,team/TeamMemberCard,sections/RecentProjects,sections/Values,sections/PolesExcellence,sections/GamifiedHowItWorks}.tsx`, `app/not-found.tsx`, `src/data/gamifiedHowItWorks.ts`.
+
+---
+
 ### [2026-08-04] · Intégration branche `gaby` + travaux `main` (MarthEly514)
 
 **Contexte** : le travail local de Céphas (Hero GemmaS, Workflow, portfolio, TeamGemmaS…) n'était plus d'actualité. Objectif : repartir des contributions de Gaby (branche `gaby`, 7 commits) et de MarthEly514 (`main`, commits `94c1fb4` + `f9ac39c`).

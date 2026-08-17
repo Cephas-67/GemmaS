@@ -5,8 +5,8 @@ import { Container } from "@/components/ui/Container";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { ProjectPagination } from "@/components/projects/ProjectPagination";
-import { defaultProjects } from "@/components/projects/data";
-import type { Project } from "@/components/projects/types";
+import { defaultProjects, type Project } from "@/data/projects";
+import { useLang } from "@/contexts/LanguageContext";
 
 type RecentProjectsProps = {
   title?: string;
@@ -23,11 +23,14 @@ type RecentProjectsProps = {
 // chaque carte garde la même clé react à travers les rendus, `layout` (voir
 // ProjectCard) anime le déplacement en douceur.
 export default function RecentProjects({
-  title = "Projets récents",
+  title,
   projects = defaultProjects,
-  ctaLabel = "Explorer le portfolio",
+  ctaLabel,
   ctaHref = "#",
 }: RecentProjectsProps) {
+  const { t } = useLang();
+  const resolvedTitle = title ?? t("recentProjects.title");
+  const resolvedCtaLabel = ctaLabel ?? t("recentProjects.cta");
   const [featuredId, setFeaturedId] = useState(projects[0]?.id);
   const [thumbIds, setThumbIds] = useState(() => projects.slice(1, 4).map((p) => p.id));
 
@@ -56,7 +59,7 @@ export default function RecentProjects({
           id="recent-projects-title"
           className="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-medium tracking-[-0.025em]"
         >
-          {title}
+          {resolvedTitle}
         </h2>
 
         <div className="recent-projects-grid mt-10">
@@ -90,7 +93,7 @@ export default function RecentProjects({
             href={ctaHref}
             className="mt-1 ml-auto bg-brand-green text-white hover:bg-brand-green-deep"
           >
-            {ctaLabel}
+            {resolvedCtaLabel}
           </CTAButton>
         </div>
       </Container>

@@ -1,4 +1,9 @@
-import type { Project } from "./types";
+export type Project = {
+  id: string;
+  name: string;
+  image: string;
+  href?: string;
+};
 
 // Contenu de démonstration en attendant les vraies réalisations GemmaS.
 // Le premier projet est mis en avant (grande carte), les suivants

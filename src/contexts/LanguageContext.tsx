@@ -141,6 +141,33 @@ const dictionaries: Record<Lang, Dict> = {
     // FAQ
     "faq.title": "Questions fréquentes",
     "faq.eyebrow": "FAQ",
+
+    // Thème
+    "theme.toLight": "Activer le mode clair",
+    "theme.toDark": "Activer le mode sombre",
+
+    // Équipe (TeamSection)
+    "team.title": "GemmaS : Team",
+    "team.intro": "GemmaS repose sur l'alliance de 5 fondateurs aux compétences synergiques et complémentaires. Un collectif d'experts mobilisés pour concevoir des produits numériques d'exception.",
+    "team.hint": "Cliquez pour en voir plus",
+    "teamCard.portfolio": "Visiter le portfolio",
+
+    // Projets récents
+    "recentProjects.title": "Projets récents",
+    "recentProjects.cta": "Explorer le portfolio",
+
+    // Valeurs
+    "values.title": "L'exigence de la performance",
+
+    // Pôles d'excellence
+    "polesExcellence.title": "Nos pôles d'excellence",
+
+    // 404
+    "notFound.title": "Page introuvable",
+    "notFound.cta": "Retour à l'accueil",
+
+    // Workflow gamifié
+    "workflow.title": "GemmaS : Notre workflow",
   },
   en: {
     // Navigation
@@ -272,6 +299,33 @@ const dictionaries: Record<Lang, Dict> = {
     // FAQ
     "faq.title": "Frequently asked questions",
     "faq.eyebrow": "FAQ",
+
+    // Theme
+    "theme.toLight": "Switch to light mode",
+    "theme.toDark": "Switch to dark mode",
+
+    // Team (TeamSection)
+    "team.title": "GemmaS : Team",
+    "team.intro": "GemmaS is built on the alliance of 5 founders with synergistic, complementary skills. A collective of experts mobilized to design exceptional digital products.",
+    "team.hint": "Click to see more",
+    "teamCard.portfolio": "Visit the portfolio",
+
+    // Recent projects
+    "recentProjects.title": "Recent projects",
+    "recentProjects.cta": "Explore the portfolio",
+
+    // Values
+    "values.title": "The pursuit of performance",
+
+    // Excellence areas
+    "polesExcellence.title": "Our areas of excellence",
+
+    // 404
+    "notFound.title": "Page not found",
+    "notFound.cta": "Back to home",
+
+    // Gamified workflow
+    "workflow.title": "GemmaS : Our workflow",
   },
 };
 

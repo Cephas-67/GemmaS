@@ -10,6 +10,8 @@ import {
     useTransform,
     type MotionValue,
 } from 'framer-motion'
+import { steps, type Step } from '@/data/gamifiedHowItWorks'
+import { useLang } from '@/contexts/LanguageContext'
 
 /* ─── World (track) config ──────────────────────────────────────────────────
  *
@@ -51,15 +53,6 @@ const TOP_EDGE_D =
     'C1078.29 152.174 1136.12 135.678 1233 124.136 ' +
     'C1286.51 117.761 1371 124.136 1371 124.136 ' +
     'L2629 124.136'
-
-/* ─── Step data ─────────────────────────────────────────────────────────────*/
-interface Step { id: number; title: string; content: string }
-
-const steps: Step[] = [
-    { id: 0, title: 'Immersion & Diagnostic', content: 'Analyse approfondie de vos enjeux et modélisation de vos besoins fonctionnels.' },
-    { id: 1, title: 'Conception & Prototypage', content: 'Analyse approfondie de vos enjeux et modélisation de vos besoins fonctionnels.' },
-    { id: 2, title: 'Déploiement & Suivi', content: 'Analyse approfondie de vos enjeux et modélisation de vos besoins fonctionnels.' },
-]
 
 /* ─── SVG atoms ─────────────────────────────────────────────────────────────*/
 const WheelSVG = () => (
@@ -191,6 +184,10 @@ function StepItem({ step, index, scrollYProgress }: {
     index: number
     scrollYProgress: MotionValue<number>
 }) {
+    const { lang } = useLang()
+    const title = lang === 'en' ? step.titleEn : step.title
+    const content = lang === 'en' ? step.contentEn : step.content
+
     const seg = STEP_DURATION / TOTAL_SCROLL
     const start = (INITIAL_OFFSET + index * STEP_DURATION) / TOTAL_SCROLL
     const fadeInEnd = start + seg * 0.2
@@ -204,8 +201,8 @@ function StepItem({ step, index, scrollYProgress }: {
         <motion.div style={{ opacity, y }} className="absolute inset-0 flex flex-row items-start justify-start gap-6">
             <h1 className="text-[168px] leading-[130px]">{index + 1}</h1>
             <div className="w-[400px]">
-                <h2 className="text-4xl">{step.title}</h2>
-                <p className="text-xl">{step.content}</p>
+                <h2 className="text-4xl">{title}</h2>
+                <p className="text-xl">{content}</p>
             </div>
         </motion.div>
     )
@@ -213,6 +210,7 @@ function StepItem({ step, index, scrollYProgress }: {
 
 /* ─── Main component ────────────────────────────────────────────────────────*/
 export default function GamifiedHowItWorks() {
+    const { t } = useLang()
     const containerRef = useRef<HTMLDivElement>(null)
     const stageRef = useRef<HTMLDivElement>(null)
     const sampleRef = useRef<SVGPathElement>(null)
@@ -302,7 +300,7 @@ export default function GamifiedHowItWorks() {
         >
 
             <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-start p-8 px-40 md:pt-40 gap-12 overflow-hidden">
-                <h1 className="text-3xl font-medium">GemmaS : Notre workflow</h1>
+                <h1 className="text-3xl font-medium">{t("workflow.title")}</h1>
                 <div ref={stageRef} className="relative w-full h-[50vh]">
                     {/* Step text overlay */}
                     <div className="absolute inset-0 z-10 pointer-events-none">
