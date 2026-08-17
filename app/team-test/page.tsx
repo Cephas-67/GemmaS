@@ -1,4 +1,4 @@
-import { TeamSection } from "@/components/team/TeamSection";
+import { TeamSection } from "@/components/sections/TeamSection";
 
 // Route temporaire pour vérifier visuellement l'animation avant intégration
 // définitive dans la page. À supprimer une fois validé.

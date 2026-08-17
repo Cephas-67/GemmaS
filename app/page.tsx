@@ -5,7 +5,7 @@ import { HumanBrilliance } from "@/components/sections/HumanBrilliance";
 import { Manifesto } from "./_components/DeferredWebGL";
 import Values from "@/components/sections/Values";
 import RecentProjects from "@/components/sections/RecentProjects";
-import { TeamSection } from "@/components/team/TeamSection";
+import { TeamSection } from "@/components/sections/TeamSection";
 import { PolesExcellence } from "@/components/sections/PolesExcellence";
 import GamifiedHowItWorks from "@/components/sections/GamifiedHowItWorks";
 

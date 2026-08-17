@@ -6,8 +6,8 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
 import { team } from "@/data/team";
-import { TeamCircle } from "./TeamCircle";
-import { TeamMemberCard } from "./TeamMemberCard";
+import { TeamCircle } from "../team/TeamCircle";
+import { TeamMemberCard } from "../team/TeamMemberCard";
 import { useLang } from "@/contexts/LanguageContext";
 
 const SPRING = { type: "spring", stiffness: 300, damping: 30, mass: 0.9 } as const;
@@ -50,19 +50,17 @@ const rowTop = (stackHeight - CIRCLE) / 2;
 export function TeamSection() {
   const { t, lang } = useLang();
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  // Le membre qu'on vient de quitter est mémorisé à part pour être replacé
-  // en haut de la pile (stackIndex 0) plutôt que retomber à sa place dans
-  // l'ordre d'origine : c'est ce qui donne l'impression d'une rotation
-  // (celui qui sort de la card remonte en haut, celui qu'on vient de cliquer
-  // sort de la pile pour prendre sa place).
-  const [previousId, setPreviousId] = useState<string | null>(null);
+  // Ordre persistant de la pile (tout le monde sauf la card), mis à jour de
+  // proche en proche plutôt que recalculé depuis l'ordre `team.ts` à chaque
+  // clic : sinon les ronds du milieu de pile retombaient à leur position
+  // d'origine au lieu de suivre la rotation, donnant l'impression d'un
+  // simple échange entre le premier et le dernier rond.
+  const [stackOrder, setStackOrder] = useState<string[]>([]);
   const stageRef = useRef<HTMLDivElement>(null);
   const selected = team.find((member) => member.id === selectedId) ?? null;
 
   // Clic en dehors de la zone (ronds + card) → referme, retour à l'état
-  // idle. `previousId` n'a pas besoin d'être réinitialisé ici : au prochain
-  // clic depuis l'état idle, `selectMember` le remplace de toute façon par
-  // `selectedId` (donc `null`).
+  // idle.
   useEffect(() => {
     if (!selectedId) return;
 
@@ -75,18 +73,26 @@ export function TeamSection() {
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, [selectedId]);
-  const otherIds = selected
-    ? [
-        ...(previousId && previousId !== selected.id ? [previousId] : []),
-        ...team
-          .filter((m) => m.id !== selected.id && m.id !== previousId)
-          .map((m) => m.id),
-      ]
-    : [];
+
+  const otherIds = selected ? stackOrder : [];
 
   function selectMember(id: string) {
     if (id === selectedId) return;
-    setPreviousId(selectedId);
+
+    if (selectedId === null) {
+      // Première sélection : pas encore de pile, on la construit dans
+      // l'ordre `team.ts` (tout le monde sauf le membre cliqué).
+      setStackOrder(team.filter((m) => m.id !== id).map((m) => m.id));
+    } else {
+      // Rond du haut cliqué → la carte quittée part en bas de la pile, le
+      // reste remonte d'un cran (vraie rotation, ordre de pile préservé).
+      // Tout autre rond cliqué → comportement d'origine, la carte quittée
+      // remonte en haut.
+      const wasTop = stackOrder[0] === id;
+      const rest = stackOrder.filter((memberId) => memberId !== id);
+      setStackOrder(wasTop ? [...rest, selectedId] : [selectedId, ...rest]);
+    }
+
     setSelectedId(id);
   }
 
