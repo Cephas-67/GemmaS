@@ -32,11 +32,15 @@ export function Navbar() {
 
   const expanded = !collapsed || hovered;
 
+  // Préfixées par `/` : Navbar/Footer/MobileMenu sont montés sur toutes les
+  // routes (via Providers), pas seulement la page d'accueil. Un `href="#services"`
+  // nu ne fonctionne que si on est déjà sur `/` ; `/#services` navigue vers
+  // la home puis saute à l'ancre, y compris depuis /mentions-legales etc.
   const links = [
-    { key: "nav.services", href: "#services" },
-    { key: "nav.how", href: "#how" },
-    { key: "nav.about", href: "#about" },
-    { key: "nav.poles", href: "#poles" },
+    { key: "nav.services", href: "/#services" },
+    { key: "nav.how", href: "/#how" },
+    { key: "nav.about", href: "/#team" },
+    { key: "nav.poles", href: "/#poles-excellence" },
   ] as const;
 
   useEffect(() => {

@@ -35,7 +35,7 @@ export function CookieBanner() {
       >
         <span className="text-[13px]">
           {t("cookies.text")}{" "}
-          <a href="#cookies" className="underline underline-offset-2 hover:text-white/80">
+          <a href="/politique-confidentialite#cookies" className="underline underline-offset-2 hover:text-white/80">
             {t("cookies.link")}
           </a>
         </span>

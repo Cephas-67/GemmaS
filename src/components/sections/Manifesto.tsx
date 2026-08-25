@@ -31,6 +31,7 @@ export function Manifesto() {
 
   return (
     <section
+      id="manifesto"
       ref={(el) => {
         ref.current = el;
         visRef.current = el;

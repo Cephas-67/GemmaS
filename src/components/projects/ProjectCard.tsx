@@ -36,7 +36,12 @@ export function ProjectCard({ project, variant, onSelect, style }: ProjectCardPr
       )}
     >
       {isFeatured ? (
-        <a href={project.href} className="absolute inset-0 block">
+        <a
+          href={project.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute inset-0 block"
+        >
           <img
             src={project.image}
             alt={project.name}

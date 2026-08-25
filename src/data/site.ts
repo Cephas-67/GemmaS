@@ -47,7 +47,7 @@ export const site = {
     },
   ],
   socials: [
-    { label: "LinkedIn", href: "#" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/company/gemmasbj/" },
     { label: "X", href: "#" },
     { label: "Instagram", href: "#" },
     { label: "YouTube", href: "#" },

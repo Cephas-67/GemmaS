@@ -5,10 +5,18 @@ export type Project = {
   href?: string;
 };
 
-// Contenu de démonstration en attendant les vraies réalisations GemmaS.
 // Le premier projet est mis en avant (grande carte), les suivants
-// alimentent la colonne de miniatures.
+// alimentent la colonne de miniatures. e-freeshop.com est notre seul
+// produit propre en ligne à ce jour, mis en avant en featured avec un lien
+// et un visuel réels ; les autres restent des placeholders picsum
+// (href="#") en attendant les vraies réalisations clients.
 export const defaultProjects: Project[] = [
+  {
+    id: "e-freeshop",
+    name: "e-freeshop.com",
+    image: "/images/projects/e-freeshop.com.png",
+    href: "https://e-freeshop.com",
+  },
   {
     id: "finn7",
     name: "Finn7",

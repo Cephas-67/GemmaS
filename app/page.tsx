@@ -8,11 +8,12 @@ import RecentProjects from "@/components/sections/RecentProjects";
 import { TeamSection } from "@/components/sections/TeamSection";
 import { PolesExcellence } from "@/components/sections/PolesExcellence";
 import GamifiedHowItWorks from "@/components/sections/GamifiedHowItWorks";
+import { Impact } from "@/components/sections/Impact";
 
-// Ordre des sections · hero → pôles → valeurs → projets → équipe →
+// Ordre des sections · hero → pôles → valeurs → impact → projets → équipe →
 // recherche → manifesto → comment ça marche → FAQ → human brilliance.
 // "Human brilliance" tient le rôle de cap final juste au-dessus du footer.
-// Services / About / Impact restent en retrait le temps du rebrand GemmaS.
+// Services / About restent en retrait le temps du rebrand GemmaS.
 export default function Page() {
   return (
     <main>
@@ -20,6 +21,7 @@ export default function Page() {
       <PolesExcellence />
       <Values />
       {/* <Services /> */}
+      <Impact />
       <RecentProjects />
       <TeamSection />
       {/* <About /> */}

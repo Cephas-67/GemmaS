@@ -12,38 +12,40 @@ import { useLang } from "@/contexts/LanguageContext";
 // pour que le contenu suive la langue active sans dupliquer la structure.
 type FooterCol = { headingKey: string; links: { labelKey: string; href: string }[] };
 
+// Préfixées par `/` : voir la note équivalente dans Navbar.tsx, même raison
+// (Footer est monté sur toutes les routes, pas seulement `/`).
 const FOOTER_COLS: FooterCol[] = [
   {
     headingKey: "footer.col.services",
     links: [
-      { labelKey: "footer.link.web", href: "#services" },
-      { labelKey: "footer.link.mobile", href: "#services" },
-      { labelKey: "footer.link.custom", href: "#services" },
-      { labelKey: "footer.link.aiAuto", href: "#services" },
+      { labelKey: "footer.link.web", href: "/#services" },
+      { labelKey: "footer.link.mobile", href: "/#services" },
+      { labelKey: "footer.link.custom", href: "/#services" },
+      { labelKey: "footer.link.aiAuto", href: "/#services" },
     ],
   },
   {
     headingKey: "footer.col.method",
     links: [
-      { labelKey: "footer.link.how", href: "#how" },
-      { labelKey: "footer.link.poles", href: "#poles" },
-      { labelKey: "footer.link.impact", href: "#impact" },
+      { labelKey: "footer.link.how", href: "/#how" },
+      { labelKey: "footer.link.poles", href: "/#poles-excellence" },
+      { labelKey: "footer.link.impact", href: "/#impact" },
     ],
   },
   {
     headingKey: "footer.col.studio",
     links: [
-      { labelKey: "footer.link.team", href: "#about" },
-      { labelKey: "footer.link.manifesto", href: "#manifesto" },
-      { labelKey: "footer.link.faq", href: "#faq" },
+      { labelKey: "footer.link.team", href: "/#team" },
+      { labelKey: "footer.link.manifesto", href: "/#manifesto" },
+      { labelKey: "footer.link.faq", href: "/#faq" },
     ],
   },
 ];
 
 const LEGAL_KEYS: { labelKey: string; href: string }[] = [
-  { labelKey: "footer.legal.terms", href: "#" },
-  { labelKey: "footer.legal.privacy", href: "#" },
-  { labelKey: "footer.legal.sitemap", href: "#" },
+  { labelKey: "footer.legal.terms", href: "/mentions-legales" },
+  { labelKey: "footer.legal.privacy", href: "/politique-confidentialite" },
+  { labelKey: "footer.legal.sitemap", href: "/sitemap" },
 ];
 
 // Wordmark géant GemmaS · SVG fourni par le client, posé en bas du footer.

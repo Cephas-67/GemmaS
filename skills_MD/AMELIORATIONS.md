@@ -82,6 +82,118 @@ Même traitement appliqué à `ValueItem` (`titleEn`) : résolution FR/EN faite 
 
 ---
 
+### [2026-08-24] · Copywriting Hero : recadrage positionnement « studio, double modèle »
+
+**Contexte** : `hero.title` (« Human Brilliance Worths everything ») était de l'anglais cassé et un doublon dégradé du vrai tagline de la section HumanBrilliance, sans rapport avec l'offre. Passage par le skill `copywriting-master` (questionnaire de découverte) : Céphas précise que GemmaS n'est pas une simple agence mais un **studio de développement logiciel à double modèle** (prestations clients + produits propres développés en parallèle), info absente de la doc jusqu'ici.
+
+**Ce qui a été fait** : `hero.title`/`hero.pitch` réécrits en FR/EN dans `LanguageContext.tsx` autour de ce positionnement (variante retenue : « Studio de développement logiciel. Vos projets, et les nôtres, avec la même exigence. »). `hero.cta` inchangé.
+
+**Point de vigilance signalé, pas corrigé** : le nouveau titre est nettement plus long (~85 caractères vs ~34) que l'ancien. Le H1 du Hero (`text-[clamp(2.5rem,5vw,4rem)]`, conteneur `max-w-[53rem]`) est dimensionné pour un titre court sur 1-2 lignes ; à vérifier visuellement (`npm run dev`), un ajustement de taille de police ou une reformulation plus courte pourrait être nécessaire si le rendu est trop lourd.
+
+**Leçon retenue** : le positionnement du client (catégorie, différenciateurs) peut évoluer au fil des sessions et ne pas être capté par CLAUDE.md/le code existant — toujours faire confirmer le positionnement en amont de toute copy plutôt que de le déduire uniquement du contenu déjà en place.
+
+**Fichiers** : `src/contexts/LanguageContext.tsx`.
+
+---
+
+### [2026-08-24] · Copywriting steps GamifiedHowItWorks
+
+**Contexte** : les 3 étapes (`src/data/gamifiedHowItWorks.ts`) avaient le même texte placeholder (« Analyse approfondie de vos enjeux... ») sur les 3, repéré lors du balayage i18n de la session précédente et volontairement laissé en l'état à l'époque (pas de copy à inventer hors du cadre du skill copywriting).
+
+**Ce qui a été fait** : `content`/`contentEn` individualisés par étape (titres `title`/`titleEn` inchangés, déjà corrects). La dernière étape (Déploiement & Suivi) répond explicitement à la douleur client identifiée pendant le questionnaire Hero (« site livré et abandonné »).
+
+**Type-check** : `npx tsc --noEmit` exit 0.
+
+**Fichiers** : `src/data/gamifiedHowItWorks.ts`.
+
+---
+
+### [2026-08-24] · Copywriting TeamSection (titre + intro)
+
+**Contexte** : `team.title` valait littéralement « GemmaS : Team » dans le dictionnaire FR (jamais traduit, résidu repéré lors du balayage i18n). `team.intro` s'appuyait sur du jargon générique (« compétences synergiques et complémentaires », « produits numériques d'exception ») sans lien avec le positionnement studio/double-modèle établi pour le Hero.
+
+**Ce qui a été fait** : titre remplacé par « Cinq fondateurs. Un seul studio. » (reprend le rythme « X. Y. » déjà utilisé pour `poles.title`). Intro réécrite en s'appuyant sur les rôles déjà publiés dans `team.ts` (stratégie/tech-IA/business/opérations) plutôt que sur du superlatif vague, et relie explicitement à la promesse « même exigence » posée dans `hero.title`.
+
+**Type-check** : `npx tsc --noEmit` exit 0.
+
+**Fichiers** : `src/contexts/LanguageContext.tsx`.
+
+---
+
+### [2026-08-24] · Copywriting FAQ : cohérence du positionnement studio
+
+**Contexte** : en revoyant la FAQ après le Hero/TeamSection, la question `« Êtes-vous une agence ou un studio ? »` répondait encore avec l'ancien positionnement (jamais le mot « studio », aucune mention du double modèle) — contradiction directe avec `hero.title`/`team.intro` fraîchement réécrits. Repéré en auditant `src/data/faq.ts` en entier, pas seulement la question ciblée.
+
+**Ce qui a été fait** : réponse FR/EN réécrite pour affirmer explicitement le studio + double modèle. Premier jet appuyé sur l'équipe (5 co-fondateurs, Cotonou) ; Céphas a demandé de recentrer sur les produits propres plutôt que la composition de l'équipe, avec e-freeshop.com en exemple. Vérifié via WebFetch (pas d'invention) : e-freeshop.com est une vraie marketplace GemmaS de composants/templates digitaux pour créateurs africains, paiement Mobile Money natif (MTN, Moov, Wave, Orange, Celtiis), créateurs gardent 95 % des revenus. Réponse finale cite ce produit concret et vérifiable au lieu de la taille de l'équipe.
+
+**Leçon retenue** : après tout changement de positionnement, relire la FAQ en entier — c'est l'endroit où les anciennes formulations survivent le plus souvent sans qu'on y pense, puisqu'elle n'est pas structurée par section comme le reste du site. Autre leçon : une preuve produit concrète et vérifiable (nom de produit, URL) est un argument plus fort qu'un fait sur l'équipe (taille, localisation) — toujours demander s'il existe un produit/projet nommable avant de se rabattre sur des faits d'équipe.
+
+**Type-check** : `npx tsc --noEmit` exit 0.
+
+**Fichiers** : `src/data/faq.ts`.
+
+---
+
+### [2026-08-24] · RecentProjects : ajout e-freeshop.com en featured
+
+**Contexte** : suite à la découverte d'e-freeshop.com, Céphas a confirmé vouloir l'ajouter au portfolio (`src/data/projects.ts`), qui ne contenait jusqu'ici que des placeholders picsum avec `href="#"` (Finn7, Hindsloop x3, « en attendant les vraies réalisations »).
+
+**Ce qui a été fait** : nouvelle entrée `e-freeshop` insérée en tête de `defaultProjects` (donc en featured, `RecentProjects.tsx` prend `projects[0]` comme featured par défaut). `href` réel (`https://e-freeshop.com`), `image` d'abord posée en placeholder picsum puis remplacée par la vraie capture fournie par Céphas : `public/images/projects/e-freeshop.com.png` (1367×772, déjà proche du ratio 16:9 de la carte featured).
+
+**Type-check** : `npx tsc --noEmit` exit 0.
+
+**Fichiers** : `src/data/projects.ts`.
+
+---
+
+### [2026-08-24] · Pages légales (mentions, confidentialité, sitemap) + fix ancres cross-route
+
+**Contexte** : demande de corriger les liens du site. `Footer.tsx` avait son propre `LEGAL_KEYS` (Mentions légales/Confidentialité/Sitemap) en `href="#"`, aucune des 3 pages n'existait dans `app/`. `src/data/site.ts` a un array `legal` équivalent mais **jamais importé nulle part** (mort, `Footer.tsx` maintient sa propre liste locale).
+
+**Découverte en creusant** : `Navbar.tsx`/`Footer.tsx` utilisent des ancres nues (`href="#services"`) qui ne fonctionnent que si on est déjà sur `/` — cassé sur toute autre route (`/team-test`, `/not-found`, et désormais mes 3 nouvelles pages). Préfixées par `/` (`/#services`) pour fonctionner depuis n'importe quelle route.
+
+**Découverte plus large, signalée mais PAS corrigée** (hors périmètre de cette tâche, décision produit à trancher par Céphas) : Navbar/Footer pointent vers `#services`, `#how`, `#about`, `#poles`, `#impact` — des ids qui appartiennent à `Services.tsx`/`HowItWorks.tsx`/`About.tsx`/`Poles.tsx`/`Impact.tsx`, **tous désactivés** dans `app/page.tsx` (remplacés par `PolesExcellence`, `GamifiedHowItWorks`, `TeamSection`, etc., cf. commentaire dans `page.tsx` : "le temps du rebrand GemmaS"). Concrètement, plusieurs liens de nav/footer ne mènent nulle part sur la home actuelle. Le préfixe `/` corrige le bug "ne marche pas hors de `/`", pas ce décalage de fond.
+
+**Ce qui a été fait** :
+- `app/sitemap/page.tsx` : liste les sections réellement montées (`app/page.tsx`), avec ancre seulement pour celles qui en ont une (`Manifesto`/`GamifiedHowItWorks` n'ont aucun `id` sur leur `<section>`, listées en texte simple plutôt qu'en lien mort).
+- `app/mentions-legales/page.tsx` : structure standard (éditeur, directeur de publication, hébergement, propriété intellectuelle, contact). Champs à valeur légale réelle (forme juridique, RCCM, IFU, hébergeur, directeur de publication) marqués `[À COMPLÉTER]` plutôt qu'inventés — une mention légale fausse est un risque, pas juste une mauvaise copy.
+- `app/politique-confidentialite/page.tsx` : contenu vérifié dans le code plutôt que générique. Formulaire Contact confirmé non connecté à un backend (`setTimeout` simulé, cf. TODO historique). Aucun traceur tiers trouvé (grep GA/Plausible/PostHog/etc. : rien). Cookies décrits honnêtement : uniquement `localStorage` fonctionnel (langue, thème, consentement bandeau), pas de cookie traceur. Ancre `#cookies` pour le lien du `CookieBanner`.
+- `CookieBanner.tsx` : lien "cookies" pointait vers `#cookies`, une ancre qui n'a jamais existé nulle part sur le site → pointe maintenant vers `/politique-confidentialite#cookies`.
+- `Footer.tsx` `LEGAL_KEYS` → les 3 nouvelles routes.
+- `ProjectCard.tsx` (fait juste avant dans la session) : lien featured passé en `target="_blank" rel="noopener noreferrer"`.
+
+**Recherché mais non trouvé** : Finn7 et les 3 Hindsloop (`src/data/projects.ts`) restent des projets de démo sans existence en ligne trouvée (recherche web infructueuse) → `href="#"` conservé, pas d'invention d'URL.
+
+**Leçon retenue** : sur un site qui n'est pas mono-page pure (plusieurs routes `app/*`), toute ancre `#id` dans un composant monté globalement (Navbar/Footer) doit être préfixée par le chemin de la page qui contient réellement cet id, sinon elle ne marche que "par coïncidence" tant qu'on reste sur `/`.
+
+**Type-check** : `npx tsc --noEmit` exit 0.
+
+**Fichiers** : `app/{sitemap,mentions-legales,politique-confidentialite}/page.tsx` (créés), `src/components/{Navbar,Footer,CookieBanner,projects/ProjectCard}.tsx`.
+
+---
+
+### [2026-08-24] · Recâblage des liens footer vers les vraies sections + réactivation d'Impact
+
+**Contexte** : suite de la tâche précédente. Céphas a demandé de corriger 5 liens footer précis (How it works / Our areas / Impact / The team / Manifesto), confirmant qu'il fallait bien recâbler vers les sections réellement montées plutôt que laisser pointer vers du contenu désactivé.
+
+**Ce qui a été fait** :
+- `id="how"` ajouté sur la `<section>` de `GamifiedHowItWorks.tsx` (n'en avait aucun).
+- `id="manifesto"` ajouté sur la `<section>` de `Manifesto.tsx` (idem).
+- `Footer.tsx` : `footer.link.poles` → `/#poles-excellence` (au lieu de `/#poles`, id de l'ancien `Poles.tsx` désactivé), `footer.link.team` → `/#team` (au lieu de `/#about`, id de l'ancien `About.tsx` désactivé). `footer.link.how`/`footer.link.manifesto` gardaient déjà le bon href, il manquait juste l'id côté section.
+- `Impact` (stats/secteurs) n'avait aucun équivalent monté → question posée à Céphas plutôt que de deviner ; réponse : réactiver la section. `Impact.tsx` avait déjà `id="impact"` et son propre `t()`, aucune modification du composant nécessaire. Montée dans `app/page.tsx` entre `Values` et `RecentProjects`.
+
+**Reste non traité, signalé la fois précédente** : `nav.services`/`footer.link.web/mobile/custom/aiAuto` (colonne "Services") pointent toujours vers `/#services`, qui n'existe pas sur la home actuelle (`Services.tsx` désactivé) — même décision à prendre que pour Impact, pas demandé cette fois.
+
+**Type-check** : `npx tsc --noEmit` exit 0.
+
+**Fichiers** : `src/components/sections/{GamifiedHowItWorks,Manifesto}.tsx`, `src/components/Footer.tsx`, `app/page.tsx`.
+
+**Complément même jour** : mêmes liens `nav.about`/`nav.poles` dans `Navbar.tsx` (dupliqués de la logique du footer, cf. audit initial "Navbar rebuilds its own local links array") → `/#team` et `/#poles-excellence`. `nav.services` laissé en `/#services`, même décision que la colonne footer Services, non traitée cette fois.
+
+**Fichiers (complément)** : `src/components/Navbar.tsx`.
+
+---
+
 ### [2026-08-04] · Intégration branche `gaby` + travaux `main` (MarthEly514)
 
 **Contexte** : le travail local de Céphas (Hero GemmaS, Workflow, portfolio, TeamGemmaS…) n'était plus d'actualité. Objectif : repartir des contributions de Gaby (branche `gaby`, 7 commits) et de MarthEly514 (`main`, commits `94c1fb4` + `f9ac39c`).

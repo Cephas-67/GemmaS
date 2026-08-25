@@ -53,7 +53,7 @@ export const faqs: FAQItem[] = [
   {
     q: "Êtes-vous une agence ou un studio ?",
     qEn: "Are you an agency or a studio?",
-    a: "Une petite équipe de 5 co-fondateurs basés à Cotonou. Agilité, rapidité, proximité directe avec ceux qui codent : ce qu'on perd en taille on le gagne en réactivité.",
-    aEn: "A small team of 5 co-founders based in Cotonou. Agility, speed, direct access to the people writing the code: what we lack in size we make up in responsiveness.",
+    a: "Un studio de développement logiciel. On ne fait pas que des projets clients : on développe aussi nos propres produits, comme e-freeshop.com, notre marketplace de composants et templates pensée pour les créateurs africains, avec paiement Mobile Money intégré. La même exigence s'applique aux deux.",
+    aEn: "A software development studio. We don't just handle client projects: we also build our own products, like e-freeshop.com, our marketplace for components and templates built for African creators, with native Mobile Money payments. The same standard applies to both.",
   },
 ];

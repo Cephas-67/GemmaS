@@ -28,9 +28,9 @@ const dictionaries: Record<Lang, Dict> = {
     "cookies.prefs": "Préférences cookies",
     "lang.switchTo": "Passer en anglais",
 
-    // Hero · positionnement référence africaine
-    "hero.title": "Human Brilliance Worths everything",
-    "hero.pitch": "GemmaS construit ses propres méthodes pour concevoir des sites, des applications mobiles natives, des logiciels sur mesure et des solutions d'intelligence artificielle. Pensés en Afrique, livrés en Afrique, pour les structures qui voient loin.",
+    // Hero · double modèle studio (prestations clients + produits propres)
+    "hero.title": "Studio de développement logiciel. Vos projets, et les nôtres, avec la même exigence.",
+    "hero.pitch": "GemmaS est un studio de développement logiciel : nous concevons sites, applications mobiles, logiciels sur mesure et IA pour nos clients, et développons nos propres produits en parallèle, avec la même exigence. Pensé en Afrique, livré en Afrique.",
     "hero.cta": "Démarrer un projet",
 
     // Services · trois familles
@@ -147,8 +147,8 @@ const dictionaries: Record<Lang, Dict> = {
     "theme.toDark": "Activer le mode sombre",
 
     // Équipe (TeamSection)
-    "team.title": "GemmaS : Team",
-    "team.intro": "GemmaS repose sur l'alliance de 5 fondateurs aux compétences synergiques et complémentaires. Un collectif d'experts mobilisés pour concevoir des produits numériques d'exception.",
+    "team.title": "Cinq fondateurs. Un seul studio.",
+    "team.intro": "Cinq fondateurs, un seul studio : stratégie, tech, IA, business et opérations réunis sous un même toit, pour livrer vos projets avec la même exigence que nos propres produits.",
     "team.hint": "Cliquez pour en voir plus",
     "teamCard.portfolio": "Visiter le portfolio",
 
@@ -187,8 +187,8 @@ const dictionaries: Record<Lang, Dict> = {
     "lang.switchTo": "Switch to French",
 
     // Hero
-    "hero.title": "Human Brilliance Worths everything",
-    "hero.pitch": "GemmaS builds its own methods to design websites, native mobile apps, custom software and applied AI solutions. Conceived in Africa, delivered from Africa, for organizations that look long-term.",
+    "hero.title": "Software development studio. Your projects, and ours, held to the same standard.",
+    "hero.pitch": "GemmaS is a software development studio: we build websites, mobile apps, custom software and AI for our clients, and develop our own products in parallel, held to the same standard. Conceived in Africa, delivered from Africa.",
     "hero.cta": "Start a project",
 
     // Services
@@ -305,8 +305,8 @@ const dictionaries: Record<Lang, Dict> = {
     "theme.toDark": "Switch to dark mode",
 
     // Team (TeamSection)
-    "team.title": "GemmaS : Team",
-    "team.intro": "GemmaS is built on the alliance of 5 founders with synergistic, complementary skills. A collective of experts mobilized to design exceptional digital products.",
+    "team.title": "Five founders. One studio.",
+    "team.intro": "Five founders, one studio: strategy, tech, AI, business and operations under one roof, delivering your projects with the same standard as our own products.",
     "team.hint": "Click to see more",
     "teamCard.portfolio": "Visit the portfolio",
 

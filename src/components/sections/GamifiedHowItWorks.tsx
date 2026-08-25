@@ -294,6 +294,7 @@ export default function GamifiedHowItWorks() {
 
     return (
         <section
+            id="how"
             ref={containerRef}
             style={{ height: `calc(100vh + ${TOTAL_SCROLL}px)` }}
             className="relative w-full bg-white text-black"

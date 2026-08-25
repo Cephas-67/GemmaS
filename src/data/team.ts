@@ -21,7 +21,7 @@ export const team: TeamMember[] = [
     role: "CSO · Commercial & Clients",
     avatar: "/founders/DuvIllustrated.png",
     focus: "top",
-    portfolioUrl: "#",
+    portfolioUrl: "https://duvaliersewade.vercel.app/",
   },
   {
     id: "enock",
@@ -29,7 +29,7 @@ export const team: TeamMember[] = [
     role: "CTO · Tech & IA",
     avatar: "/founders/MarthIllustrated.png",
     focus: "top",
-    portfolioUrl: "#",
+    portfolioUrl: "https://portfolio-ely514.vercel.app/",
   },
   {
     id: "prudence",
@@ -45,7 +45,7 @@ export const team: TeamMember[] = [
     role: "CMO · Marketing & Contenu",
     avatar: "/founders/simeonillustrated.jpg",
     focus: "center",
-    portfolioUrl: "#",
+    portfolioUrl: "http://simeonamoussou.com/",
   },
   {
     id: "gaby",
@@ -53,6 +53,6 @@ export const team: TeamMember[] = [
     role: "COO · Opérations & Process",
     avatar: "/founders/gabyillustrated.jpg",
     focus: "topZoom",
-    portfolioUrl: "#",
+    portfolioUrl: "http://dossagaby.vercel.app/",
   },
 ];
