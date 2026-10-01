@@ -28,6 +28,52 @@ Journal ouvert : 2026-06-23
 
 ## Entrées
 
+### [2026-08-25] · CGV/CGU remplacé par une page « Conditions d'utilisation »
+
+**Contexte** : Céphas a jugé le CGV/CGU (contrat de vente) hors sujet pour un site vitrine — a demandé une page plus simple, centrée sur l'usage du site (pas de transaction en ligne), avec un plan précis en 12 points (objet, acceptation, usage autorisé, propriété intellectuelle, contenu du site, disponibilité, liens externes, contenu soumis par l'utilisateur, responsabilité, modification des conditions, droit applicable, contact).
+
+**Ce qui a été fait** :
+- `src/data/legal.ts` : export `cgvCgu` remplacé par `termsOfUse` (12 sections, structure conforme à la demande). Contrairement au CGV/CGU précédent (beaucoup de `[À COMPLÉTER]` car clauses commerciales réelles), la majorité des sections d'un « Terms of use » informationnel est du texte générique légitime, rédigeable avec confiance. Seule la section 11 (droit applicable/juridiction) garde des placeholders, un vrai fait juridique que je ne peux pas inventer.
+- Route déplacée : `app/cgv-cgu/` supprimé, `app/conditions-utilisation/page.tsx` créé (le slug suit le contenu, plus un CGV).
+- `footer.legal.cgvCgu` renommé `footer.legal.termsOfUse` (FR "Conditions d'utilisation" / EN "Terms of use") dans `LanguageContext.tsx`, `Footer.tsx` et `app/sitemap/page.tsx` mis à jour vers la nouvelle route.
+
+**Type-check** : `npx tsc --noEmit` exit 0.
+
+**Fichiers** : `src/data/legal.ts`, `app/conditions-utilisation/page.tsx` (créé, remplace `app/cgv-cgu/`), `src/contexts/LanguageContext.tsx`, `src/components/Footer.tsx`, `app/sitemap/page.tsx`.
+
+---
+
+### [2026-08-25] · Modularisation i18n des 3 pages légales
+
+**Contexte** : Céphas a signalé, à raison, que les 3 pages légales (`mentions-legales`, `politique-confidentialite`, `cgv-cgu`) créées la veille avaient leur texte en dur en JSX français, contrairement au reste du site qui passe systématiquement par `t()` ou des champs `*En`. Problème pour la traduction et l'édition future.
+
+**Ce qui a été fait** :
+- `src/data/legal.ts` créé : types `LegalPageData`/`LegalSection`/`LegalField` + 3 exports (`mentionsLegales`, `politiqueConfidentialite`, `cgvCgu`), même pattern `*En` que `PoleExcellence`/`ValueItem`/`Step`. Les valeurs `[À COMPLÉTER]`/`[TO BE COMPLETED]` restent des placeholders bilingues, pas des faits inventés. Champs dynamiques (dénomination, adresse, email) résolus depuis `site.ts` via un discriminant `dynamic` plutôt que dupliqués en dur dans les données légales.
+- `src/components/legal/LegalPage.tsx` créé : composant client unique (`useLang()`) qui rend n'importe laquelle des 3 structures — titre, sections, paragraphes, champs label/valeur, et un bloc contact optionnel (`contactIntro` + lien mailto). Élimine la duplication qu'auraient eue 3 pages quasi identiques.
+- Les 3 `app/*/page.tsx` réduites à un simple export `metadata` (reste un Server Component, l'API `Metadata` de Next ne tourne pas côté client) + `<LegalPage page={...} />`.
+
+**Piège évité** : un composant qui exporte `metadata` ne peut pas être `"use client"` (contrainte Next App Router). D'où la séparation page (serveur, metadata) / `LegalPage` (client, `useLang()`) plutôt que de tout mettre dans le même fichier.
+
+**Leçon retenue** : dès qu'une nouvelle page a plusieurs sections structurées de forme répétitive (titre + corps, ou label + valeur), passer directement par `src/data/*.ts` + un composant de rendu partagé, plutôt que d'écrire le JSX en dur "pour aller vite" — le coût de la reprise (comme ici) dépasse largement le coût de le faire bien du premier coup.
+
+**Type-check** : `npx tsc --noEmit` exit 0.
+
+**Fichiers** : `src/data/legal.ts` (créé), `src/components/legal/LegalPage.tsx` (créé), `app/{mentions-legales,politique-confidentialite,cgv-cgu}/page.tsx` (réduites).
+
+---
+
+### [2026-08-25] · Page CGV/CGU
+
+**Contexte** : suite à une question de Céphas sur les pages légales attendues pour un site vitrine, identification d'un manque : CGV/CGU (pertinent car GemmaS facture des prestations avec des modalités définies, déjà décrites en FAQ : forfait vs abonnement mensuel). Confirmé combiné en une seule page plutôt que CGV et CGU séparées.
+
+**Ce qui a été fait** : `app/cgv-cgu/page.tsx` créé, même discipline que `mentions-legales`/`politique-confidentialite` : les faits déjà publics et vérifiés (délai moyen 5j, modalités de démarrage décrites en FAQ) sont repris tels quels ; les clauses contractuelles réelles (acompte, pénalités, transfert de PI, garantie, droit applicable) marquées `[À COMPLÉTER]`, pas inventées. Nouvelle clé `footer.legal.cgvCgu` (distincte de `footer.legal.terms`, qui dans ce codebase désigne déjà les mentions légales — éviter la confusion avec la convention anglaise où "terms" veut souvent dire CGV/CGU). Liée depuis `Footer.tsx` et `app/sitemap/page.tsx`.
+
+**Type-check** : `npx tsc --noEmit` exit 0.
+
+**Fichiers** : `app/cgv-cgu/page.tsx` (créé), `src/contexts/LanguageContext.tsx`, `src/components/Footer.tsx`, `app/sitemap/page.tsx`.
+
+---
+
 ### [2026-08-17] · Centralisation du contenu dans `src/data/`
 
 **Contexte** : deux composants activement rendus définissaient encore leurs données en dur dans le fichier composant (`PolesExcellence.tsx`, `GamifiedHowItWorks.tsx`), et un second pattern de centralisation coexistait en parallèle de `src/data/` : données co-localisées dans `src/components/{team,projects,values}/{data,types}.ts`. Décision : un seul centre de données pour tout le site.

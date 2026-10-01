@@ -45,6 +45,7 @@ const FOOTER_COLS: FooterCol[] = [
 const LEGAL_KEYS: { labelKey: string; href: string }[] = [
   { labelKey: "footer.legal.terms", href: "/mentions-legales" },
   { labelKey: "footer.legal.privacy", href: "/politique-confidentialite" },
+  { labelKey: "footer.legal.termsOfUse", href: "/conditions-utilisation" },
   { labelKey: "footer.legal.sitemap", href: "/sitemap" },
 ];
 

@@ -8,9 +8,9 @@ export const site = {
   country: "Bénin",
   year: new Date().getFullYear(),
   contact: {
-    email: "contact@gemmas.africa",
+    email: "gemmas.pro@gmail.com",
     phone: "+229 00 00 00 00",
-    address: "Cotonou, Bénin",
+    address: "Sèmè-Kpodji, Bénin",
   },
   nav: [
     { label: "Services", href: "#services" },

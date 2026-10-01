@@ -136,6 +136,7 @@ const dictionaries: Record<Lang, Dict> = {
     "footer.link.faq": "FAQ",
     "footer.legal.terms": "Mentions légales",
     "footer.legal.privacy": "Politique de confidentialité",
+    "footer.legal.termsOfUse": "Conditions d'utilisation",
     "footer.legal.sitemap": "Sitemap",
 
     // FAQ
@@ -294,6 +295,7 @@ const dictionaries: Record<Lang, Dict> = {
     "footer.link.faq": "FAQ",
     "footer.legal.terms": "Legal notice",
     "footer.legal.privacy": "Privacy policy",
+    "footer.legal.termsOfUse": "Terms of use",
     "footer.legal.sitemap": "Sitemap",
 
     // FAQ

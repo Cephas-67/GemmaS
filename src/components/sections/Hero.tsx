@@ -114,7 +114,7 @@ export function Hero() {
       <div className="relative z-10 px-5 sm:px-6">
         <div className="mx-auto flex max-w-md flex-col items-center gap-5 text-left ">
           <motion.a
-            href={`mailto:${"contact@gemmas.africa"}`}
+            href={`mailto:${"gemmas.pro@gmail.com"}`}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45, ease }}
