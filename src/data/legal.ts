@@ -61,8 +61,18 @@ export const mentionsLegales: LegalPageData = {
       heading: "Hébergement",
       headingEn: "Hosting",
       fields: [
-        { label: "Hébergeur", labelEn: "Host", value: TBD_FR, valueEn: TBD_EN },
-        { label: "Adresse", labelEn: "Address", value: TBD_FR, valueEn: TBD_EN },
+        {
+          label: "Hébergeur",
+          labelEn: "Host",
+          value: "Vercel Inc.",
+          valueEn: "Vercel Inc.",
+        },
+        {
+          label: "Adresse",
+          labelEn: "Address",
+          value: "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
+          valueEn: "440 N Barranca Ave #4133, Covina, CA 91723, USA",
+        },
       ],
     },
     {
