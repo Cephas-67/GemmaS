@@ -1,4 +1,4 @@
-# COMPONENTS.md — Catalogue UI (template réutilisable)
+# COMPONENTS.md · Catalogue UI (template réutilisable)
 
 > Bibliothèque de référence · composants premium externes
 > Sources couramment intégrées : [Aceternity UI](https://ui.aceternity.com) · [Magic UI](https://magicui.design) · [shadcn-ui](https://ui.shadcn.com)
@@ -25,11 +25,11 @@
 
 1. **Inspecter `{COMPONENTS_PATH}`** (primitives déjà installées)
 2. **Inspecter `{DOMAIN_COMPONENTS_PATH}`** (composants métier déjà créés)
-3. **Chercher dans ce catalogue** ↓ — si un composant premium externe convient, l'intégrer
+3. **Chercher dans ce catalogue** ↓ · si un composant premium externe convient, l'intégrer
 4. **Si rien ne convient** → créer en respectant `UI-UX.md` et les tokens du projet
 
 > Ce fichier est un **catalogue de référence**. Les composants ne sont pas tous installés
-> dans le repo — il faut les copier depuis leur source, dans `{COMPONENTS_PATH}<catégorie>/<composant>.tsx`,
+> dans le repo · il faut les copier depuis leur source, dans `{COMPONENTS_PATH}<catégorie>/<composant>.tsx`,
 > en adaptant aux tokens du projet.
 
 ---
@@ -38,7 +38,7 @@
 
 ```
 {COMPONENTS_PATH}
-├── (primitives shadcn — button, card, dialog, form, …)
+├── (primitives shadcn · button, card, dialog, form, …)
 └── (sous-dossiers à créer au besoin)
     ├── cards/
     ├── backgrounds/
@@ -92,7 +92,7 @@ Quand on intègre un composant Aceternity/Magic UI, **toujours remplacer les cou
 
 ---
 
-## 1. `ui/cards/` — Cartes & hover effects
+## 1. `ui/cards/` · Cartes & hover effects
 
 | Fichier | Description | Notes |
 |---|---|---|
@@ -100,20 +100,20 @@ Quand on intègre un composant Aceternity/Magic UI, **toujours remplacer les cou
 | `card-hover-effect.tsx` | Cartes avec highlight au survol | Effet fond lumineux |
 | `card-spotlight.tsx` | Carte avec spotlight canvas | Requiert `canvas-reveal-effect` |
 | `card-stack.tsx` | Stack de cartes animées | Pile + flip auto |
-| `comet-card.tsx` | Carte avec bordure comète animée | — |
+| `comet-card.tsx` | Carte avec bordure comète animée | · |
 | `direction-aware-hover.tsx` | Hover avec direction aware | Détecte direction du curseur |
 | `evervault-card.tsx` | Carte avec effet matrice/chiffres | Caractères aléatoires au hover |
 | `glare-card.tsx` | Carte avec effet glare 3D | Tilt 3D + reflet |
 | `glowing-effect.tsx` | Wrapper avec bordure lumineuse | Universel |
 | `layout-grid.tsx` | Grille masonry animée | Click pour expand |
 
-## 2. `ui/backgrounds/` — Fonds animés
+## 2. `ui/backgrounds/` · Fonds animés
 
 | Fichier | Description | Notes |
 |---|---|---|
 | `aurora-background.tsx` | Fond aurora boréale animé | Wrapper de section |
 | `background-beams.tsx` | Faisceaux de lumière | Fond sombre recommandé |
-| `background-boxes.tsx` | Grille de cubes colorés | — |
+| `background-boxes.tsx` | Grille de cubes colorés | · |
 | `background-gradient-animation.tsx` | Gradient animé en boucle | CSS pur, léger |
 | `canvas-reveal-effect.tsx` | Effet de révélation canvas | Requis par `card-spotlight` |
 | `google-gemini-effect.tsx` | Effet lignes style Gemini | Piloté par scroll |
@@ -122,7 +122,7 @@ Quand on intègre un composant Aceternity/Magic UI, **toujours remplacer les cou
 | `vortex.tsx` | Fond vortex | Canvas animé |
 | `wavy-background.tsx` | Fond vagues animées | SVG animé |
 
-## 3. `ui/3d/` — Composants 3D / WebGL
+## 3. `ui/3d/` · Composants 3D / WebGL
 
 | Fichier | Description | Notes |
 |---|---|---|
@@ -132,7 +132,7 @@ Quand on intègre un composant Aceternity/Magic UI, **toujours remplacer les cou
 | `macbook-scroll.tsx` | Scroll reveal style MacBook | Scroll-driven |
 | `pixelated-canvas.tsx` | Canvas pixelisé | Effet pixel dissolve |
 
-## 4. `ui/text-effects/` — Effets texte
+## 4. `ui/text-effects/` · Effets texte
 
 | Fichier | Description |
 |---|---|
@@ -145,7 +145,7 @@ Quand on intègre un composant Aceternity/Magic UI, **toujours remplacer les cou
 | `text-reveal-card.tsx` | Texte révélé au hover |
 | `typewriter-effect.tsx` | Machine à écrire + curseur |
 
-## 5. `ui/navigation/` — Navigation
+## 5. `ui/navigation/` · Navigation
 
 | Fichier | Description |
 |---|---|
@@ -156,7 +156,7 @@ Quand on intègre un composant Aceternity/Magic UI, **toujours remplacer les cou
 | `sticky-banner.tsx` | Bannière sticky |
 | `tabs.tsx` | Tabs avec underline animé |
 
-## 6. `ui/heroes/` — Sections hero
+## 6. `ui/heroes/` · Sections hero
 
 | Fichier | Description |
 |---|---|
@@ -167,7 +167,7 @@ Quand on intègre un composant Aceternity/Magic UI, **toujours remplacer les cou
 | `spotlight.tsx` | Spotlight suivant le curseur |
 | `svg-mask-effect.tsx` | Masque SVG révélé au hover |
 
-## 7. `ui/misc/` — Divers
+## 7. `ui/misc/` · Divers
 
 | Fichier | Description |
 |---|---|

@@ -1,13 +1,13 @@
 ---
 name: high-end-visual-design
-description: Design d'agence haut de gamme ($150k+ tier) — Apple/Linear/Awwwards. Définit fonts, spacing, shadows, structures de cartes, animations qui font "expensive" et bloque les défauts génériques AI. Variance engine (Vibe + Layout archetypes) à rouler avant chaque output pour éviter la répétition. À déclencher sur "premium design", "agency-tier UI", "Awwwards-quality", "expensive feel".
+description: Design d'agence haut de gamme ($150k+ tier) · Apple/Linear/Awwwards. Définit fonts, spacing, shadows, structures de cartes, animations qui font "expensive" et bloque les défauts génériques AI. Variance engine (Vibe + Layout archetypes) à rouler avant chaque output pour éviter la répétition. À déclencher sur "premium design", "agency-tier UI", "Awwwards-quality", "expensive feel".
 source: https://github.com/leonxlnx/taste-skill (skills/soft-skill/SKILL.md)
 tags: design, premium, agency, awwwards, variance, double-bezel, motion
 ---
 
-# High-End Visual Design — Skill réutilisable
+# High-End Visual Design · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Framework d'opinions fortes pour générer du design qui pèse "$150k agency build".
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Framework d'opinions fortes pour générer du design qui pèse "$150k agency build".
 
 ---
 
@@ -19,7 +19,7 @@ tags: design, premium, agency, awwwards, variance, double-bezel, motion
 
 ---
 
-## 🚫 Section 2 — ABSOLUTE ZERO (anti-patterns instant-fail)
+## 🚫 Section 2 · ABSOLUTE ZERO (anti-patterns instant-fail)
 
 Si ton code contient L'UN de ces éléments, le design **fail instantanément** :
 
@@ -36,7 +36,7 @@ Si ton code contient L'UN de ces éléments, le design **fail instantanément** 
 
 ---
 
-## 🎲 Section 3 — Variance Engine
+## 🎲 Section 3 · Variance Engine
 
 Avant chaque output : **silently roll the dice** et choisir UNE combo selon le contexte du prompt.
 
@@ -63,15 +63,15 @@ Avant chaque output : **silently roll the dice** et choisir UNE combo selon le c
 
 ---
 
-## 🪟 Section 4 — Haptic Micro-Aesthetics
+## 🪟 Section 4 · Haptic Micro-Aesthetics
 
 ### A. Double-Bezel (Doppelrand / Nested Architecture)
 
 > ❌ Ne JAMAIS placer une carte premium flat sur le background. Elles doivent paraître **machined hardware** (plaque de verre dans un plateau alu).
 
 **Structure** :
-- **Outer Shell** — wrapper `div` avec bg subtil (`bg-black/5` ou `bg-white/5`), hairline outer (`ring-1 ring-black/5` ou `border border-white/10`), padding (`p-1.5` ou `p-2`), radius large (`rounded-[2rem]`)
-- **Inner Core** — container contenu réel, bg distinct, inner highlight (`shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]`), radius mathématiquement plus petit pour courbes concentriques (`rounded-[calc(2rem-0.375rem)]`)
+- **Outer Shell** · wrapper `div` avec bg subtil (`bg-black/5` ou `bg-white/5`), hairline outer (`ring-1 ring-black/5` ou `border border-white/10`), padding (`p-1.5` ou `p-2`), radius large (`rounded-[2rem]`)
+- **Inner Core** · container contenu réel, bg distinct, inner highlight (`shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]`), radius mathématiquement plus petit pour courbes concentriques (`rounded-[calc(2rem-0.375rem)]`)
 
 ### B. Nested CTA & "Island" Buttons
 
@@ -92,7 +92,7 @@ Avant chaque output : **silently roll the dice** et choisir UNE combo selon le c
 
 ---
 
-## 🌊 Section 5 — Motion Choreography (Fluid Dynamics)
+## 🌊 Section 5 · Motion Choreography (Fluid Dynamics)
 
 > ❌ JAMAIS transitions par défaut. Tout motion = mass + spring physics réels. Custom cubic-beziers.
 
@@ -106,14 +106,14 @@ transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]
 | État | Détail |
 |---|---|
 | **Closed** | Navbar = pill glass flottant détaché du top (`mt-6 mx-auto w-max rounded-full`) |
-| **Hamburger Morph** | Click : 2-3 lignes rotate + translate fluidement pour former un X parfait (`rotate-45` / `-rotate-45` avec absolute) — **pas juste disparaître** |
+| **Hamburger Morph** | Click : 2-3 lignes rotate + translate fluidement pour former un X parfait (`rotate-45` / `-rotate-45` avec absolute) · **pas juste disparaître** |
 | **Modal Expansion** | Menu = overlay massif screen-filling, glass heavy (`backdrop-blur-3xl bg-black/80` ou `bg-white/80`) |
 | **Staggered Mask Reveal** | Liens nav fade-in + slide-up depuis box invisible (`translate-y-12 opacity-0` → `translate-y-0 opacity-100`) avec stagger delays (`delay-100`, `delay-150`, `delay-200`…) |
 
 ### B. Magnetic Button Hover Physics
 
 - Utiliser l'utility `group`. Au hover, ne **PAS** juste changer la couleur
-- Scale entire button slight down (`active:scale-[0.98]`) — simule pressing physique
+- Scale entire button slight down (`active:scale-[0.98]`) · simule pressing physique
 - Nested inner icon circle : translate diagonal (`group-hover:translate-x-1 group-hover:-translate-y-[1px]`) + scale up léger (`scale-105`) → kinetic tension interne
 
 ### C. Scroll Interpolation (Entry Animations)
@@ -132,7 +132,7 @@ durée : 800ms+
 
 ---
 
-## ⚡ Section 6 — Performance Guardrails
+## ⚡ Section 6 · Performance Guardrails
 
 | Règle | Détail |
 |---|---|
@@ -143,19 +143,19 @@ durée : 800ms+
 
 ---
 
-## 🎬 Section 7 — Execution Protocol
+## 🎬 Section 7 · Execution Protocol
 
 Séquence exacte à suivre pour générer du code UI :
 
-1. **[SILENT THOUGHT]** — Roll Variance Engine. Choose Vibe + Layout selon contexte
-2. **[SCAFFOLD]** — Background texture, macro-whitespace, typo massive
-3. **[ARCHITECT]** — DOM via Double-Bezel pour cards/inputs/grids. Radius exaggéré (`rounded-[2rem]`)
-4. **[CHOREOGRAPH]** — Custom cubic-beziers, staggered nav reveals, button-in-button hover physics
-5. **[OUTPUT]** — React/Tailwind/HTML pixel-perfect. **Pas de fallbacks génériques basiques**
+1. **[SILENT THOUGHT]** · Roll Variance Engine. Choose Vibe + Layout selon contexte
+2. **[SCAFFOLD]** · Background texture, macro-whitespace, typo massive
+3. **[ARCHITECT]** · DOM via Double-Bezel pour cards/inputs/grids. Radius exaggéré (`rounded-[2rem]`)
+4. **[CHOREOGRAPH]** · Custom cubic-beziers, staggered nav reveals, button-in-button hover physics
+5. **[OUTPUT]** · React/Tailwind/HTML pixel-perfect. **Pas de fallbacks génériques basiques**
 
 ---
 
-## ✅ Section 8 — Pre-Output Checklist
+## ✅ Section 8 · Pre-Output Checklist
 
 > Dernière passe avant delivery. Évaluer le code contre cette matrice.
 
@@ -163,9 +163,9 @@ Séquence exacte à suivre pour générer du code UI :
 - [ ] Vibe + Layout Archetype de la Section 3 **consciemment** sélectionnés et appliqués
 - [ ] Major cards & containers utilisent **Double-Bezel** (outer shell + inner core)
 - [ ] CTA boutons utilisent le **Button-in-Button** trailing icon où applicable
-- [ ] Section padding minimum **`py-24`** — le layout respire fort
+- [ ] Section padding minimum **`py-24`** · le layout respire fort
 - [ ] Toutes les transitions = **custom cubic-bezier** (jamais `linear` / `ease-in-out`)
-- [ ] **Scroll entry animations** présentes — aucun élément statique
+- [ ] **Scroll entry animations** présentes · aucun élément statique
 - [ ] Layout collapse gracefully sous 768px (`w-full` + `px-4`)
 - [ ] Animations = **`transform` + `opacity` seulement**
 - [ ] `backdrop-blur` uniquement sur fixed/sticky (jamais scrolling)
@@ -183,4 +183,4 @@ Séquence exacte à suivre pour générer du code UI :
 | `impeccable-animate` | Décisions générales sur le motion |
 | `gsap-performance` / `vercel-react-best-practices` | Implémentation perf-aware |
 
-Ce skill est plus **dogmatique** que `frontend-design` — il impose des choix très précis (fonts exactes, archetypes, double-bezel). À utiliser quand on veut vraiment du tier agence premium.
+Ce skill est plus **dogmatique** que `frontend-design` · il impose des choix très précis (fonts exactes, archetypes, double-bezel). À utiliser quand on veut vraiment du tier agence premium.

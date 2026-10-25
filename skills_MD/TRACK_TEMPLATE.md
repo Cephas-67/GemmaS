@@ -1,4 +1,4 @@
-# 🎯 TRACK_{NAME}.md — Document de Continuité par Feature (template réutilisable)
+# 🎯 TRACK_{NAME}.md · Document de Continuité par Feature (template réutilisable)
 
 > **Document de continuité** : à lire en début de session pour reprendre le travail d'une feature/sprint long.
 > Format pensé pour les chantiers qui s'étalent sur plusieurs sessions.
@@ -14,7 +14,7 @@
 | `{REFERENCE_URL}` | URL inspiration / cible de niveau | `https://exemple.com` |
 | `{TARGET_DESCRIPTION}` | Une phrase qui décrit l'objectif final | "Atteindre le niveau X de Y" |
 | `{LAST_UPDATE}` | Date dernière session | YYYY-MM-DD |
-| `{PROGRESS_PCT}` | Avancement global estimé | 0–100 |
+| `{PROGRESS_PCT}` | Avancement global estimé | 0-100 |
 
 > Renommer le fichier en `TRACK_{NAME}.md` puis remplir l'en-tête.
 
@@ -26,7 +26,7 @@
 
 Référence visuelle / fonctionnelle : {REFERENCE_URL}
 
-**Dernier état** : {LAST_UPDATE} — **avancement {PROGRESS_PCT} %**
+**Dernier état** : {LAST_UPDATE} · **avancement {PROGRESS_PCT} %**
 
 ---
 
@@ -34,7 +34,7 @@ Référence visuelle / fonctionnelle : {REFERENCE_URL}
 
 > Une sous-section par session importante. Du plus récent au plus ancien.
 
-### Session N — {YYYY-MM-DD} — {Titre court}
+### Session N · {YYYY-MM-DD} · {Titre court}
 
 **Ce qui a été fait** :
 -
@@ -50,7 +50,7 @@ Référence visuelle / fonctionnelle : {REFERENCE_URL}
 
 ---
 
-### Session N-1 — {YYYY-MM-DD} — {Titre}
+### Session N-1 · {YYYY-MM-DD} · {Titre}
 
 …
 
@@ -60,11 +60,11 @@ Référence visuelle / fonctionnelle : {REFERENCE_URL}
 
 | Phase | État | Reste |
 |---|---|---|
-| 1 — Foundation | ⬜ / 🟡 / ✅ |  |
-| 2 — Core feature |  |  |
-| 3 — Polish |  |  |
-| 4 — Optimisations |  |  |
-| 5 — QA / Edge cases |  |  |
+| 1 · Foundation | ⬜ / 🟡 / ✅ |  |
+| 2 · Core feature |  |  |
+| 3 · Polish |  |  |
+| 4 · Optimisations |  |  |
+| 5 · QA / Edge cases |  |  |
 
 Légende : ⬜ pas commencé · 🟡 en cours · ✅ terminé
 
@@ -95,12 +95,12 @@ Légende : ⬜ pas commencé · 🟡 en cours · ✅ terminé
 
 **Fichiers clés à connaître** :
 
-- [`path/to/file.ts`](path/to/file.ts) — rôle en une phrase
+- [`path/to/file.ts`](path/to/file.ts) · rôle en une phrase
 - ...
 
 **Conventions du chantier** :
 
-- (à compléter — ex: ne pas casser X, toujours tester sur Y, etc.)
+- (à compléter · ex: ne pas casser X, toujours tester sur Y, etc.)
 
 ---
 

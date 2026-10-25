@@ -1,14 +1,14 @@
 ---
 name: ai-image-generation
-description: Génération d'images IA via 50+ modèles (FLUX, GPT-Image-2, Gemini, Grok, Seedream, Reve, ImagineArt…) à travers le CLI `belt` de inference.sh. Capabilities — text-to-image, image-to-image, inpainting, LoRA, editing, upscaling, text rendering. À déclencher pour AI art, product mockups, concept art, social media graphics, illustrations marketing.
+description: Génération d'images IA via 50+ modèles (FLUX, GPT-Image-2, Gemini, Grok, Seedream, Reve, ImagineArt…) à travers le CLI `belt` de inference.sh. Capabilities · text-to-image, image-to-image, inpainting, LoRA, editing, upscaling, text rendering. À déclencher pour AI art, product mockups, concept art, social media graphics, illustrations marketing.
 source: https://github.com/skills-shell/skills (tools/image/ai-image-generation/SKILL.md)
-required-cli: belt (inference.sh) — installer via `npx skills add belt-sh/cli`
+required-cli: belt (inference.sh) · installer via `npx skills add belt-sh/cli`
 allowed-tools: Bash(belt *)
 ---
 
-# AI Image Generation — Skill réutilisable
+# AI Image Generation · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Nécessite l'installation du CLI `belt` (inference.sh) en pré-requis.
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Nécessite l'installation du CLI `belt` (inference.sh) en pré-requis.
 
 ---
 
@@ -79,7 +79,7 @@ belt app store --category image
 
 ## 📚 Exemples par cas d'usage
 
-### GPT-Image-2 — text-to-image classique
+### GPT-Image-2 · text-to-image classique
 
 ```bash
 belt app run openai/gpt-image-2 --input '{
@@ -88,7 +88,7 @@ belt app run openai/gpt-image-2 --input '{
 }'
 ```
 
-### GPT-Image-2 — édition d'image existante
+### GPT-Image-2 · édition d'image existante
 
 ```bash
 belt app run openai/gpt-image-2 --input '{
@@ -97,7 +97,7 @@ belt app run openai/gpt-image-2 --input '{
 }'
 ```
 
-### FLUX Dev LoRA — qualité haute
+### FLUX Dev LoRA · qualité haute
 
 ```bash
 belt app run falai/flux-dev-lora --input '{
@@ -105,7 +105,7 @@ belt app run falai/flux-dev-lora --input '{
 }'
 ```
 
-### FLUX Klein — génération rapide
+### FLUX Klein · génération rapide
 
 ```bash
 belt app run falai/flux-2-klein-lora --input '{"prompt": "sunset over mountains"}'
@@ -119,7 +119,7 @@ belt app run google/gemini-3-pro-image-preview --input '{
 }'
 ```
 
-### Grok Imagine — avec aspect ratio
+### Grok Imagine · avec aspect ratio
 
 ```bash
 belt app run xai/grok-imagine-image --input '{
@@ -128,7 +128,7 @@ belt app run xai/grok-imagine-image --input '{
 }'
 ```
 
-### Reve — text rendering (poster, signe, etc.)
+### Reve · text rendering (poster, signe, etc.)
 
 ```bash
 belt app run falai/reve --input '{
@@ -136,7 +136,7 @@ belt app run falai/reve --input '{
 }'
 ```
 
-### Seedream 4.5 — 4K cinématique
+### Seedream 4.5 · 4K cinématique
 
 ```bash
 belt app run bytedance/seedream-4-5 --input '{
@@ -192,6 +192,6 @@ belt app run infsh/stitch-images --input '{
 
 ## 📚 Documentation officielle
 
-- [Running Apps](https://inference.sh/docs/apps/running) — Lancer une app via CLI
-- [Image Generation Example](https://inference.sh/docs/examples/image-generation) — Guide complet
-- [Apps Overview](https://inference.sh/docs/apps/overview) — Comprendre l'écosystème
+- [Running Apps](https://inference.sh/docs/apps/running) · Lancer une app via CLI
+- [Image Generation Example](https://inference.sh/docs/examples/image-generation) · Guide complet
+- [Apps Overview](https://inference.sh/docs/apps/overview) · Comprendre l'écosystème

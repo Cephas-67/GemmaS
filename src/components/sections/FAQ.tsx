@@ -9,7 +9,7 @@ import { faqs } from "@/data/faq";
 import { useLang } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 
-// Section FAQ — titre à gauche (sticky sur desktop), accordéon à droite.
+// Section FAQ · titre à gauche (sticky sur desktop), accordéon à droite.
 // Plus → croix par rotation 45°, contenu révélé via height auto animé.
 export function FAQ() {
   const { lang, t } = useLang();

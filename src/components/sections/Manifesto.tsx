@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Silk } from "@/components/backgrounds/Silk";
 import { useInViewport } from "@/hooks/useInViewport";
 import { useLang } from "@/contexts/LanguageContext";
@@ -28,6 +29,20 @@ export function Manifesto() {
   const { ref, inView } = useInViewport<HTMLElement>("400px", { once: true });
   // visible = section réellement à l'écran → on coupe l'animation sinon.
   const { ref: visRef, inView: visible } = useInViewport<HTMLElement>("0px");
+  // Monter Silk coûte : contexte WebGL et compilation du shader, plus de 300 ms
+  // d'un bloc. À 400 px de la section, ce bloc tombait en plein défilement.
+  // On le monte donc au premier temps mort après le chargement ; en pause hors
+  // champ, il ne dessine rien jusqu'à ce qu'on arrive.
+  const [tempsMort, setTempsMort] = useState(false);
+  useEffect(() => {
+    const marquer = () => setTempsMort(true);
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(marquer, { timeout: 4000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(marquer, 2000);
+    return () => clearTimeout(id);
+  }, []);
 
   return (
     <section
@@ -40,7 +55,7 @@ export function Manifesto() {
     >
       {/* z:-2 → Silk plein cover, monté une seule fois et mis en pause hors viewport */}
       <div aria-hidden className="absolute inset-0 z-0 bg-[#3a3540]">
-        {inView && (
+        {(inView || tempsMort) && (
           <Silk
             speed={5}
             scale={1}

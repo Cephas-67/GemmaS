@@ -16,6 +16,11 @@ import "./MobileMenu.css";
 
 type Item = { label: string; href: string };
 
+// Position fermee posee dans le HTML rendu par le serveur. Sans elle, le menu
+// s'affichait ouvert en plein ecran a chaque chargement de page, le temps que
+// le JavaScript arrive et que GSAP le pousse hors champ.
+const FERME = { transform: "translateX(100%)" } as const;
+
 type Props = {
   open: boolean;
   onClose: () => void;
@@ -47,8 +52,10 @@ export function MobileMenu({
     const panel = panelRef.current;
     if (!panel) return;
 
-    // États initiaux : tout hors écran à droite.
-    gsap.set([panel, ...layerRefs.current], { xPercent: 100 });
+    // États initiaux : tout hors écran à droite. Le HTML naît déjà fermé
+    // (FERME, plus bas) : GSAP reprend la main avec x a zero, sinon il
+    // ajouterait sa translation a celle du style et le menu resterait dehors.
+    gsap.set([panel, ...layerRefs.current], { xPercent: 100, x: 0 });
     if (labelRefs.current.length) {
       gsap.set(labelRefs.current, { yPercent: 140, rotate: 8 });
     }
@@ -170,19 +177,20 @@ export function MobileMenu({
               if (el) layerRefs.current[i] = el;
             }}
             className="absolute inset-y-0 right-0 h-full w-full"
-            style={{ background: c }}
+            style={{ background: c, ...FERME }}
             aria-hidden
           />
         ))}
       </div>
 
-      {/* Panneau principal — adaptatif au thème, plein écran sur mobile */}
+      {/* Panneau principal · adaptatif au thème, plein écran sur mobile */}
       <aside
         ref={panelRef}
         className={
           "pointer-events-auto absolute inset-y-0 right-0 flex h-full w-full flex-col " +
           "bg-background text-foreground"
         }
+        style={FERME}
       >
         {/* Header du panneau : logo gauche + croix fermeture droite */}
         <div className="flex items-center justify-between px-6 pt-6">

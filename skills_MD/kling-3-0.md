@@ -1,15 +1,15 @@
 ---
 name: kling-3-0
-description: Génération vidéo via Kling 3.0 sur RunComfy — modèle multi-shot de Kuaishou avec audio synchronisé natif + identité de personnages préservée entre shots. 3 tiers (Standard / Pro / 4K) × 2 modes (t2v / i2v) = 6 endpoints. À déclencher sur "kling", "kling 3.0", "kling v3", "kling pro", "kling 4k", "kling text/image to video".
+description: Génération vidéo via Kling 3.0 sur RunComfy · modèle multi-shot de Kuaishou avec audio synchronisé natif + identité de personnages préservée entre shots. 3 tiers (Standard / Pro / 4K) × 2 modes (t2v / i2v) = 6 endpoints. À déclencher sur "kling", "kling 3.0", "kling v3", "kling pro", "kling 4k", "kling text/image to video".
 source: https://github.com/agentspace-so/runcomfy-agent-skills (kling-3-0/SKILL.md)
 license: MIT
 required-cli: "@runcomfy/cli (npm i -g @runcomfy/cli)"
 required-env: RUNCOMFY_TOKEN (CI/containers, sinon `runcomfy login`)
 ---
 
-# Kling 3.0 — Pro Pack RunComfy
+# Kling 3.0 · Pro Pack RunComfy
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Nécessite CLI `runcomfy` + compte RunComfy.
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Nécessite CLI `runcomfy` + compte RunComfy.
 
 ---
 
@@ -17,7 +17,7 @@ required-env: RUNCOMFY_TOKEN (CI/containers, sinon `runcomfy login`)
 
 Triggers : `kling`, `kling 3.0`, `kling v3`, `kling pro`, `kling 4k`, `kling text to video`, `kling image to video`.
 
-## 🧬 Kling 3.0 — ce qu'il est
+## 🧬 Kling 3.0 · ce qu'il est
 
 Modèle vidéo V3 de Kuaishou. Capable de :
 - **Multi-shot cinématographique** (plusieurs scènes en un seul call)
@@ -49,14 +49,14 @@ Modèle vidéo V3 de Kuaishou. Capable de :
 
 | Tier | Cas d'usage | Compromis |
 |---|---|---|
-| **Standard** | Drafts, previews, social shorts, A/B variants | Cheapest — quality OK sauf hero shots |
+| **Standard** | Drafts, previews, social shorts, A/B variants | Cheapest · quality OK sauf hero shots |
 | **Pro** | Hero 1080p, ad creative, talking heads haute fidélité | ~33% + cher que Standard, motion fidelity nettement tighter |
 | **4K** | Brand films 4K, big-screen cinematic, finished masters | Native 3840×2160 (pas d'upscale), flat $0.42/s ≈ 5× le coût Standard |
 
 ## 🎯 Choix du mode
 
-- **Text-to-Video** (t2v) — prompt seul, génération from scratch. Pour scènes novel, compositions brand new
-- **Image-to-Video** (i2v) — prompt + image source. Quand on a une référence exacte (visage, produit, scène) à préserver
+- **Text-to-Video** (t2v) · prompt seul, génération from scratch. Pour scènes novel, compositions brand new
+- **Image-to-Video** (i2v) · prompt + image source. Quand on a une référence exacte (visage, produit, scène) à préserver
 
 ---
 
@@ -75,15 +75,15 @@ Pour i2v : URL HTTPS publique (JPEG/PNG/WebP).
 
 | Champ | Type | Requis | Default | Notes |
 |---|---|---|---|---|
-| `prompt` | string | ✅ | — | Scene + motion + camera + atmosphere. Multi-segment supporté pour transitions de scène |
-| `image_url` | string | ✅ (i2v only) | — | HTTPS, JPEG/PNG/WebP |
-| `tail_image_url` | string | ❌ (i2v) | — | Image de fin pour transition source→tail contrôlée |
-| `negative_prompt` | string | ❌ | — | Éléments à exclure |
-| `duration` | int | ❌ | 5 | 3–15 secondes |
+| `prompt` | string | ✅ | · | Scene + motion + camera + atmosphere. Multi-segment supporté pour transitions de scène |
+| `image_url` | string | ✅ (i2v only) | · | HTTPS, JPEG/PNG/WebP |
+| `tail_image_url` | string | ❌ (i2v) | · | Image de fin pour transition source→tail contrôlée |
+| `negative_prompt` | string | ❌ | · | Éléments à exclure |
+| `duration` | int | ❌ | 5 | 3-15 secondes |
 | `aspect_ratio` | enum | ❌ | `16:9` | `16:9`, `9:16`, `1:1`, `4:3`, `3:4`, `21:9` |
 | `cfg_scale` | float | ❌ | 0.5 | Strength du prompt. 0.7-0.9 strict / 0.3-0.4 loose |
 | `generate_audio` | bool | ❌ | false | Audio in-pass synchronisé |
-| `seed` | int | ❌ | — | Reproducibility |
+| `seed` | int | ❌ | · | Reproducibility |
 
 ---
 
@@ -139,7 +139,7 @@ runcomfy run kling/kling-3.0/4k/image-to-video \
 
 ---
 
-## ✍️ Prompting Kling 3.0 — ce qui marche
+## ✍️ Prompting Kling 3.0 · ce qui marche
 
 ### Lead with motion + camera
 
@@ -250,9 +250,9 @@ the hiss of the steam wand.
 
 - **Cap durée 15s** sur chaque tier
 - **Max 6 shots continus** en une seule gen 4K
-- **i2v requiert HTTPS URL publique** — fichiers locaux pas supportés
+- **i2v requiert HTTPS URL publique** · fichiers locaux pas supportés
 - **Aspect ratios fixes** aux 6 documentés
-- **Output 4K = fichiers larges** — planifier disque + bandwidth pour batch
+- **Output 4K = fichiers larges** · planifier disque + bandwidth pour batch
 
 ---
 

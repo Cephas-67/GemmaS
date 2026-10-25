@@ -5,9 +5,9 @@ source: https://github.com/binjuhor/shadcn-lar (.claude/skills/frontend-design/S
 author: claudekit
 ---
 
-# Frontend Design (ClaudeKit) — Skill réutilisable
+# Frontend Design (ClaudeKit) · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Sister skill : `ck-ui-ux-pro-max` (à activer en 1er pour la design intelligence).
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Sister skill : `ck-ui-ux-pro-max` (à activer en 1er pour la design intelligence).
 
 ---
 
@@ -22,7 +22,7 @@ author: claudekit
 | **Quick task** | Rapid implementation | `./references/workflow-quick.md` |
 | **Complex/award-quality** | Full immersive | `./references/workflow-immersive.md` |
 | **Existing project upgrade** | Redesign audit | `./references/redesign-audit-checklist.md` |
-| **From scratch** | Design Thinking (ci-dessous) | — |
+| **From scratch** | Design Thinking (ci-dessous) | · |
 
 > ⚠️ **Avant tout workflow** : activer `ck:ui-ux-pro-max` skill EN PREMIER pour la design intelligence.
 
@@ -32,11 +32,11 @@ author: claudekit
 
 ## 📸 Workflow Screenshot/Video Replication (quick ref)
 
-1. **Analyze** avec `ck:ai-multimodal` — extract colors, fonts, spacing, effects
-2. **Plan** avec `ui-ux-designer` subagent — create phased implementation
-3. **Implement** — match source precisely
-4. **Verify** — compare to original
-5. **Document** — update `./docs/design-guidelines.md` si approved
+1. **Analyze** avec `ck:ai-multimodal` · extract colors, fonts, spacing, effects
+2. **Plan** avec `ui-ux-designer` subagent · create phased implementation
+3. **Implement** · match source precisely
+4. **Verify** · compare to original
+5. **Document** · update `./docs/design-guidelines.md` si approved
 
 ---
 
@@ -48,7 +48,7 @@ author: claudekit
 |---|---|---|---|---|
 | `DESIGN_VARIANCE` | **8** | 1-10 | Symétrie parfaite, centered, equal grids | Asymétrique, masonry, massive empty zones, fractional CSS Grid |
 | `MOTION_INTENSITY` | **6** | 1-10 | CSS hover/active states only | Framer Motion scroll reveals, spring physics, perpetual micro-animations |
-| `VISUAL_DENSITY` | **4** | 1-10 | Art gallery — huge whitespace, expensive/clean | Cockpit — tiny paddings, 1px dividers, monospace numbers everywhere |
+| `VISUAL_DENSITY` | **4** | 1-10 | Art gallery · huge whitespace, expensive/clean | Cockpit · tiny paddings, 1px dividers, monospace numbers everywhere |
 
 ### Règles drivées par les dials
 
@@ -67,11 +67,11 @@ Avant de coder, s'engager sur une direction **BOLD aesthetic** :
 | Aspect | Question |
 |---|---|
 | **Purpose** | Quel problème l'interface résout ? Qui l'utilise ? |
-| **Tone** | Choisir un extrême — brutally minimal · maximalist chaos · retro-futuristic · organic/natural · luxury/refined · playful/toy-like · editorial/magazine · brutalist/raw · art deco/geometric · soft/pastel · industrial/utilitarian… |
+| **Tone** | Choisir un extrême · brutally minimal · maximalist chaos · retro-futuristic · organic/natural · luxury/refined · playful/toy-like · editorial/magazine · brutalist/raw · art deco/geometric · soft/pastel · industrial/utilitarian… |
 | **Constraints** | Framework, perf, a11y |
 | **Differentiation** | Qu'est-ce qui rend ça INOUBLIABLE ? Le seul truc qu'on retiendra ? |
 
-> ⚠️ **CRITIQUE** : Choisir une direction conceptuelle claire et l'exécuter avec précision. Bold maximalism et refined minimalism marchent tous deux — la clé est l'**intentionnalité**, pas l'intensité.
+> ⚠️ **CRITIQUE** : Choisir une direction conceptuelle claire et l'exécuter avec précision. Bold maximalism et refined minimalism marchent tous deux · la clé est l'**intentionnalité**, pas l'intensité.
 
 Code produit :
 - Production-grade et fonctionnel

@@ -15,7 +15,7 @@ export function useLenis() {
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     if (reduce || coarse) return;
 
-    // Mode `lerp` — c'est la config par défaut de lenis.dev : à chaque frame
+    // Mode `lerp` · c'est la config par défaut de lenis.dev : à chaque frame
     // on interpole de 10% vers la cible. Donne ce "trail" très typique,
     // bien meilleur que la version `duration + easing` qui force une courbe
     // dont le ressenti dépend trop du throw du wheel.

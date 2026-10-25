@@ -45,7 +45,7 @@ export const mentionsLegales: LegalPageData = {
       headingEn: "Site publisher",
       fields: [
         { label: "Dénomination", labelEn: "Legal name", dynamic: "denomination" },
-        { label: "Forme juridique", labelEn: "Legal form", value: "Etablissement", valueEn: TBD_EN },
+        { label: "Forme juridique", labelEn: "Legal form", value: "Établissement", valueEn: "Établissement (sole proprietorship)" },
         { label: "Numéro RCCM", labelEn: "RCCM number", value: "RB/PNO/26 A 128959", valueEn: "RB/PNO/26 A 128959" },
         { label: "Numéro IFU", labelEn: "IFU number", value: "02024384000142", valueEn: "02024384000142" },
         { label: "Siège social", labelEn: "Registered address", dynamic: "address" },
@@ -115,10 +115,10 @@ export const politiqueConfidentialite: LegalPageData = {
       headingEn: "Cookies and local storage",
       id: "cookies",
       paragraphs: [
-        "Le site n'utilise aucun cookie publicitaire ou traceur tiers (pas d'outil d'analyse d'audience à ce jour). Il stocke uniquement, dans le stockage local de votre navigateur (localStorage), votre préférence de langue, votre préférence d'affichage clair/sombre, et le fait que vous ayez accepté ce bandeau. Ces préférences restent sur votre appareil et ne sont jamais transmises à GemmaS.",
+        "Le site n'utilise aucun cookie publicitaire ou traceur tiers (pas d'outil d'analyse d'audience à ce jour). Il stocke uniquement, dans le stockage local de votre navigateur (localStorage), votre préférence de langue, votre préférence d'affichage clair/sombre, et le fait que vous ayez fermé ce bandeau d'information. Ces préférences restent sur votre appareil et ne sont jamais transmises à GemmaS.",
       ],
       paragraphsEn: [
-        "The site does not use any advertising cookie or third-party tracker (no audience analytics tool at this time). It only stores, in your browser's local storage (localStorage), your language preference, your light/dark display preference, and whether you accepted this banner. These preferences stay on your device and are never transmitted to GemmaS.",
+        "The site does not use any advertising cookie or third-party tracker (no audience analytics tool at this time). It only stores, in your browser's local storage (localStorage), your language preference, your light/dark display preference, and whether you closed this information banner. These preferences stay on your device and are never transmitted to GemmaS.",
       ],
     },
     {

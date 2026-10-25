@@ -6,6 +6,8 @@ import { values } from "@/data/values";
 import { GlassG } from "@/components/values/GlassG";
 import Image from "next/image";
 import { useLang } from "@/contexts/LanguageContext";
+import { Reveal } from "@/components/Reveal";
+import SplitText from "@/components/effects/SplitText";
 
 export default function Values() {
   const { t } = useLang();
@@ -33,15 +35,17 @@ export default function Values() {
           id="value-title"
           className="text-center font-display text-[clamp(1.75rem,3vw,2.25rem)] font-medium leading-tight tracking-[-0.025em]"
         >
-          {t("values.title")}
+          <SplitText text={t("values.title")} />
         </h2>
 
         <div className="relative mx-auto mt-20 lg:mt-[12rem]">
           <ValuesConnector />
 
-          <div className="relative flex items-center gap-5 sm:flex-row sm:flex-wrap sm:justify-center //lg:flex-nowrap //lg:justify-between lg:gap-[90px]">
-            {values.map((value) => (
-              <ValueCard key={value.id} value={value} />
+          <div className="relative grid grid-cols-2 justify-items-center gap-4 [&>*:last-child:nth-child(odd)]:col-span-2 sm:flex sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-5 lg:gap-[90px]">
+            {values.map((value, index) => (
+              <Reveal key={value.id} delay={index * 0.08}>
+                <ValueCard value={value} />
+              </Reveal>
             ))}
           </div>
         </div>

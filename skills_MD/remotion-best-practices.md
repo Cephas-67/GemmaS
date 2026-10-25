@@ -1,13 +1,13 @@
 ---
 name: remotion-best-practices
-description: Best practices Remotion — création de vidéos en React, animations frame-based via useCurrentFrame() + interpolate(), assets via staticFile(), composition via Sequence. À déclencher dès qu'on touche à du code Remotion ou qu'on scaffold un projet vidéo React.
+description: Best practices Remotion · création de vidéos en React, animations frame-based via useCurrentFrame() + interpolate(), assets via staticFile(), composition via Sequence. À déclencher dès qu'on touche à du code Remotion ou qu'on scaffold un projet vidéo React.
 source: https://github.com/remotion-dev/skills (skills/remotion/SKILL.md)
 tags: remotion, video, react, animation, composition
 ---
 
-# Remotion Best Practices — Skill réutilisable
+# Remotion Best Practices · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. À utiliser dès qu'on rencontre du code Remotion.
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. À utiliser dès qu'on rencontre du code Remotion.
 
 ---
 
@@ -28,7 +28,7 @@ Remplacer `my-video` par le nom souhaité.
 | ❌ Interdit | Pourquoi |
 |---|---|
 | **CSS `transition`** | Ne sera pas rendu par Remotion (rendu frame-par-frame, pas de timing browser) |
-| **CSS `@keyframes` / `animation`** | Idem — non rendu |
+| **CSS `@keyframes` / `animation`** | Idem · non rendu |
 | **Classes d'animation Tailwind** (`animate-*`, `transition-*`) | Idem |
 
 Toute animation doit passer par `useCurrentFrame()` + `interpolate()`.

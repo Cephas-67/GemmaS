@@ -1,13 +1,13 @@
 ---
 name: vercel-react-best-practices
-description: Best practices React + Next.js de l'équipe Vercel Engineering — 70 règles classées en 8 catégories par impact, pour écrire/refactor/review du code React perf-aware. À déclencher quand on écrit un composant React, une page Next.js, du data fetching, ou qu'on optimise un bundle.
+description: Best practices React + Next.js de l'équipe Vercel Engineering · 70 règles classées en 8 catégories par impact, pour écrire/refactor/review du code React perf-aware. À déclencher quand on écrit un composant React, une page Next.js, du data fetching, ou qu'on optimise un bundle.
 source: https://github.com/vercel-labs/agent-skills (skills/react-best-practices/SKILL.md)
-license: MIT — Vercel
+license: MIT · Vercel
 ---
 
-# Vercel React Best Practices — Skill réutilisable
+# Vercel React Best Practices · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — aucune configuration projet requise. Les règles s'appliquent à tout projet React/Next.js.
+> ✅ **Ce fichier est neutre** · aucune configuration projet requise. Les règles s'appliquent à tout projet React/Next.js.
 
 ---
 
@@ -163,13 +163,13 @@ Pour le détail de chaque règle (mauvais exemple + bon exemple + raison) :
 
 Si on n'a le temps que pour 10 règles dans une codebase existante :
 
-1. `async-parallel` — Promise.all() sur ops indépendantes (gros gain TTFB)
-2. `bundle-barrel-imports` — directe vs barrel (gros gain bundle)
-3. `bundle-dynamic-imports` — next/dynamic pour composants lourds
-4. `rerender-no-inline-components` — pas de composants inline (cause typique de re-render infini)
-5. `rerender-functional-setstate` — callbacks stables
-6. `server-cache-react` — React.cache() per request
-7. `server-parallel-fetching` — paralléliser les fetches RSC
-8. `client-passive-event-listeners` — passive sur scroll/touch
-9. `rendering-content-visibility` — content-visibility sur longues listes
-10. `js-set-map-lookups` — Set/Map pour O(1) (cf. `sectionCenters` killer)
+1. `async-parallel` · Promise.all() sur ops indépendantes (gros gain TTFB)
+2. `bundle-barrel-imports` · directe vs barrel (gros gain bundle)
+3. `bundle-dynamic-imports` · next/dynamic pour composants lourds
+4. `rerender-no-inline-components` · pas de composants inline (cause typique de re-render infini)
+5. `rerender-functional-setstate` · callbacks stables
+6. `server-cache-react` · React.cache() per request
+7. `server-parallel-fetching` · paralléliser les fetches RSC
+8. `client-passive-event-listeners` · passive sur scroll/touch
+9. `rendering-content-visibility` · content-visibility sur longues listes
+10. `js-set-map-lookups` · Set/Map pour O(1) (cf. `sectionCenters` killer)

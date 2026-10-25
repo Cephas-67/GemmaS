@@ -8,6 +8,7 @@ import BgNeon from "../ui/BgNeon";
 import GLogo from "../ui/G_Logo";
 import LiquidGlass from "liquid-glass-react";
 import GlassPOC from "../ui/GlassPOC";
+import ParallaxLayer from "@/components/effects/ParallaxLayer";
 
 // Grain · SVG feTurbulence inline répété (équivalent d'un .webp répété).
 const NOISE_SVG =
@@ -57,11 +58,17 @@ export function Hero() {
 
 
 
-      <div className="absolute w-[50vw] h-screen flex flex-col items-center justify-center z-0 right-0 translate-x-1/2" aria-hidden>
-        <BgNeon />
+      <div className="absolute w-[50vw] h-screen flex flex-col items-center justify-center z-0 right-0 translate-x-[80%] md:translate-x-1/2" aria-hidden>
+        {/* Profondeur : les neons descendent moins vite que la page, le titre
+            un peu moins encore, et l'ecran se lit en plans. */}
+        <ParallaxLayer speed={0.3} className="flex h-full w-full flex-col items-center justify-center">
+          <BgNeon />
+        </ParallaxLayer>
       </div>
-      <div className="absolute w-[50vw] h-screen flex flex-col items-center justify-center z-0 left-0 -translate-x-1/2" aria-hidden>
-        <BgNeon />
+      <div className="absolute w-[50vw] h-screen flex flex-col items-center justify-center z-0 left-0 -translate-x-[80%] md:-translate-x-1/2" aria-hidden>
+        <ParallaxLayer speed={0.3} className="flex h-full w-full flex-col items-center justify-center">
+          <BgNeon />
+        </ParallaxLayer>
       </div>
 
       <div className="absolute w-[50vw] h-screen flex flex-col top-1/2 left-1/2 -translate-y-1/2 items-center justify-center z-100 right-[45vw]">
@@ -81,20 +88,21 @@ export function Hero() {
         }}
       />
 
-      {/* z-[2] — voile bas pour amener le trait décoratif et asseoir le CTA */}
+      {/* z-[2] · voile bas pour amener le trait décoratif et asseoir le CTA */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-b from-background/0 via-background/0 to-background/50"
       />
 
-      {/* CONTENU — Mobile-first :
+      {/* CONTENU · Mobile-first :
           - mobile : flex column simple, titre + pitch + CTA empilés, padding fluide.
           - md+    : on bascule sur la maquette de référence (titre poussé à 42vh,
                      pitch+CTA flottants en bas à droite). */}
 
-      {/* TITRE — centré, padding fluide.
+      {/* TITRE · centré, padding fluide.
           Mobile : pt-[20vh] pb-12, taille clamp pour lisibilité.
           Desktop : pt-[42vh] pb-[20vh] (retour à la compo desktop). */}
+      <ParallaxLayer speed={0.15} className="relative z-10">
       <div className="relative z-10 mx-auto flex w-full max-w-[53rem] flex-col items-center px-5 pt-[32vh] text-center sm:px-6 sm:pt-[28vh] md:pt-[42vh] pb-10 md:text-center">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -143,8 +151,11 @@ export function Hero() {
           </motion.a>
         </div>
       </div>
+      {/* Titre et bouton dans la meme couche : separes, le titre descendait
+          sur le bouton en defilant. */}
+      </ParallaxLayer>
 
-      {/* trait vertical décoratif, bas-centre — équivalent .h_h_line */}
+      {/* trait vertical décoratif, bas-centre · équivalent .h_h_line */}
       <div
         aria-hidden
         className="pointer-events-none absolute bottom-0 left-1/2 z-[3] h-48 w-px -translate-x-1/2

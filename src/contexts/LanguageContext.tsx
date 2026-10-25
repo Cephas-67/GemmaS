@@ -22,10 +22,9 @@ const dictionaries: Record<Lang, Dict> = {
 
     // Barre d'annonce + cookies + switch langue
     "announce.text": "GemmaS · réponse à votre projet sous 24h ouvrées",
-    "cookies.text": "En utilisant ce site, vous acceptez nos",
-    "cookies.link": "cookies",
-    "cookies.accept": "Accepter",
-    "cookies.prefs": "Préférences cookies",
+    "cookies.text": "Aucun traceur ici : seules vos préférences restent sur votre appareil.",
+    "cookies.link": "En savoir plus",
+    "cookies.accept": "Compris",
     "lang.switchTo": "Passer en anglais",
 
     // Hero · double modèle studio (prestations clients + produits propres)
@@ -168,7 +167,7 @@ const dictionaries: Record<Lang, Dict> = {
     "notFound.cta": "Retour à l'accueil",
 
     // Workflow gamifié
-    "workflow.title": "GemmaS : Notre workflow",
+    "workflow.title": "Notre méthode, en trois temps",
   },
   en: {
     // Navigation
@@ -181,10 +180,9 @@ const dictionaries: Record<Lang, Dict> = {
 
     // Announcement bar + cookies + language switch
     "announce.text": "GemmaS · we reply to your project within 24 business hours",
-    "cookies.text": "By using this site, you accept our",
-    "cookies.link": "cookies",
-    "cookies.accept": "Accept",
-    "cookies.prefs": "Cookie preferences",
+    "cookies.text": "No trackers here: only your preferences stay on your device.",
+    "cookies.link": "Learn more",
+    "cookies.accept": "Got it",
     "lang.switchTo": "Switch to French",
 
     // Hero
@@ -327,7 +325,7 @@ const dictionaries: Record<Lang, Dict> = {
     "notFound.cta": "Back to home",
 
     // Gamified workflow
-    "workflow.title": "GemmaS : Our workflow",
+    "workflow.title": "Our method, in three steps",
   },
 };
 

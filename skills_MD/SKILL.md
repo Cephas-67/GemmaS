@@ -5,12 +5,12 @@ description: >
   "composant", "page", "landing", "section", "UI", "interface", "layout",
   "formulaire", "navbar", "card", "design", "/design".
   Lire ce fichier EN PREMIER, puis UI-UX.md et COMPONENTS.md avant d'écrire une seule ligne de code.
-  Ne jamais utiliser de couleurs hardcodées — toujours utiliser les tokens du projet.
+  Ne jamais utiliser de couleurs hardcodées · toujours utiliser les tokens du projet.
   Ne jamais réinventer un composant qui existe déjà.
   Ne jamais ajouter de badge "AI / Built with Claude" sur les pages publiques.
 ---
 
-# SKILL.md — Design System (template réutilisable)
+# SKILL.md · Design System (template réutilisable)
 
 ## 🔧 Configuration projet (à remplir une fois)
 

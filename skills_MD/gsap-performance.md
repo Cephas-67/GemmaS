@@ -1,13 +1,13 @@
 ---
 name: gsap-performance
-description: Skill officiel GSAP — optimiser les animations pour du 60 fps stable (transforms vs layout, will-change, batching, quickTo, ScrollTrigger). À déclencher quand l'utilisateur parle de jank, perf d'anim, FPS, smooth scroll.
+description: Skill officiel GSAP · optimiser les animations pour du 60 fps stable (transforms vs layout, will-change, batching, quickTo, ScrollTrigger). À déclencher quand l'utilisateur parle de jank, perf d'anim, FPS, smooth scroll.
 source: https://github.com/greensock/gsap-skills (skills/gsap-performance/SKILL.md)
 license: MIT
 ---
 
-# GSAP Performance — Skill réutilisable
+# GSAP Performance · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — aucune configuration projet requise. Utilisable tel quel dans tout projet qui intègre GSAP.
+> ✅ **Ce fichier est neutre** · aucune configuration projet requise. Utilisable tel quel dans tout projet qui intègre GSAP.
 
 ---
 
@@ -34,13 +34,13 @@ Animer **transform** (`x`, `y`, `scaleX`, `scaleY`, `rotation`, `rotationX/Y`, `
 | `x`, `y` | `top`, `left` |
 | `scale` | `width`, `height` |
 | `rotation` | `margin`, `padding` |
-| `opacity` | — |
+| `opacity` | · |
 
 > GSAP utilise `translate` par défaut pour `x`/`y` → toujours les utiliser **au lieu de** `top`/`left` pour bouger un élément.
 
 ---
 
-## 2. `will-change` — avec parcimonie
+## 2. `will-change` · avec parcimonie
 
 Hint CSS pour promouvoir l'élément sur sa propre couche :
 
@@ -50,7 +50,7 @@ Hint CSS pour promouvoir l'élément sur sa propre couche :
 
 **Règles** :
 - ✅ Uniquement sur les éléments **réellement animés**
-- ❌ Pas "au cas où" sur tout le DOM — coûteux en mémoire GPU
+- ❌ Pas "au cas où" sur tout le DOM · coûteux en mémoire GPU
 - ❌ Ne **pas** abuser de `force3D: true`
 
 ---
@@ -77,7 +77,7 @@ items.forEach((el, i) => gsap.from(el, { y: 20, opacity: 0, delay: i * 0.05 }));
 
 - Utiliser **`stagger`** plutôt que N tweens manuels
 - Pour des listes longues : **virtualiser** ou n'animer que les éléments visibles
-- **Réutiliser les timelines** — ne pas en créer à chaque frame
+- **Réutiliser les timelines** · ne pas en créer à chaque frame
 
 ---
 
@@ -99,7 +99,7 @@ window.addEventListener("mousemove", (e) => {
 
 ---
 
-## 6. ScrollTrigger — perf spécifique
+## 6. ScrollTrigger · perf spécifique
 
 | Pratique | Détail |
 |---|---|

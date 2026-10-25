@@ -1,13 +1,13 @@
 ---
 name: impeccable-animate
-description: Guide d'animation UI orienté craft — ajouter du motion qui communique state, feedback, hiérarchie ; couper le motion décoratif. Cible "animation fatigue" + 100/300/500 rule + easing curves recommandées + matériaux de motion + a11y (`prefers-reduced-motion`). À déclencher quand on ajoute des animations, qu'on review du motion existant, ou qu'on définit une stratégie d'anim sur un composant/section.
+description: Guide d'animation UI orienté craft · ajouter du motion qui communique state, feedback, hiérarchie ; couper le motion décoratif. Cible "animation fatigue" + 100/300/500 rule + easing curves recommandées + matériaux de motion + a11y (`prefers-reduced-motion`). À déclencher quand on ajoute des animations, qu'on review du motion existant, ou qu'on définit une stratégie d'anim sur un composant/section.
 source: https://github.com/pbakaus/impeccable (skill/reference/animate.md)
 tags: animation, motion, ux, micro-interactions, performance, a11y
 ---
 
-# Impeccable — Animate
+# Impeccable · Animate
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Guide de craft pour décider **quand**, **où** et **comment** animer.
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Guide de craft pour décider **quand**, **où** et **comment** animer.
 
 > **Contexte additionnel requis** : performance constraints.
 
@@ -17,7 +17,7 @@ tags: animation, motion, ux, micro-interactions, performance, a11y
 
 > Ajouter du motion qui communique **state, feedback, hierarchy**. Couper le motion qui existe **seulement pour décorer**.
 
-> **Animation fatigue is a real cost** — dépenser le budget sur les moments qui le méritent.
+> **Animation fatigue is a real cost** · dépenser le budget sur les moments qui le méritent.
 
 ---
 
@@ -29,9 +29,9 @@ tags: animation, motion, ux, micro-interactions, performance, a11y
 - Le scroll-triggered motion est réservé aux moments qui le méritent
 
 ### Product
-- **150–250 ms** sur la plupart des transitions
+- **150-250 ms** sur la plupart des transitions
 - Motion = state : feedback, reveal, loading, transitions
-- **Pas de page-load choreography** — l'utilisateur est dans une tâche
+- **Pas de page-load choreography** · l'utilisateur est dans une tâche
 
 ---
 
@@ -39,11 +39,11 @@ tags: animation, motion, ux, micro-interactions, performance, a11y
 
 ### 1. Identifier les zones statiques
 
-- **Missing feedback** — actions sans acknowledgment visuel (clic bouton, submit form…)
-- **Jarring transitions** — changements instantanés qui paraissent abrupts (show/hide, page loads, route changes)
-- **Unclear relationships** — relations spatiales/hiérarchiques non évidentes
-- **Lack of delight** — interactions fonctionnelles mais joyeux
-- **Missed guidance** — opportunités de diriger l'attention ou d'expliquer un comportement
+- **Missing feedback** · actions sans acknowledgment visuel (clic bouton, submit form…)
+- **Jarring transitions** · changements instantanés qui paraissent abrupts (show/hide, page loads, route changes)
+- **Unclear relationships** · relations spatiales/hiérarchiques non évidentes
+- **Lack of delight** · interactions fonctionnelles mais joyeux
+- **Missed guidance** · opportunités de diriger l'attention ou d'expliquer un comportement
 
 ### 2. Comprendre le contexte
 
@@ -104,42 +104,42 @@ Plan purposeful :
 | **Like / favorite** | Scale + rotation, particle effects, color transition |
 
 ### State Transitions
-- **Show / hide** — fade + slide (pas instant), 200-300ms
-- **Expand / collapse** — height transition + overflow + icon rotation
-- **Loading states** — skeleton fades, spinner, progress bars
-- **Success / error** — color transitions, icon animations, gentle pulse
-- **Enable / disable** — opacity transitions, cursor changes
+- **Show / hide** · fade + slide (pas instant), 200-300ms
+- **Expand / collapse** · height transition + overflow + icon rotation
+- **Loading states** · skeleton fades, spinner, progress bars
+- **Success / error** · color transitions, icon animations, gentle pulse
+- **Enable / disable** · opacity transitions, cursor changes
 
 ### Navigation & Flow
-- **Page transitions** — crossfade entre routes, shared element transitions
-- **Tab switching** — slide indicator, content fade/slide
-- **Carousel / slider** — smooth transforms, snap points, momentum
-- **Scroll effects** — parallax layers, sticky headers, scroll progress
+- **Page transitions** · crossfade entre routes, shared element transitions
+- **Tab switching** · slide indicator, content fade/slide
+- **Carousel / slider** · smooth transforms, snap points, momentum
+- **Scroll effects** · parallax layers, sticky headers, scroll progress
 
 ### Feedback & Guidance
-- **Hover hints** — tooltip fade-ins, cursor changes, highlights
-- **Drag & drop** — lift effect (shadow + scale), drop zone highlights
-- **Copy / paste** — brief flash, "copied" confirmation
-- **Focus flow** — highlight path through form
+- **Hover hints** · tooltip fade-ins, cursor changes, highlights
+- **Drag & drop** · lift effect (shadow + scale), drop zone highlights
+- **Copy / paste** · brief flash, "copied" confirmation
+- **Focus flow** · highlight path through form
 
 ### Delight Moments
-- **Empty states** — subtle floating animations sur illustrations
-- **Completed actions** — confetti, check mark flourish
-- **Easter eggs** — hidden interactions for discovery
-- **Contextual** — weather, time-of-day, seasonal
+- **Empty states** · subtle floating animations sur illustrations
+- **Completed actions** · confetti, check mark flourish
+- **Easter eggs** · hidden interactions for discovery
+- **Contextual** · weather, time-of-day, seasonal
 
 ---
 
-## ⏱️ Timing — la règle 100/300/500
+## ⏱️ Timing · la règle 100/300/500
 
 > **Le timing compte plus que l'easing** pour le "feels right".
 
 | Durée | Cas d'usage | Exemples |
 |---|---|---|
-| **100–150ms** | Instant feedback | Button press, toggle, color change |
-| **200–300ms** | State changes | Menu open, tooltip, hover state |
-| **300–500ms** | Layout changes | Accordion, modal, drawer |
-| **500–800ms** | Entrance animations | Page load, hero reveal |
+| **100-150ms** | Instant feedback | Button press, toggle, color change |
+| **200-300ms** | State changes | Menu open, tooltip, hover state |
+| **300-500ms** | Layout changes | Accordion, modal, drawer |
+| **500-800ms** | Entrance animations | Page load, hero reveal |
 
 > 💡 **Exit animations = ~75% de la durée d'entrée**.
 
@@ -148,12 +148,12 @@ Plan purposeful :
 ## 🌀 Easing curves
 
 ```css
-/* ✅ Recommandés — décélération naturelle */
+/* ✅ Recommandés · décélération naturelle */
 --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);    /* Smooth */
 --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);   /* Snappier */
 --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);    /* Confident, decisive */
 
-/* ❌ À ÉVITER — feel dated and tacky */
+/* ❌ À ÉVITER · feel dated and tacky */
 /* bounce:  cubic-bezier(0.34, 1.56, 0.64, 1); */
 /* elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6); */
 ```
@@ -202,11 +202,11 @@ Pour complexes / interactives
 
 ## ⚡ Performance
 
-- **Layout safety** — éviter d'animer `width`/`height`/`top`/`left`/margins casuallement
-- **`will-change`** — sparingly pour anim expensive connues (sur `:hover` ou `.animating`), **jamais préemptivement** sur toute la page
-- **Scroll triggers** — IntersectionObserver, pas scroll event listeners. Unobserve après l'anim
-- **Bound expensive effects** — blur/filter/shadow zones petites ou isolées, `contain` où approprié
-- **Monitor FPS** — 60fps sur devices cibles
+- **Layout safety** · éviter d'animer `width`/`height`/`top`/`left`/margins casuallement
+- **`will-change`** · sparingly pour anim expensive connues (sur `:hover` ou `.animating`), **jamais préemptivement** sur toute la page
+- **Scroll triggers** · IntersectionObserver, pas scroll event listeners. Unobserve après l'anim
+- **Bound expensive effects** · blur/filter/shadow zones petites ou isolées, `contain` où approprié
+- **Monitor FPS** · 60fps sur devices cibles
 
 ---
 
@@ -243,7 +243,7 @@ Seuil **80ms** : sous ~80ms ça paraît instantané (les cerveaux buffer les inp
 
 ## 🚫 NEVER
 
-- ❌ **Bounce / elastic** easing — feel dated, attire attention sur l'animation elle-même
+- ❌ **Bounce / elastic** easing · feel dated, attire attention sur l'animation elle-même
 - ❌ Animer **layout properties** casuallement (`width`, `height`, `top`, `left`, margins) quand transform/FLIP/grid marche
 - ❌ Durées > 500ms pour du **feedback** (feel laggy)
 - ❌ Animer **sans purpose** (chaque anim a besoin d'une raison)
@@ -255,12 +255,12 @@ Seuil **80ms** : sous ~80ms ça paraît instantané (les cerveaux buffer les inp
 
 ## ✅ Vérification qualité
 
-- **60 fps smooth** — no jank on target devices
-- **Feels natural** — easing curves organic, pas robotic
-- **Appropriate timing** — pas trop rapide (jarring), pas trop lent (laggy)
-- **Reduced motion works** — animations disabled/simplified
-- **Doesn't block** — interaction possible pendant/après
-- **Adds value** — interface plus claire OU plus delightful
+- **60 fps smooth** · no jank on target devices
+- **Feels natural** · easing curves organic, pas robotic
+- **Appropriate timing** · pas trop rapide (jarring), pas trop lent (laggy)
+- **Reduced motion works** · animations disabled/simplified
+- **Doesn't block** · interaction possible pendant/après
+- **Adds value** · interface plus claire OU plus delightful
 
 ---
 

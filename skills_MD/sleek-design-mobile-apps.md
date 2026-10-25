@@ -1,14 +1,14 @@
 ---
 name: sleek-design-mobile-apps
-description: Design d'applications mobiles via l'API REST sleek.design — création de projets, génération de screens via prompt langage naturel, screenshots HD, récupération du code HTML pour implémentation native (React Native, SwiftUI…). À déclencher pour "design mobile app", "create app screens", "build mobile UI", ou pour interagir avec un projet Sleek existant.
+description: Design d'applications mobiles via l'API REST sleek.design · création de projets, génération de screens via prompt langage naturel, screenshots HD, récupération du code HTML pour implémentation native (React Native, SwiftUI…). À déclencher pour "design mobile app", "create app screens", "build mobile UI", ou pour interagir avec un projet Sleek existant.
 source: https://github.com/sleekdotdesign/agent-skills (skills/design-mobile-apps/SKILL.md)
 required-env: SLEEK_API_KEY
 allowed-hosts: https://sleek.design
 ---
 
-# Sleek Design Mobile Apps — Skill réutilisable
+# Sleek Design Mobile Apps · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Nécessite `SLEEK_API_KEY` (plan Pro ou supérieur sur sleek.design).
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Nécessite `SLEEK_API_KEY` (plan Pro ou supérieur sur sleek.design).
 
 ---
 
@@ -162,15 +162,15 @@ Content-Type: application/json
 | Champ | Default | Notes |
 |---|---|---|
 | `format` | `png` | `png` ou `webp` |
-| `scale` | `2` | 1–3 (DPR) |
+| `scale` | `2` | 1-3 (DPR) |
 | `gap` | `40` | Pixels entre composants |
 | `padding` | `40` | Uniforme sur tous les côtés |
-| `paddingX/Y/Top/Right/Bottom/Left` | — | Cascade : per-side → axis → uniform |
+| `paddingX/Y/Top/Right/Bottom/Left` | · | Cascade : per-side → axis → uniform |
 | `background` | `transparent` | CSS color (hex, named, transparent) |
 | `showDots` | `false` | Grille de points subtile (auto-adapt couleur) |
 | `radius` | `48` | Squircle corner radius (≥ 0, 0 = sharp) |
-| `componentVersionOverrides` | — | Map `cmpId` → `verId` pour versions épinglées |
-| `themeVersionOverrides` | — | Map `themeId` → `verId` |
+| `componentVersionOverrides` | · | Map `cmpId` → `verId` pour versions épinglées |
+| `themeVersionOverrides` | · | Map `themeId` → `verId` |
 
 > ⚠️ **Toujours `"background": "transparent"`** sauf demande explicite user.
 
@@ -192,7 +192,7 @@ Chaque projet = son propre theme + design system. Pour des **variations**, crée
 ### 2. Envoyer un chat message
 
 - Passer la demande **telle quelle** → l'IA Sleek interprète le langage naturel
-- **Pas besoin** de décomposer en screens — un seul message avec l'intent complet
+- **Pas besoin** de décomposer en screens · un seul message avec l'intent complet
 - Async par défaut, poll pour completion
 - **One run at a time** par projet (sinon 409 CONFLICT)
 - Cross-projets en parallèle OK avec async polling
@@ -210,7 +210,7 @@ Chaque projet = son propre theme + design system. Pour des **variations**, crée
 
 ## 🛠️ Implémentation des designs en code
 
-> ⚠️ **TOUJOURS** récupérer le HTML du composant — ne pas se reposer sur les screenshots seuls.
+> ⚠️ **TOUJOURS** récupérer le HTML du composant · ne pas se reposer sur les screenshots seuls.
 
 ```http
 GET /api/v1/projects/:id/components/:componentId
@@ -252,16 +252,16 @@ Le `code` retourné est un **document HTML complet** → sauver directement en `
 
 | Source | Rôle |
 |---|---|
-| **HTML code** | Référence d'**implémentation** — structure, layout, styling, couleurs, spacing, images URLs, icon names |
-| **Screenshots** | Cible **visuelle** — vérifier que l'implémentation matche l'aspect |
+| **HTML code** | Référence d'**implémentation** · structure, layout, styling, couleurs, spacing, images URLs, icon names |
+| **Screenshots** | Cible **visuelle** · vérifier que l'implémentation matche l'aspect |
 
 > HTML dit *comment* construire · screenshot dit *à quoi ça doit ressembler*.
 
-#### Icônes — Iconify (`prefix:name`)
+#### Icônes · Iconify (`prefix:name`)
 
 Sets fréquents : **Solar**, **Hugeicons**, **Material Symbols**, **MDI**.
 
-> ⚠️ **Utiliser EXACTEMENT les icônes du HTML** — ne pas substituer avec un autre set (impact direct sur design fidelity).
+> ⚠️ **Utiliser EXACTEMENT les icônes du HTML** · ne pas substituer avec un autre set (impact direct sur design fidelity).
 
 **Si projet a déjà un système d'icônes** supportant Solar/Hugeicons/Material Symbols/MDI → utiliser.
 
@@ -323,7 +323,7 @@ Les designs incluent souvent tab bars + headers → **mettre à jour la navigati
 
 ### Prompter Sleek
 
-- Passer la demande user **as-is** — pas d'ajouts non demandés
+- Passer la demande user **as-is** · pas d'ajouts non demandés
 - Si user a décrit screens + styling → les inclure
 - Si "build me a running app" → envoyer tel quel, laisser Sleek planifier
 - Sleek produit des designs plus riches quand on lui laisse de la marge
@@ -338,7 +338,7 @@ Le code peut être lourd. **Ne pas** écrire le contenu via output texte (lent +
 GET /api/v1/projects?limit=10&offset=20
 ```
 
-- `limit` 1–100, default 50
+- `limit` 1-100, default 50
 - `offset` ≥ 0
 - Response : `pagination.total` pour itérer
 

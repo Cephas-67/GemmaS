@@ -22,7 +22,7 @@ export function Impact() {
   const sectors = SECTOR_KEYS.map((k) => t(k as never));
 
   return (
-    <section id="impact" className="relative overflow-hidden bg-background py-20 sm:py-28 lg:py-36">
+    <section id="impact" className="relative overflow-hidden bg-background py-10 sm:py-14 lg:py-16">
       <div className="relative">
         <Marquee gradient={false} speed={45} pauseOnHover>
           {sectors.map((s, i) => (

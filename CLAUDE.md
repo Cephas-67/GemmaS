@@ -1,4 +1,4 @@
-# 🧠 CLAUDE.md — Mémoire Persistante · Site GemmaS
+# 🧠 CLAUDE.md · Mémoire Persistante · Site GemmaS
 
 > **INSTRUCTION CRITIQUE** : lire ce fichier EN PREMIER à chaque nouvelle session.
 > Puis lire `skills_MD/AMELIORATIONS.md` avant tout acte de code.
@@ -244,7 +244,7 @@ Images        : sharp (build-time, optimisation)
 4. MOBILE-FIRST              Partir du mobile vers le desktop
 5. TOKENS HSL UNIQUEMENT     Aucune couleur hardcodée, jamais
 6. UN SEUL LABEL HOVER       Pas de title HTML + label custom en même temps
-7. JAMAIS DE TIRET CADRATIN  Aucun « — » : utiliser « · », virgule ou deux-points
+7. JAMAIS DE TIRET CADRATIN  Aucun tiret cadratin (U+2014) : utiliser « · », virgule ou deux-points
 ```
 
 ---

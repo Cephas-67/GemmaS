@@ -1,13 +1,13 @@
 ---
 name: web-design-guidelines
-description: Audit UI code contre les Web Interface Guidelines de Vercel — a11y, focus, formulaires, animations, typo, perf, dark mode, i18n, hydration. À déclencher sur "review my UI", "check accessibility", "audit design", "review UX", ou pour valider un composant avant merge.
+description: Audit UI code contre les Web Interface Guidelines de Vercel · a11y, focus, formulaires, animations, typo, perf, dark mode, i18n, hydration. À déclencher sur "review my UI", "check accessibility", "audit design", "review UX", ou pour valider un composant avant merge.
 source: https://github.com/vercel-labs/agent-skills (skills/web-design-guidelines) + https://github.com/vercel-labs/web-interface-guidelines
-license: MIT — Vercel
+license: MIT · Vercel
 ---
 
-# Web Interface Guidelines — Skill réutilisable
+# Web Interface Guidelines · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Checklist exhaustive pour auditer du code UI web.
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Checklist exhaustive pour auditer du code UI web.
 
 ---
 
@@ -25,8 +25,8 @@ license: MIT — Vercel
 
 1. **Lire** le(s) fichier(s) ciblé(s)
 2. **Cocher** contre chaque catégorie ci-dessous
-3. **Output** au format `file:line — description courte` (style VS Code, cliquable)
-4. **Sacrifier la grammaire pour la concision** — high signal-to-noise ratio
+3. **Output** au format `file:line · description courte` (style VS Code, cliquable)
+4. **Sacrifier la grammaire pour la concision** · high signal-to-noise ratio
 
 ---
 
@@ -35,12 +35,12 @@ license: MIT — Vercel
 - Boutons icône-seule → `aria-label`
 - Form controls → `<label>` ou `aria-label`
 - Interactive elements → keyboard handlers (`onKeyDown`/`onKeyUp`)
-- `<button>` pour actions, `<a>`/`<Link>` pour navigation — **JAMAIS `<div onClick>`**
+- `<button>` pour actions, `<a>`/`<Link>` pour navigation · **JAMAIS `<div onClick>`**
 - Images → `alt` (ou `alt=""` si décoratif)
 - Icônes décoratives → `aria-hidden="true"`
 - Updates async (toast, validation) → `aria-live="polite"`
 - HTML sémantique (`<button>`, `<a>`, `<label>`, `<table>`) **avant** ARIA
-- Headings hiérarchiques `<h1>`–`<h6>` + skip-link vers main
+- Headings hiérarchiques `<h1>`-`<h6>` + skip-link vers main
 - `scroll-margin-top` sur les ancres de headings
 
 ## 🎯 Focus States
@@ -68,7 +68,7 @@ license: MIT — Vercel
 
 - Honor `prefers-reduced-motion`
 - Animer **`transform` + `opacity` uniquement** (compositor-friendly)
-- ❌ Jamais `transition: all` — lister les propriétés explicitement
+- ❌ Jamais `transition: all` · lister les propriétés explicitement
 - `transform-origin` correctement positionné
 - SVG : transforms sur `<g>` wrapper + `transform-box: fill-box; transform-origin: center`
 - Animations **interruptibles** (responsive à l'input user mid-animation)
@@ -86,7 +86,7 @@ license: MIT — Vercel
 
 - Containers text → `truncate`, `line-clamp-*`, ou `break-words`
 - Flex children → `min-w-0` pour autoriser truncation
-- Gérer les **empty states** — pas de UI cassée sur strings/arrays vides
+- Gérer les **empty states** · pas de UI cassée sur strings/arrays vides
 - Anticiper short / average / very long inputs sur le contenu user
 
 ## 🖼️ Images
@@ -106,10 +106,10 @@ license: MIT — Vercel
 
 ## 🧭 Navigation & State
 
-- URL reflète le state — filtres, tabs, pagination, panneaux ouverts dans query params
+- URL reflète le state · filtres, tabs, pagination, panneaux ouverts dans query params
 - Links → `<a>`/`<Link>` (support Cmd/Ctrl-click, middle-click)
 - Deep-link tout UI stateful (si `useState`, considérer sync URL via `nuqs` ou similaire)
-- Actions destructives → confirmation modal OU undo window — **jamais immédiat**
+- Actions destructives → confirmation modal OU undo window · **jamais immédiat**
 
 ## 👆 Touch & Interaction
 
@@ -117,7 +117,7 @@ license: MIT — Vercel
 - `-webkit-tap-highlight-color` set intentionnellement
 - `overscroll-behavior: contain` dans modales/drawers/sheets
 - Pendant drag : disable text selection, `inert` sur l'élément dragué
-- `autoFocus` parcimonie — desktop only, single primary input, jamais mobile
+- `autoFocus` parcimonie · desktop only, single primary input, jamais mobile
 
 ## 📐 Safe Areas & Layout
 
@@ -135,7 +135,7 @@ license: MIT — Vercel
 
 - Dates/times → `Intl.DateTimeFormat` (pas de format hardcodé)
 - Numbers/currency → `Intl.NumberFormat` (pas hardcodé)
-- Détecter la langue via `Accept-Language` / `navigator.languages` — **pas IP**
+- Détecter la langue via `Accept-Language` / `navigator.languages` · **pas IP**
 - Brand names / code tokens → `translate="no"` (évite l'auto-traduction qui les casse)
 
 ## 💧 Hydration Safety
@@ -155,7 +155,7 @@ license: MIT — Vercel
 - Title Case sur headings/boutons (Chicago style)
 - Numérique pour les counts : "8 deployments" pas "eight"
 - Labels boutons spécifiques : "Save API Key" pas "Continue"
-- Messages d'erreur incluent fix/next step — pas juste le problème
+- Messages d'erreur incluent fix/next step · pas juste le problème
 - Seconde personne (you/your), pas première (I/we)
 - `&` > "and" si contraint en espace
 
@@ -185,15 +185,15 @@ license: MIT — Vercel
 ```text
 ## src/components/Button.tsx
 
-src/components/Button.tsx:42 — icon button missing aria-label
-src/components/Button.tsx:18 — input lacks label
-src/components/Button.tsx:55 — animation missing prefers-reduced-motion
-src/components/Button.tsx:67 — transition: all → list properties
+src/components/Button.tsx:42 · icon button missing aria-label
+src/components/Button.tsx:18 · input lacks label
+src/components/Button.tsx:55 · animation missing prefers-reduced-motion
+src/components/Button.tsx:67 · transition: all → list properties
 
 ## src/components/Modal.tsx
 
-src/components/Modal.tsx:12 — missing overscroll-behavior: contain
-src/components/Modal.tsx:34 — "..." → "…"
+src/components/Modal.tsx:12 · missing overscroll-behavior: contain
+src/components/Modal.tsx:34 · "..." → "…"
 
 ## src/components/Card.tsx
 
@@ -202,7 +202,7 @@ src/components/Modal.tsx:34 — "..." → "…"
 
 **Règles d'output** :
 - Grouper **par fichier**
-- Format `file:line — description courte` (cliquable VS Code)
+- Format `file:line · description courte` (cliquable VS Code)
 - **Sacrifier la grammaire** pour la concision
 - Pas de preamble, pas d'explication sauf si le fix est non-évident
 - Cocher `✓ pass` pour les fichiers conformes

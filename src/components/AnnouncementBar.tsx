@@ -3,7 +3,7 @@
 import { Logo } from "./Logo";
 import { useLang } from "@/contexts/LanguageContext";
 
-// Bandeau d'annonce tout en haut — strip noir, texte court centré.
+// Bandeau d'annonce tout en haut · strip noir, texte court centré.
 export function AnnouncementBar() {
   const { t } = useLang();
   return (

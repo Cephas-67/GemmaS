@@ -28,9 +28,109 @@ Journal ouvert : 2026-06-23
 
 ## Entrées
 
+### [2026-10-25] · Pôles : un seul mot GemmaS à travers les cartes ; Valeurs : arcs tracés au défilement
+
+**Pôles** : les trois G placés à la main sont remplacés par un seul mot GemmaS (`/wordmark-gemmas.svg` en masque), large comme toute la rangée et visible seulement dans les cartes. Chaque carte porte la même bande décalée de sa position, en CSS pur (bordure de 1 px comprise). Sur mobile, chaque carte montre son tiers (Ge, mm, aS). Les trois cartes ont désormais la même hauteur, condition pour que le mot reste aligné.
+
+**Valeurs** : les deux arcs ne sont plus des images mais un tracé SVG qui se dessine au défilement, d'Agilité vers Technologies puis de Technologies vers Culture, le point en tête du trait. Le tracé suit la position dans la page : il se défait quand on remonte au-dessus de la section et se refait à la redescente. `?arcs=0.5` fige un instant.
+
+**Erreurs / pièges** :
+- Le fichier `connection-arc.svg` est un contour rempli : il ne se trace pas. La ligne médiane a été reprise dans le même repère.
+- Un trait de longueur nulle à bout arrondi se dessine en point : caché tant que le tracé n'a pas commencé.
+
+**Vérifié** : captures à 0, 0,25, 0,5, 0,75 et 1 ; relevé de l'avancement en vrai défilement (descente, remontée, redescente) ; mot GemmaS à 1440 px en sombre et clair, et à 390 px. Fluidité de la section : 6 à 7 images lourdes sur 164 avec le tracé, 4 à 5 avec les arcs figés.
+
+**Fichiers** : `src/components/sections/PolesExcellence.tsx`, `src/components/values/ValuesConnector.tsx`
+
+**Reprise le même jour, à toutes les tailles d'écran** :
+- Pôles : sous md, les cartes s'empilent et le mot se redresse (`/wordmark-gemmas-vertical.svg`, le même tracé tourné d'un quart de tour) pour se lire de haut en bas. La grille passe en `auto-rows-fr` : des cartes de même hauteur, condition pour que les lettres tombent juste d'une carte à l'autre.
+- Valeurs : les arcs ne sont plus placés en pourcentages fixes (et cachés sous lg). Ils se calculent sur la position réelle des cercles : sur une même ligne, par le dessus puis par le dessous ; si le cercle suivant passe à la ligne d'en dessous (mobile, 2 + 1), l'arc descend et vient le prendre par le côté.
+- Piège : chaque cercle est dans le conteneur de son apparition, qui sert de repère à ses offsets. Il faut remonter la chaîne des `offsetParent` jusqu'au cadre commun, sinon tous les cercles se lisent à 0 et les arcs se réduisent à deux points.
+- Vérifié : planche à 390, 640, 768, 1024 et 1440 px, arcs à 0,5, 0,75 et 1. Fluidité : le mot vertical ne change rien au relevé sur mobile (mesuré avec et sans).
+
+### [2026-10-25] · Silk : une vraie pause, et un montage hors défilement
+
+**Contexte** : le site restait légèrement saccadé, y compris loin du Manifeste.
+
+**Cause** :
+- `Silk` tournait en `frameloop="always"` : la « pause » hors champ figeait le temps du shader, mais le plan plein écran était redessiné à chaque image, partout sur la page, une fois monté.
+- Son montage (contexte WebGL et compilation du shader) faisait un bloc de plus de 300 ms, déclenché à 400 px de la section, donc en plein défilement (tâches longues de 335 et 353 ms vers Impact et Projets).
+
+**Solution appliquée** :
+- `Silk.tsx` : `frameloop={paused ? "demand" : "always"}`. En pause, plus aucun dessin ; « demand » dessine une fois au montage, ce qui compile le shader tout de suite.
+- `Manifesto.tsx` : Silk est monté au premier temps mort après le chargement (`requestIdleCallback`), ou à l'approche de la section si celle-ci vient avant.
+
+**Vérifié** (build de production, 1440 px, dix passages de la page) : plus aucune tâche longue au défilement ; Manifeste à 1 à 3 images lourdes sur 170. Silk monté en haut de page après le temps mort, animé quand il est visible, et il garde son image au retour sur la section.
+
+**Ce qui reste** : la barre de navigation et le bandeau cookies, fixes avec un flou d'arrière-plan, pèsent environ deux tiers des saccades restantes. Ce sont des choix visuels, non modifiés.
+
+**Fichiers** : `src/components/backgrounds/Silk.tsx`, `src/components/sections/Manifesto.tsx`
+
+### [2026-10-24] · Fluidité au défilement : néons du hero et cartes valeurs
+
+**Contexte** : le haut de page saccadait, sur PC comme sur mobile, au défilement et même à l'arrêt pendant l'entrée des néons.
+
+**Mesure** (build de production, durée de chaque image sur la carte graphique, 24 crans de molette depuis le haut) : avant, 36 images sur 126 au-dessus de 33 ms sur PC (neuvième dixième à 100 ms), 47 sur 110 sur mobile ; à l'arrêt, 10 images lourdes pendant l'entrée des néons.
+
+**Ce qui a été fait** :
+- `ParallaxLayer` : `will-change: transform`. Les néons sont peints une fois dans la couche, le défilement ne fait plus que la déplacer.
+- `ValueCard` : retrait du `backdrop-blur-[48px]`. Sous un fond opaque à 90 %, il ne changeait que les traits de liaison vus au travers (12/255 au plus, sur environ 250 pixels à 1440 px), et il se recalculait à chaque image.
+
+**Erreurs / pièges** :
+- `will-change` sur l'élément qui porte le filtre SVG du G de verre : le filtre passe au moment de l'assemblage et se recalcule à chaque image (90 à 100 images lourdes sur 150). Annulé.
+- `will-change` sur le conteneur du G : il devient le repère du calque absolu, et le G passe de 336 à 900 px dans les cartes pôles. Annulé.
+- `will-change` sur chaque halo des néons : le flou est alors réappliqué à chaque image ; mieux vaut les peindre dans la couche de parallaxe.
+
+**Résultat** : sur PC, 12 à 16 images lourdes sur 150 en haut de page (neuvième dixième à 17 ms), 2 sur 160 au milieu et en bas ; sur mobile, 11 sur 135 en haut. À l'arrêt : 1 à 2 sur 235. Hero comparé au pixel avec et sans la couche : 6/255 au plus.
+
+**Leçon retenue** : `will-change` ne s'ajoute pas par principe. Chaque pose se mesure : il aide une couche qui se déplace, il ruine un élément filtré.
+
+**Fichiers** : `src/components/effects/ParallaxLayer.tsx`, `src/components/values/ValueCard.tsx`
+
+### [2026-10-23] · Le menu plein écran s'affichait à chaque chargement
+
+**Contexte** : au rechargement, et après un clic dans le pied de page, le menu plein écran apparaissait avant la page, sur mobile comme sur PC.
+
+**Cause** : `MobileMenu.tsx` était rendu par le serveur en position ouverte ; seul GSAP, une fois le JavaScript hydraté, le poussait hors champ. Entre les deux, le menu couvrait l'écran (long en dev, bref mais réel en production).
+
+**Solution appliquée** : le panneau et ses deux couches naissent fermés dans le HTML (`transform: translateX(100%)`), et `gsap.set` repart de `x: 0` pour ne pas cumuler sa translation avec celle du style.
+
+**Vérifié** : sonde image par image depuis le début du document, à 390 et 1440 px, au chargement, au rechargement et après un clic dans le pied de page : 0 image avec le menu visible. Sabotage : sans la correction, la même sonde en compte jusqu'à 27. Ouverture et fermeture du menu toujours animées.
+
+**À retenir** : la barre de navigation qui se replie en pastille au défilement est voulue. Elle se déplie dès qu'on remonte. Ne pas la juger sur des captures fixes : il faut le geste réel à la molette.
+
+**Fichiers** : `src/components/MobileMenu.tsx`.
+
+---
+
+### [2026-10-22] · Mobile, mouvement au défilement, conformité
+
+**Contexte** : branche `gaby` reprise et passée aux contrôles de conformité (interdits, mouvement, débordement, domaines tiers), puis au rendu mobile (390 px) et au thème clair.
+
+**Ce qui a été fait** :
+- `GamifiedHowItWorks.tsx` : le conteneur sticky portait `px-40` sans variante mobile (70 px de contenu à 390 px) et rétrécissait aussi la scène sur desktop, d'où la piste coupée avant le bord droit. La scène prend toute la largeur, seul le texte est en retrait ; échelle du monde bornée entre 0,6 et 1 ; chiffre et texte des étapes responsives ; titre en `h2`, étapes en `h3`. Titre renommé « Notre méthode, en trois temps ».
+- `Values.tsx` / `ValueCard.tsx` : grille 2 colonnes sous 640 px (la rangée débordait), dernier cercle centré ; les SVG blancs (cercle, arcs) passent par `invert dark:invert-0`, ils étaient invisibles en thème clair.
+- `TeamSection.tsx` : jeu de mesures compact sous 640 px (ronds de 48 px), la rangée de 504 px sortait de l'écran.
+- `Hero.tsx` : néons poussés hors champ sous `md` (ils mordaient sur le titre) ; parallaxe sur les néons et sur le bloc titre + bouton.
+- `Impact.tsx` : padding réduit, il laissait un vide d'environ 500 px autour du bandeau.
+- Mouvement au défilement (`src/components/effects/`) : `ParallaxLayer` et `SplitText` sur les titres des pôles, des valeurs, de l'équipe et des projets ; `Reveal` sur les cartes des pôles et des valeurs. Mesure du banc : 0,4 % → 3,8 % (seuil 2,5 %).
+- `CookieBanner.tsx` : le texte « en utilisant ce site, vous acceptez » supposait un consentement ; le site ne dépose aucun traceur, le bandeau devient une information (« Compris »). Le bouton de préférences, sans effet, est retiré.
+- `Footer.tsx` : les réseaux en `#` (X, Instagram, YouTube) ne s'affichent plus ; logo X à la place de l'oiseau Twitter.
+- `next.config.ts` : `outputFileTracingRoot` (Next prenait un dossier parent pour racine) ; `/glass-test`, `/poles-test`, `/team-test` redirigent vers l'accueil en production.
+- Tirets cadratins et demi-cadratins retirés de tout le dépôt (`·` ou `-`).
+- `legal.ts` : « Établissement » accentué, traduction anglaise de la forme juridique.
+
+**Vérifié** : captures 1440 et 390, thème clair, anglais, pages légales ; `npx tsc --noEmit` ; `next build` ; banc de conformité 8 sur 9 (la ligne restante est écartée volontairement).
+
+**Laissé en l'état** : les images picsum (provisoires), le lien « Services » vers une section commentée, la mention d'un formulaire de contact inexistant dans la politique de confidentialité.
+
+**Fichiers** : voir la liste ci-dessus, plus `src/components/effects/` (créé), `src/contexts/LanguageContext.tsx`.
+
+---
+
 ### [2026-08-25] · CGV/CGU remplacé par une page « Conditions d'utilisation »
 
-**Contexte** : Céphas a jugé le CGV/CGU (contrat de vente) hors sujet pour un site vitrine — a demandé une page plus simple, centrée sur l'usage du site (pas de transaction en ligne), avec un plan précis en 12 points (objet, acceptation, usage autorisé, propriété intellectuelle, contenu du site, disponibilité, liens externes, contenu soumis par l'utilisateur, responsabilité, modification des conditions, droit applicable, contact).
+**Contexte** : Céphas a jugé le CGV/CGU (contrat de vente) hors sujet pour un site vitrine · a demandé une page plus simple, centrée sur l'usage du site (pas de transaction en ligne), avec un plan précis en 12 points (objet, acceptation, usage autorisé, propriété intellectuelle, contenu du site, disponibilité, liens externes, contenu soumis par l'utilisateur, responsabilité, modification des conditions, droit applicable, contact).
 
 **Ce qui a été fait** :
 - `src/data/legal.ts` : export `cgvCgu` remplacé par `termsOfUse` (12 sections, structure conforme à la demande). Contrairement au CGV/CGU précédent (beaucoup de `[À COMPLÉTER]` car clauses commerciales réelles), la majorité des sections d'un « Terms of use » informationnel est du texte générique légitime, rédigeable avec confiance. Seule la section 11 (droit applicable/juridiction) garde des placeholders, un vrai fait juridique que je ne peux pas inventer.
@@ -49,12 +149,12 @@ Journal ouvert : 2026-06-23
 
 **Ce qui a été fait** :
 - `src/data/legal.ts` créé : types `LegalPageData`/`LegalSection`/`LegalField` + 3 exports (`mentionsLegales`, `politiqueConfidentialite`, `cgvCgu`), même pattern `*En` que `PoleExcellence`/`ValueItem`/`Step`. Les valeurs `[À COMPLÉTER]`/`[TO BE COMPLETED]` restent des placeholders bilingues, pas des faits inventés. Champs dynamiques (dénomination, adresse, email) résolus depuis `site.ts` via un discriminant `dynamic` plutôt que dupliqués en dur dans les données légales.
-- `src/components/legal/LegalPage.tsx` créé : composant client unique (`useLang()`) qui rend n'importe laquelle des 3 structures — titre, sections, paragraphes, champs label/valeur, et un bloc contact optionnel (`contactIntro` + lien mailto). Élimine la duplication qu'auraient eue 3 pages quasi identiques.
+- `src/components/legal/LegalPage.tsx` créé : composant client unique (`useLang()`) qui rend n'importe laquelle des 3 structures · titre, sections, paragraphes, champs label/valeur, et un bloc contact optionnel (`contactIntro` + lien mailto). Élimine la duplication qu'auraient eue 3 pages quasi identiques.
 - Les 3 `app/*/page.tsx` réduites à un simple export `metadata` (reste un Server Component, l'API `Metadata` de Next ne tourne pas côté client) + `<LegalPage page={...} />`.
 
 **Piège évité** : un composant qui exporte `metadata` ne peut pas être `"use client"` (contrainte Next App Router). D'où la séparation page (serveur, metadata) / `LegalPage` (client, `useLang()`) plutôt que de tout mettre dans le même fichier.
 
-**Leçon retenue** : dès qu'une nouvelle page a plusieurs sections structurées de forme répétitive (titre + corps, ou label + valeur), passer directement par `src/data/*.ts` + un composant de rendu partagé, plutôt que d'écrire le JSX en dur "pour aller vite" — le coût de la reprise (comme ici) dépasse largement le coût de le faire bien du premier coup.
+**Leçon retenue** : dès qu'une nouvelle page a plusieurs sections structurées de forme répétitive (titre + corps, ou label + valeur), passer directement par `src/data/*.ts` + un composant de rendu partagé, plutôt que d'écrire le JSX en dur "pour aller vite" · le coût de la reprise (comme ici) dépasse largement le coût de le faire bien du premier coup.
 
 **Type-check** : `npx tsc --noEmit` exit 0.
 
@@ -66,7 +166,7 @@ Journal ouvert : 2026-06-23
 
 **Contexte** : suite à une question de Céphas sur les pages légales attendues pour un site vitrine, identification d'un manque : CGV/CGU (pertinent car GemmaS facture des prestations avec des modalités définies, déjà décrites en FAQ : forfait vs abonnement mensuel). Confirmé combiné en une seule page plutôt que CGV et CGU séparées.
 
-**Ce qui a été fait** : `app/cgv-cgu/page.tsx` créé, même discipline que `mentions-legales`/`politique-confidentialite` : les faits déjà publics et vérifiés (délai moyen 5j, modalités de démarrage décrites en FAQ) sont repris tels quels ; les clauses contractuelles réelles (acompte, pénalités, transfert de PI, garantie, droit applicable) marquées `[À COMPLÉTER]`, pas inventées. Nouvelle clé `footer.legal.cgvCgu` (distincte de `footer.legal.terms`, qui dans ce codebase désigne déjà les mentions légales — éviter la confusion avec la convention anglaise où "terms" veut souvent dire CGV/CGU). Liée depuis `Footer.tsx` et `app/sitemap/page.tsx`.
+**Ce qui a été fait** : `app/cgv-cgu/page.tsx` créé, même discipline que `mentions-legales`/`politique-confidentialite` : les faits déjà publics et vérifiés (délai moyen 5j, modalités de démarrage décrites en FAQ) sont repris tels quels ; les clauses contractuelles réelles (acompte, pénalités, transfert de PI, garantie, droit applicable) marquées `[À COMPLÉTER]`, pas inventées. Nouvelle clé `footer.legal.cgvCgu` (distincte de `footer.legal.terms`, qui dans ce codebase désigne déjà les mentions légales · éviter la confusion avec la convention anglaise où "terms" veut souvent dire CGV/CGU). Liée depuis `Footer.tsx` et `app/sitemap/page.tsx`.
 
 **Type-check** : `npx tsc --noEmit` exit 0.
 
@@ -92,7 +192,7 @@ Journal ouvert : 2026-06-23
 
 **Solution appliquée** : voir "Ce qui a été fait".
 
-**Leçon retenue** : avant toute nouvelle section avec données répétées (icônes, titres, images), créer directement le fichier dans `src/data/` plutôt qu'un tableau local dans le composant — évite la resynchronisation a posteriori faite ici.
+**Leçon retenue** : avant toute nouvelle section avec données répétées (icônes, titres, images), créer directement le fichier dans `src/data/` plutôt qu'un tableau local dans le composant · évite la resynchronisation a posteriori faite ici.
 
 **Fichiers** : `src/data/{polesExcellence,gamifiedHowItWorks,team,projects,values}.ts` (créés), `src/components/sections/{PolesExcellence,GamifiedHowItWorks,RecentProjects,Values}.tsx`, `src/components/team/{TeamSection,TeamMemberCard}.tsx`, `src/components/projects/ProjectCard.tsx`, `src/components/values/ValueCard.tsx` (imports mis à jour), `src/components/{team,projects,values}/{data,types}.ts` (supprimés).
 
@@ -136,7 +236,7 @@ Même traitement appliqué à `ValueItem` (`titleEn`) : résolution FR/EN faite 
 
 **Point de vigilance signalé, pas corrigé** : le nouveau titre est nettement plus long (~85 caractères vs ~34) que l'ancien. Le H1 du Hero (`text-[clamp(2.5rem,5vw,4rem)]`, conteneur `max-w-[53rem]`) est dimensionné pour un titre court sur 1-2 lignes ; à vérifier visuellement (`npm run dev`), un ajustement de taille de police ou une reformulation plus courte pourrait être nécessaire si le rendu est trop lourd.
 
-**Leçon retenue** : le positionnement du client (catégorie, différenciateurs) peut évoluer au fil des sessions et ne pas être capté par CLAUDE.md/le code existant — toujours faire confirmer le positionnement en amont de toute copy plutôt que de le déduire uniquement du contenu déjà en place.
+**Leçon retenue** : le positionnement du client (catégorie, différenciateurs) peut évoluer au fil des sessions et ne pas être capté par CLAUDE.md/le code existant · toujours faire confirmer le positionnement en amont de toute copy plutôt que de le déduire uniquement du contenu déjà en place.
 
 **Fichiers** : `src/contexts/LanguageContext.tsx`.
 
@@ -168,11 +268,11 @@ Même traitement appliqué à `ValueItem` (`titleEn`) : résolution FR/EN faite 
 
 ### [2026-08-24] · Copywriting FAQ : cohérence du positionnement studio
 
-**Contexte** : en revoyant la FAQ après le Hero/TeamSection, la question `« Êtes-vous une agence ou un studio ? »` répondait encore avec l'ancien positionnement (jamais le mot « studio », aucune mention du double modèle) — contradiction directe avec `hero.title`/`team.intro` fraîchement réécrits. Repéré en auditant `src/data/faq.ts` en entier, pas seulement la question ciblée.
+**Contexte** : en revoyant la FAQ après le Hero/TeamSection, la question `« Êtes-vous une agence ou un studio ? »` répondait encore avec l'ancien positionnement (jamais le mot « studio », aucune mention du double modèle) · contradiction directe avec `hero.title`/`team.intro` fraîchement réécrits. Repéré en auditant `src/data/faq.ts` en entier, pas seulement la question ciblée.
 
 **Ce qui a été fait** : réponse FR/EN réécrite pour affirmer explicitement le studio + double modèle. Premier jet appuyé sur l'équipe (5 co-fondateurs, Cotonou) ; Céphas a demandé de recentrer sur les produits propres plutôt que la composition de l'équipe, avec e-freeshop.com en exemple. Vérifié via WebFetch (pas d'invention) : e-freeshop.com est une vraie marketplace GemmaS de composants/templates digitaux pour créateurs africains, paiement Mobile Money natif (MTN, Moov, Wave, Orange, Celtiis), créateurs gardent 95 % des revenus. Réponse finale cite ce produit concret et vérifiable au lieu de la taille de l'équipe.
 
-**Leçon retenue** : après tout changement de positionnement, relire la FAQ en entier — c'est l'endroit où les anciennes formulations survivent le plus souvent sans qu'on y pense, puisqu'elle n'est pas structurée par section comme le reste du site. Autre leçon : une preuve produit concrète et vérifiable (nom de produit, URL) est un argument plus fort qu'un fait sur l'équipe (taille, localisation) — toujours demander s'il existe un produit/projet nommable avant de se rabattre sur des faits d'équipe.
+**Leçon retenue** : après tout changement de positionnement, relire la FAQ en entier · c'est l'endroit où les anciennes formulations survivent le plus souvent sans qu'on y pense, puisqu'elle n'est pas structurée par section comme le reste du site. Autre leçon : une preuve produit concrète et vérifiable (nom de produit, URL) est un argument plus fort qu'un fait sur l'équipe (taille, localisation) · toujours demander s'il existe un produit/projet nommable avant de se rabattre sur des faits d'équipe.
 
 **Type-check** : `npx tsc --noEmit` exit 0.
 
@@ -196,13 +296,13 @@ Même traitement appliqué à `ValueItem` (`titleEn`) : résolution FR/EN faite 
 
 **Contexte** : demande de corriger les liens du site. `Footer.tsx` avait son propre `LEGAL_KEYS` (Mentions légales/Confidentialité/Sitemap) en `href="#"`, aucune des 3 pages n'existait dans `app/`. `src/data/site.ts` a un array `legal` équivalent mais **jamais importé nulle part** (mort, `Footer.tsx` maintient sa propre liste locale).
 
-**Découverte en creusant** : `Navbar.tsx`/`Footer.tsx` utilisent des ancres nues (`href="#services"`) qui ne fonctionnent que si on est déjà sur `/` — cassé sur toute autre route (`/team-test`, `/not-found`, et désormais mes 3 nouvelles pages). Préfixées par `/` (`/#services`) pour fonctionner depuis n'importe quelle route.
+**Découverte en creusant** : `Navbar.tsx`/`Footer.tsx` utilisent des ancres nues (`href="#services"`) qui ne fonctionnent que si on est déjà sur `/` · cassé sur toute autre route (`/team-test`, `/not-found`, et désormais mes 3 nouvelles pages). Préfixées par `/` (`/#services`) pour fonctionner depuis n'importe quelle route.
 
-**Découverte plus large, signalée mais PAS corrigée** (hors périmètre de cette tâche, décision produit à trancher par Céphas) : Navbar/Footer pointent vers `#services`, `#how`, `#about`, `#poles`, `#impact` — des ids qui appartiennent à `Services.tsx`/`HowItWorks.tsx`/`About.tsx`/`Poles.tsx`/`Impact.tsx`, **tous désactivés** dans `app/page.tsx` (remplacés par `PolesExcellence`, `GamifiedHowItWorks`, `TeamSection`, etc., cf. commentaire dans `page.tsx` : "le temps du rebrand GemmaS"). Concrètement, plusieurs liens de nav/footer ne mènent nulle part sur la home actuelle. Le préfixe `/` corrige le bug "ne marche pas hors de `/`", pas ce décalage de fond.
+**Découverte plus large, signalée mais PAS corrigée** (hors périmètre de cette tâche, décision produit à trancher par Céphas) : Navbar/Footer pointent vers `#services`, `#how`, `#about`, `#poles`, `#impact` · des ids qui appartiennent à `Services.tsx`/`HowItWorks.tsx`/`About.tsx`/`Poles.tsx`/`Impact.tsx`, **tous désactivés** dans `app/page.tsx` (remplacés par `PolesExcellence`, `GamifiedHowItWorks`, `TeamSection`, etc., cf. commentaire dans `page.tsx` : "le temps du rebrand GemmaS"). Concrètement, plusieurs liens de nav/footer ne mènent nulle part sur la home actuelle. Le préfixe `/` corrige le bug "ne marche pas hors de `/`", pas ce décalage de fond.
 
 **Ce qui a été fait** :
 - `app/sitemap/page.tsx` : liste les sections réellement montées (`app/page.tsx`), avec ancre seulement pour celles qui en ont une (`Manifesto`/`GamifiedHowItWorks` n'ont aucun `id` sur leur `<section>`, listées en texte simple plutôt qu'en lien mort).
-- `app/mentions-legales/page.tsx` : structure standard (éditeur, directeur de publication, hébergement, propriété intellectuelle, contact). Champs à valeur légale réelle (forme juridique, RCCM, IFU, hébergeur, directeur de publication) marqués `[À COMPLÉTER]` plutôt qu'inventés — une mention légale fausse est un risque, pas juste une mauvaise copy.
+- `app/mentions-legales/page.tsx` : structure standard (éditeur, directeur de publication, hébergement, propriété intellectuelle, contact). Champs à valeur légale réelle (forme juridique, RCCM, IFU, hébergeur, directeur de publication) marqués `[À COMPLÉTER]` plutôt qu'inventés · une mention légale fausse est un risque, pas juste une mauvaise copy.
 - `app/politique-confidentialite/page.tsx` : contenu vérifié dans le code plutôt que générique. Formulaire Contact confirmé non connecté à un backend (`setTimeout` simulé, cf. TODO historique). Aucun traceur tiers trouvé (grep GA/Plausible/PostHog/etc. : rien). Cookies décrits honnêtement : uniquement `localStorage` fonctionnel (langue, thème, consentement bandeau), pas de cookie traceur. Ancre `#cookies` pour le lien du `CookieBanner`.
 - `CookieBanner.tsx` : lien "cookies" pointait vers `#cookies`, une ancre qui n'a jamais existé nulle part sur le site → pointe maintenant vers `/politique-confidentialite#cookies`.
 - `Footer.tsx` `LEGAL_KEYS` → les 3 nouvelles routes.
@@ -228,7 +328,7 @@ Même traitement appliqué à `ValueItem` (`titleEn`) : résolution FR/EN faite 
 - `Footer.tsx` : `footer.link.poles` → `/#poles-excellence` (au lieu de `/#poles`, id de l'ancien `Poles.tsx` désactivé), `footer.link.team` → `/#team` (au lieu de `/#about`, id de l'ancien `About.tsx` désactivé). `footer.link.how`/`footer.link.manifesto` gardaient déjà le bon href, il manquait juste l'id côté section.
 - `Impact` (stats/secteurs) n'avait aucun équivalent monté → question posée à Céphas plutôt que de deviner ; réponse : réactiver la section. `Impact.tsx` avait déjà `id="impact"` et son propre `t()`, aucune modification du composant nécessaire. Montée dans `app/page.tsx` entre `Values` et `RecentProjects`.
 
-**Reste non traité, signalé la fois précédente** : `nav.services`/`footer.link.web/mobile/custom/aiAuto` (colonne "Services") pointent toujours vers `/#services`, qui n'existe pas sur la home actuelle (`Services.tsx` désactivé) — même décision à prendre que pour Impact, pas demandé cette fois.
+**Reste non traité, signalé la fois précédente** : `nav.services`/`footer.link.web/mobile/custom/aiAuto` (colonne "Services") pointent toujours vers `/#services`, qui n'existe pas sur la home actuelle (`Services.tsx` désactivé) · même décision à prendre que pour Impact, pas demandé cette fois.
 
 **Type-check** : `npx tsc --noEmit` exit 0.
 
@@ -281,7 +381,7 @@ Même traitement appliqué à `ValueItem` (`titleEn`) : résolution FR/EN faite 
 **Pièges** :
 - `Folder.css` hardcodait `:nth-child(1..3)`. Bumper `MAX_ITEMS` sans étendre la CSS aurait fait que les papiers 4 et 5 restent empilés au centre, invisibles. Solution : ajout des positions CSS pour 4 et 5, élargissement de l'éventail.
 - Le PV nomme "Enock" alors que l'avatar s'appelle "Marth". Marth = Marthelly = surnom d'Enock (confirmé par Céphas).
-- Aucun tiret cadratin `—` toléré : tous les commentaires retouchés utilisent `·`.
+- Aucun tiret cadratin (U+2014) toléré : tous les commentaires retouchés utilisent `·`.
 
 **Type-check** : `npx tsc --noEmit` exit 0, aucune erreur.
 
@@ -350,7 +450,7 @@ Même traitement appliqué à `ValueItem` (`titleEn`) : résolution FR/EN faite 
 **Contexte** : Les 5 cartes de la section « Comment ça marche ? » étaient des dégradés génériques. Céphas a déposé 5 JPG métier dans `src/commentcamarche/`.
 
 **Ce qui a été fait** :
-- Conversion sharp → WebP : `width: 1600`, `quality: 80`, `effort: 6`. Gain massif (1.4–2.1 MB → 33–103 KB, ratio ~95 %).
+- Conversion sharp → WebP : `width: 1600`, `quality: 80`, `effort: 6`. Gain massif (1.4-2.1 MB → 33-103 KB, ratio ~95 %).
 - Renommage en slugs ASCII sûrs (`itéraption…` / espace → `iteration-mvp.webp`, `mesure-impact.webp`, etc.) pour des imports propres.
 - Import statique Vite dans `HowItWorks.tsx`, fingerprinting + lazy chunk gratuits.
 - Remplacement des `bg-gradient-to-br` + radial overlay par `<img object-cover>` + voile sombre `from-black/70 … to-black/30` pour garder la lisibilité du numéro et du label en blanc.

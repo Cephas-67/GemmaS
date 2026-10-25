@@ -1,13 +1,13 @@
 ---
 name: mcp-builder
-description: Skill officiel Anthropic pour créer des serveurs MCP (Model Context Protocol) de qualité — tools bien designés, schémas Zod/Pydantic, évaluations, choix Python (FastMCP) vs TypeScript SDK. À déclencher quand l'utilisateur veut intégrer un service externe à un LLM via MCP.
+description: Skill officiel Anthropic pour créer des serveurs MCP (Model Context Protocol) de qualité · tools bien designés, schémas Zod/Pydantic, évaluations, choix Python (FastMCP) vs TypeScript SDK. À déclencher quand l'utilisateur veut intégrer un service externe à un LLM via MCP.
 source: https://github.com/anthropics/skills (skills/mcp-builder/SKILL.md)
-license: Anthropic — voir LICENSE.txt du repo source
+license: Anthropic · voir LICENSE.txt du repo source
 ---
 
-# MCP Builder — Skill réutilisable
+# MCP Builder · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — aucune configuration projet requise. Méthode de travail pour construire un serveur MCP de qualité, agnostique du domaine cible.
+> ✅ **Ce fichier est neutre** · aucune configuration projet requise. Méthode de travail pour construire un serveur MCP de qualité, agnostique du domaine cible.
 
 ---
 
@@ -25,7 +25,7 @@ Sur toute demande de :
 
 ## 🚀 Workflow en 4 phases
 
-### Phase 1 — Recherche & planification
+### Phase 1 · Recherche & planification
 
 #### 1.1 Comprendre le design moderne d'un MCP
 
@@ -73,7 +73,7 @@ Sur toute demande de :
 
 ---
 
-### Phase 2 — Implémentation
+### Phase 2 · Implémentation
 
 #### 2.1 Structure projet
 
@@ -92,7 +92,7 @@ Suivre les conventions du SDK :
 
 | Élément | Détail |
 |---|---|
-| **Input schema** | Zod (TS) ou Pydantic (Python) — contraintes + descriptions claires + exemples dans les champs |
+| **Input schema** | Zod (TS) ou Pydantic (Python) · contraintes + descriptions claires + exemples dans les champs |
 | **Output schema** | Définir `outputSchema` pour les données structurées, utiliser `structuredContent` (TS SDK) |
 | **Description tool** | Résumé concis + descriptions des paramètres + type de retour |
 | **Implémentation** | Async/await pour les I/O, error handling actionnable, pagination si applicable |
@@ -100,7 +100,7 @@ Suivre les conventions du SDK :
 
 ---
 
-### Phase 3 — Review & test
+### Phase 3 · Review & test
 
 #### 3.1 Qualité code
 - Pas de duplication (DRY)
@@ -114,16 +114,16 @@ Suivre les conventions du SDK :
 
 ---
 
-### Phase 4 — Évaluations
+### Phase 4 · Évaluations
 
 Créer des **évaluations** pour vérifier que le LLM peut utiliser le serveur efficacement sur des questions réelles complexes.
 
 #### 4.1 Méthode (10 questions)
 
-1. **Tool inspection** — lister les tools + comprendre leurs capacités
-2. **Content exploration** — opérations READ-ONLY pour découvrir la donnée disponible
-3. **Question generation** — 10 questions complexes et réalistes
-4. **Answer verification** — résoudre soi-même chaque question pour valider
+1. **Tool inspection** · lister les tools + comprendre leurs capacités
+2. **Content exploration** · opérations READ-ONLY pour découvrir la donnée disponible
+3. **Question generation** · 10 questions complexes et réalistes
+4. **Answer verification** · résoudre soi-même chaque question pour valider
 
 #### 4.2 Critères de chaque question
 

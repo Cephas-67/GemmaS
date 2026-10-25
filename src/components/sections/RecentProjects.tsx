@@ -7,6 +7,7 @@ import { ProjectCard } from "@/components/projects/ProjectCard";
 import { ProjectPagination } from "@/components/projects/ProjectPagination";
 import { defaultProjects, type Project } from "@/data/projects";
 import { useLang } from "@/contexts/LanguageContext";
+import SplitText from "@/components/effects/SplitText";
 
 type RecentProjectsProps = {
   title?: string;
@@ -59,7 +60,7 @@ export default function RecentProjects({
           id="recent-projects-title"
           className="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-medium tracking-[-0.025em]"
         >
-          {resolvedTitle}
+          <SplitText text={resolvedTitle} />
         </h2>
 
         <div className="recent-projects-grid mt-10">

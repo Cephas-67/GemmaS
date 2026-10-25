@@ -1,13 +1,13 @@
 ---
 name: microsoft-foundry
-description: Skill officiel Microsoft pour le cycle de vie complet des agents IA Foundry sur Azure — déploiement (Docker/ACR), évaluation continue, fine-tuning (SFT/DPO/RFT), provisioning ressources, RBAC, quotas, réseau privé. À déclencher pour : créer/déployer/invoquer/évaluer un agent Foundry, fine-tuner un modèle, gérer un projet/ressource Foundry.
+description: Skill officiel Microsoft pour le cycle de vie complet des agents IA Foundry sur Azure · déploiement (Docker/ACR), évaluation continue, fine-tuning (SFT/DPO/RFT), provisioning ressources, RBAC, quotas, réseau privé. À déclencher pour : créer/déployer/invoquer/évaluer un agent Foundry, fine-tuner un modèle, gérer un projet/ressource Foundry.
 source: https://github.com/microsoft/azure-skills (skills/microsoft-foundry/SKILL.md)
-license: MIT — Microsoft
+license: MIT · Microsoft
 ---
 
-# Microsoft Foundry — Skill réutilisable
+# Microsoft Foundry · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Méta-skill qui route vers des sous-skills spécialisés selon l'intention.
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Méta-skill qui route vers des sous-skills spécialisés selon l'intention.
 
 ---
 
@@ -109,15 +109,15 @@ Chaque dossier d'agent peut avoir son cache + overlay Foundry :
 ```
 
 **Règles** :
-- En projets azd : déduire le contexte (project endpoint, agent name, ACR, App Insights) depuis `azure.yaml` + `azd env get-values` — ne pas dupliquer dans metadata
+- En projets azd : déduire le contexte (project endpoint, agent name, ACR, App Insights) depuis `azure.yaml` + `azd env get-values` · ne pas dupliquer dans metadata
 - `agent-metadata.yaml` = overlay pour les valeurs non-azd + caches + overrides explicites
-- `suites/`, `datasets/`, `evaluators/` = caches locaux — réutiliser si à jour, **demander avant** d'écraser
+- `suites/`, `datasets/`, `evaluators/` = caches locaux · réutiliser si à jour, **demander avant** d'écraser
 
 ---
 
 ## 🔍 Résolution du contexte projet (7 étapes)
 
-À exécuter **uniquement quand des valeurs manquent** — skip si déjà connu depuis le message user ou un skill précédent.
+À exécuter **uniquement quand des valeurs manquent** · skip si déjà connu depuis le message user ou un skill précédent.
 
 | Step | Quoi |
 |---|---|
@@ -126,7 +126,7 @@ Chaque dossier d'agent peut avoir son cache + overlay Foundry :
 | **3. Select metadata overlay** | Ordre : explicit → `agent-metadata.<env>.yaml` → `agent-metadata.yaml` → prompt |
 | **4. Resolve eval.yaml** | Si présent : `agent.name`, `dataset_file`, `evaluators[]`, `name`, options → traiter comme **intention locale**, pas comme preuve d'existence remote |
 | **5. Layer config sources** | 1) user input · 2) azd env · 3) `.foundry/agent-metadata*.yaml` · 4) `agent.yaml`/`eval.yaml` · 5) prompts |
-| **6. Write metadata overlay** | Persist UNIQUEMENT le non-derivable (suites, lastEval, overrides) — pas les valeurs azd-owned |
+| **6. Write metadata overlay** | Persist UNIQUEMENT le non-derivable (suites, lastEval, overrides) · pas les valeurs azd-owned |
 | **7. Collect missing values** | Via `ask_user`/`askQuestions` uniquement pour ce qui n'a pas pu être résolu |
 
 ### Sources prioritaires par valeur

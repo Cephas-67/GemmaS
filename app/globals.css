@@ -81,7 +81,7 @@
     @apply antialiased;
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
-    /* Scrollbar masquée — IE/Edge & Firefox */
+    /* Scrollbar masquée · IE/Edge & Firefox */
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
@@ -91,7 +91,7 @@
     font-feature-settings: "cv11", "ss01";
   }
 
-  /* Scrollbar masquée — Chromium / WebKit */
+  /* Scrollbar masquée · Chromium / WebKit */
   html::-webkit-scrollbar,
   body::-webkit-scrollbar,
   *::-webkit-scrollbar {
@@ -170,7 +170,7 @@
   }
 
   /* ──────────────────────────────────────────────────────────
-     Liquid glass — effet bulle d'eau / verre liquide style visionOS.
+     Liquid glass · effet bulle d'eau / verre liquide style visionOS.
      Combine : backdrop-blur fort, saturation, highlight intérieur
      en haut, ombre interne en bas, et un voile radial pour donner
      la sensation de matière. À appliquer sur un élément déjà arrondi.
@@ -208,7 +208,7 @@
     pointer-events: none;
     mix-blend-mode: screen;
   }
-  /* Variante sombre — verre fumé pour le dark mode. */
+  /* Variante sombre · verre fumé pour le dark mode. */
   .dark .liquid-glass {
     background: rgba(20, 20, 22, 0.45);
     border-color: rgba(255, 255, 255, 0.08);
@@ -235,7 +235,7 @@
   }
 
   /* ──────────────────────────────────────────────────────────
-     Glass icon button — technique React Bits GlassIcons :
+     Glass icon button · technique React Bits GlassIcons :
        · couche back : pastille colorée rotatée 15deg (gradient HSL)
        · couche front : verre frosted (backdrop-blur + inset highlight)
        · au hover : back rotate plus + translate diagonale,

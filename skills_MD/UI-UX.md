@@ -1,4 +1,4 @@
-# UI-UX.md — Règles de Design Production-Grade (template réutilisable)
+# UI-UX.md · Règles de Design Production-Grade (template réutilisable)
 
 > Lire avant tout code d'interface. Ce fichier définit le **comment** construire,
 > pas les couleurs. Les couleurs viennent du projet (`CLAUDE.md` / `{TOKENS_FILE}`).
@@ -18,7 +18,7 @@
 
 ---
 
-## 0. Le Problème à Éviter — "AI Design Slop"
+## 0. Le Problème à Éviter · "AI Design Slop"
 
 Les LLMs produisent par défaut des interfaces reconnaissables entre mille.
 Ce pattern doit être **activement évité** :
@@ -31,30 +31,30 @@ Ce pattern doit être **activement évité** :
 - Glassmorphism `backdrop-blur` partout
 - Particules animées en background
 - Progress bars décoratifs sans sens fonctionnel
-- **Badges "AI / Powered by AI / Made with Claude" sur les pages publiques** — interdits
+- **Badges "AI / Powered by AI / Made with Claude" sur les pages publiques** · interdits
 
 **Ce n'est pas du design. C'est un template recyclé.**
 
 ---
 
-## 1. Références — Ce Qu'on Reproduit
+## 1. Références · Ce Qu'on Reproduit
 
 ### Anthropic (anthropic.com, claude.ai)
 - Beaucoup d'espace blanc, éléments qui respirent
-- Typographie éditoriale — serif massif pour les grands titres
+- Typographie éditoriale · serif massif pour les grands titres
 - Une seule couleur vive, utilisée avec parcimonie
 - Contenu posé directement sur la page, pas des cartes partout
-- Interactions subtiles (150–200ms)
+- Interactions subtiles (150-200ms)
 
 ### Linear (linear.app)
-- Layout asymétrique — texte à gauche, visuels décalés à droite
-- Sans-serif resserrée — `letter-spacing` tight sur les headings
+- Layout asymétrique · texte à gauche, visuels décalés à droite
+- Sans-serif resserrée · `letter-spacing` tight sur les headings
 - Lignes fines comme séparateurs, pas de cartes lourdes
-- Motion précise — reveals au scroll avec stagger
+- Motion précise · reveals au scroll avec stagger
 
 ### Vercel (vercel.com)
-- Grille stricte — tout s'aligne
-- Contraste fort — sections sombres/claires alternées avec intention
+- Grille stricte · tout s'aligne
+- Contraste fort · sections sombres/claires alternées avec intention
 - Typographie large pour headings, précise pour le corps
 
 ### Stripe (stripe.com)
@@ -62,48 +62,48 @@ Ce pattern doit être **activement évité** :
 - Couleur primaire réservée aux éléments interactifs
 
 ### Notion (notion.so)
-- Sidebar + main — layout fonctionnel
+- Sidebar + main · layout fonctionnel
 - Densité dans les listes, espace dans les headers
 - Focus lisibilité longue durée
 
 ---
 
-## 2. Typographie — Règles Précises
+## 2. Typographie · Règles Précises
 
 ```
 Display (hero)   : font-display, clamp(2.5rem, 6vw, 5rem), weight 700
-H1 (page title)  : font-display ou font-body bold, 2rem–2.5rem, weight 600–700
-H2 (section)     : font-body, 1.25rem–1.5rem, weight 600
-H3 (card title)  : font-body, 1rem–1.125rem, weight 600
+H1 (page title)  : font-display ou font-body bold, 2rem-2.5rem, weight 600-700
+H2 (section)     : font-body, 1.25rem-1.5rem, weight 600
+H3 (card title)  : font-body, 1rem-1.125rem, weight 600
 Body             : font-body, 1rem, weight 400
-Small / meta     : font-body, 0.75rem–0.875rem, weight 400–500
+Small / meta     : font-body, 0.75rem-0.875rem, weight 400-500
 ```
 
 ### Règles obligatoires
-- `line-height` des titres : **1.05 à 1.2** — jamais 1.5 sur un H1
+- `line-height` des titres : **1.05 à 1.2** · jamais 1.5 sur un H1
 - `letter-spacing` des grands titres : **-0.02em à -0.04em**
 - Titres display via `font-display` ({FONT_DISPLAY})
 - Corps via `font-sans` ({FONT_BODY})
 
 ### Interdit
-- ❌ Texte en dégradé (`background-clip: text`) — cliché épuisé
+- ❌ Texte en dégradé (`background-clip: text`) · cliché épuisé
 - ❌ `text-transform: uppercase` sur les titres principaux
 - ❌ `font-weight: 700` sur tout
 - ❌ Emoji dans les titres de section
 
 ---
 
-## 3. Layout — Principes de Composition
+## 3. Layout · Principes de Composition
 
 ### Respiration
-- Sections : `padding-block` ≥ **4rem** (6–8rem sur desktop)
-- Contenu max-width : `1152px`–`1280px` avec `margin: auto`
-- Padding de page : `1.5rem` mobile, `2–3rem` desktop
+- Sections : `padding-block` ≥ **4rem** (6-8rem sur desktop)
+- Contenu max-width : `1152px`-`1280px` avec `margin: auto`
+- Padding de page : `1.5rem` mobile, `2-3rem` desktop
 
 ### Asymétrie intentionnelle
 - Éviter les layouts 100% symétriques
 - Hero : texte ~60% de largeur, le reste respire
-- Ne pas centrer tous les blocs — alterner alignement avec intention
+- Ne pas centrer tous les blocs · alterner alignement avec intention
 
 ### Grille
 - 12 colonnes explicites
@@ -113,7 +113,7 @@ Small / meta     : font-body, 0.75rem–0.875rem, weight 400–500
 ### Patterns par type de page
 ```
 Landing     : hero pleine hauteur, sections larges, rythme vertical fort
-Feed/Liste  : sidebar 240–280px + grille 2–4 cols
+Feed/Liste  : sidebar 240-280px + grille 2-4 cols
 Dashboard   : sidebar + main, métriques en haut, contenu dense en bas
 Lecture     : colonne centrale max 680px
 Auth        : centré, une seule colonne, max 400px, pas d'ornement
@@ -121,7 +121,7 @@ Auth        : centré, une seule colonne, max 400px, pas d'ornement
 
 ---
 
-## 4. Composants — Règles de Construction
+## 4. Composants · Règles de Construction
 
 ### Boutons
 ```
@@ -136,9 +136,9 @@ Taille     : sm (8px 14px), md (10px 20px), lg (12px 28px)
 ### Cartes
 ```
 Structure  : surface (≠ bg), border 1px, radius 8px
-Padding    : 1rem–1.5rem
+Padding    : 1rem-1.5rem
 Hover      : changer border-color uniquement
-Shadow     : max 0 2px 8px rgba(0,0,0,0.08) — jamais colorée
+Shadow     : max 0 2px 8px rgba(0,0,0,0.08) · jamais colorée
 ```
 **Interdit** : `hover:scale-105` · `backdrop-blur` comme fond de carte · radius > 16px · gradient en background
 
@@ -148,7 +148,7 @@ Label      : au-dessus du champ, toujours visible
 Border     : 1px solid hsl(var(--border))
 Focus      : border-color + outline 2px offset 2px (couleur accent)
 Padding    : 10px 14px
-Radius     : 4px–6px
+Radius     : 4px-6px
 Error      : border rouge + message texte en dessous
 ```
 
@@ -179,10 +179,10 @@ Elle guide l'attention, elle ne la détourne pas.
 
 ### Durées recommandées
 ```
-Micro-interactions (hover, focus) : 100–150ms
-Transitions d'état (show/hide)    : 150–250ms
-Reveals au scroll                 : 300–500ms
-Transitions de page               : 200–300ms
+Micro-interactions (hover, focus) : 100-150ms
+Transitions d'état (show/hide)    : 150-250ms
+Reveals au scroll                 : 300-500ms
+Transitions de page               : 200-300ms
 ```
 
 ### Permis
@@ -196,11 +196,11 @@ Transitions de page               : 200–300ms
 - ❌ Parallax sur background de section
 - ❌ Rotation infinie décorative
 - ❌ Particules / confettis en background
-- ❌ `transition: all` — cibler les propriétés précises
+- ❌ `transition: all` · cibler les propriétés précises
 
 ---
 
-## 6. Spacing — Système Cohérent
+## 6. Spacing · Système Cohérent
 
 Échelle de 4px. Pas de valeurs arbitraires.
 
@@ -220,7 +220,7 @@ Transitions de page               : 200–300ms
 
 ---
 
-## 7. Mobile-First — Impératif
+## 7. Mobile-First · Impératif
 
 ```
 375px  : 1 colonne, texte 16px min, touch 44px min
@@ -236,7 +236,7 @@ Transitions de page               : 200–300ms
 
 ---
 
-## 8. Accessibilité — Non-Négociable
+## 8. Accessibilité · Non-Négociable
 
 ```
 Contraste texte/fond : ≥ 4.5:1 (WCAG AA)
@@ -248,7 +248,7 @@ Sémantique HTML      : <nav>, <main>, <article>, <section>
 
 ---
 
-## 9. Composants UI Personnels — Règle de Priorité
+## 9. Composants UI Personnels · Règle de Priorité
 
 **Avant de créer un composant :**
 1. Vérifier `{COMPONENTS_PATH}` (primitives shadcn)
@@ -305,5 +305,5 @@ Sémantique HTML      : <nav>, <main>, <article>, <section>
 
 ---
 
-*UI-UX.md — Règles de craft agnostiques des couleurs.*
+*UI-UX.md · Règles de craft agnostiques des couleurs.*
 *Les couleurs viennent du projet (`CLAUDE.md` / `{TOKENS_FILE}`).*

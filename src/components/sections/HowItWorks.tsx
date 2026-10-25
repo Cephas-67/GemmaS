@@ -103,14 +103,14 @@ export function HowItWorks() {
 
   return (
     <section id="how" ref={viewRef} className="relative bg-background">
-      {/* DESKTOP — sticky-scroll dans une carte arrondie */}
+      {/* DESKTOP · sticky-scroll dans une carte arrondie */}
       <div ref={ref} className="relative hidden h-[500vh] md:block">
         <div
           ref={visRef}
           className="sticky top-0 flex h-screen items-center px-3 py-3 sm:px-4 sm:py-4"
         >
           <div className="relative h-full w-full overflow-hidden rounded-3xl bg-[#3a3540] [contain:layout_paint] [transform:translateZ(0)]">
-            {/* z:0 — Silk monté une fois, mis en pause hors viewport */}
+            {/* z:0 · Silk monté une fois, mis en pause hors viewport */}
             <div aria-hidden className="absolute inset-0 z-0">
               {inView && (
                 <Silk
@@ -124,10 +124,10 @@ export function HowItWorks() {
               )}
             </div>
 
-            {/* z:1 — voile noir pour asseoir le contenu */}
+            {/* z:1 · voile noir pour asseoir le contenu */}
             <div aria-hidden className="absolute inset-0 z-[1] bg-black/15" />
 
-            {/* z:2 — contenu */}
+            {/* z:2 · contenu */}
             <div className="relative z-[2] grid h-full grid-cols-2 items-center">
               <div
                 aria-hidden
@@ -188,7 +188,7 @@ export function HowItWorks() {
         </div>
       </div>
 
-      {/* MOBILE — stack, rythme aligné sur Container.tsx (px-4 sm:px-6) */}
+      {/* MOBILE · stack, rythme aligné sur Container.tsx (px-4 sm:px-6) */}
       <div className="md:hidden px-4 py-20 sm:px-6 sm:py-28">
         <h2 className="font-display text-[clamp(1.75rem,7vw,2.5rem)] font-normal leading-[1.15] tracking-[-0.02em] text-foreground">
           Comment ça marche ?

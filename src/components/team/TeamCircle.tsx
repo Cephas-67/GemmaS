@@ -1,5 +1,5 @@
 // Reproduction fidèle du rond Figma : anneau très translucide, sans contenu.
-// Reste un composant purement visuel — c'est le wrapper motion.button dans
+// Reste un composant purement visuel · c'est le wrapper motion.button dans
 // TeamSection qui porte le layoutId et gère l'expansion en carte.
 export function TeamCircle({ className }: { className?: string }) {
   return (

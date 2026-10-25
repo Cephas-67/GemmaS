@@ -7,7 +7,7 @@ import { animateThemeToggle } from "@/lib/animateThemeToggle";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/contexts/LanguageContext";
 
-// Bouton sun/moon nu — pas de carte derrière, juste l'icône avec hover
+// Bouton sun/moon nu · pas de carte derrière, juste l'icône avec hover
 // discret (couleur qui passe au foreground plein).
 export function ThemeToggle({ className = "" }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();

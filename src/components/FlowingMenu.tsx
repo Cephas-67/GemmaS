@@ -77,7 +77,7 @@ function MenuItem({
   const [repetitions, setRepetitions] = useState(4);
 
   // Sur tactile (pas de hover natif) : on remplace le hover par un tap toggle.
-  // Le tap n'ouvre PAS le lien — il déclenche la même animation marquee que
+  // Le tap n'ouvre PAS le lien · il déclenche la même animation marquee que
   // le hover desktop. Re-tap = sortie.
   const [supportsHover] = useState(() =>
     typeof window !== "undefined"

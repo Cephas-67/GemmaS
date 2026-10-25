@@ -2,7 +2,7 @@ import React from 'react';
 
 const VIEWBOX = '-360 0 922 922';
 
-// Exact paths from the source SVG (unmodified) — the small slivers are real
+// Exact paths from the source SVG (unmodified) · the small slivers are real
 // geometry needed to close the shape correctly, not artifacts to discard.
 const G_MASK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${VIEWBOX}">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M465.116 384.168C516.254 384.168 558.138 423.789 561.748 474.009C558.661 423.867 517.028 384.168 466.111 384.168H465.116Z" fill="white"/>

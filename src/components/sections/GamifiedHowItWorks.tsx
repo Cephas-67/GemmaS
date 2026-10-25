@@ -70,7 +70,7 @@ const ShadowSVG = () => (
     </svg>
 )
 
-/* Track SVG — viewBox widened with flat fill extensions so no gap on slide */
+/* Track SVG · viewBox widened with flat fill extensions so no gap on slide */
 const TrackSVGBack = () => (
     <svg
         className="absolute top-0 left-0"
@@ -177,7 +177,7 @@ const FogSVG = () => (
  *
  * Each step fades in at the start of its scroll window and fades out at the end.
  * Windows are derived from the same INITIAL_OFFSET / STEP_DURATION constants
- * that drive the track — guaranteed lockstep.
+ * that drive the track · guaranteed lockstep.
  */
 function StepItem({ step, index, scrollYProgress }: {
     step: Step
@@ -198,11 +198,12 @@ function StepItem({ step, index, scrollYProgress }: {
     const y = useTransform(scrollYProgress, [start, fadeInEnd], [40, 0])
 
     return (
-        <motion.div style={{ opacity, y }} className="absolute inset-0 flex flex-row items-start justify-start gap-6">
-            <h1 className="text-[168px] leading-[130px]">{index + 1}</h1>
-            <div className="w-[400px]">
-                <h2 className="text-4xl">{title}</h2>
-                <p className="text-xl">{content}</p>
+        <motion.div style={{ opacity, y }} className="absolute inset-0 flex flex-row items-start justify-start gap-4 md:gap-6">
+            {/* Le chiffre est decoratif : le titre de l'etape porte le sens. */}
+            <span aria-hidden="true" className="shrink-0 text-[88px] leading-[72px] md:text-[168px] md:leading-[130px]">{index + 1}</span>
+            <div className="min-w-0 max-w-[400px] flex-1">
+                <h3 className="text-2xl leading-tight md:text-4xl">{title}</h3>
+                <p className="mt-2 text-base md:text-xl">{content}</p>
             </div>
         </motion.div>
     )
@@ -221,7 +222,7 @@ export default function GamifiedHowItWorks() {
 
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] })
 
-    // Spring smoothing — inertia while scrolling, crisp stop at end
+    // Spring smoothing · inertia while scrolling, crisp stop at end
     const smooth = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.5 })
 
     // Track shift: [0..1] scroll → [0..TOTAL_SHIFT] world-px, then negate for translateX
@@ -282,7 +283,10 @@ export default function GamifiedHowItWorks() {
         const el = stageRef.current
         if (!el) return
         const update = () => {
-            const s = el.clientWidth / WORLD_W
+            // Sur un ecran etroit, caler le monde sur la largeur le rendait
+            // minuscule (0,33 a 390 px) : on garde un plancher et un plafond, et la piste
+            // deborde a droite, ce qui ne gene pas puisqu'elle defile vers la gauche.
+            const s = clamp(el.clientWidth / WORLD_W, 0.6, 1)
             setScale(s)
             setWorldTop(el.clientHeight * 0.45 - 60 * s)
         }
@@ -300,11 +304,15 @@ export default function GamifiedHowItWorks() {
             className="relative w-full bg-white text-black"
         >
 
-            <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-start p-8 px-40 md:pt-40 gap-12 overflow-hidden">
-                <h1 className="text-3xl font-medium">{t("workflow.title")}</h1>
-                <div ref={stageRef} className="relative w-full h-[50vh]">
+            {/* La scene prend toute la largeur : un padding horizontal sur ce
+                conteneur retrecissait le monde et coupait la piste avant le
+                bord droit. Seuls le titre et le texte des etapes sont en retrait. */}
+            <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-start pt-24 md:pt-40 gap-8 md:gap-12 overflow-hidden">
+                <h2 className="px-6 text-center text-3xl font-medium">{t("workflow.title")}</h2>
+                <div ref={stageRef} className="relative w-full h-[55vh] md:h-[50vh]">
                     {/* Step text overlay */}
-                    <div className="absolute inset-0 z-10 pointer-events-none">
+                    <div className="absolute inset-y-0 left-0 right-0 z-10 mx-auto max-w-page px-6 md:px-12 pointer-events-none">
+                        <div className="relative h-full">
                         {steps.map((step, index) => (
                             <StepItem
                                 key={step.id}
@@ -313,6 +321,7 @@ export default function GamifiedHowItWorks() {
                                 scrollYProgress={scrollYProgress}
                             />
                         ))}
+                        </div>
                     </div>
 
                     {/* World coordinate system (scaled to stage width) */}

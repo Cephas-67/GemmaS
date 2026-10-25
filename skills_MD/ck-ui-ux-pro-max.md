@@ -1,13 +1,13 @@
 ---
 name: ck-ui-ux-pro-max
-description: Design intelligence UI/UX exhaustive pour web + mobile — 50+ styles, 161 palettes, 57 font pairings, 161 product types, 99 UX guidelines, 25 chart types sur 10 stacks (React, Next, Vue, Svelte, SwiftUI, RN, Flutter, Tailwind, shadcn/ui, HTML/CSS). 10 catégories priorisées par impact, intégration shadcn/ui MCP. À déclencher pour design new pages, refactor UI components, choisir palettes/typo/spacing, review UI code.
+description: Design intelligence UI/UX exhaustive pour web + mobile · 50+ styles, 161 palettes, 57 font pairings, 161 product types, 99 UX guidelines, 25 chart types sur 10 stacks (React, Next, Vue, Svelte, SwiftUI, RN, Flutter, Tailwind, shadcn/ui, HTML/CSS). 10 catégories priorisées par impact, intégration shadcn/ui MCP. À déclencher pour design new pages, refactor UI components, choisir palettes/typo/spacing, review UI code.
 source: https://github.com/binjuhor/shadcn-lar (.claude/skills/ui-ux-pro-max/SKILL.md)
 author: claudekit
 ---
 
-# UI/UX Pro Max (ClaudeKit) — Skill réutilisable
+# UI/UX Pro Max (ClaudeKit) · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise.
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise.
 
 Guide design complet pour web + mobile. Database searchable avec priority-based recommendations sur 10 stacks technology.
 
@@ -51,7 +51,7 @@ Guide design complet pour web + mobile. Database searchable avec priority-based 
 | **4** | Style Selection | 🟠 HIGH | `style`, `product` | Match product type, consistency, SVG icons (no emoji) | Mix flat/skeuomorphic random, emoji as icons |
 | **5** | Layout & Responsive | 🟠 HIGH | `ux` | Mobile-first breakpoints, viewport meta, no horizontal scroll | Horizontal scroll, fixed px widths, disable zoom |
 | **6** | Typography & Color | 🟡 MEDIUM | `typography`, `color` | Base 16px, line-height 1.5, semantic color tokens | Text <12px body, gray-on-gray, raw hex in components |
-| **7** | Animation | 🟡 MEDIUM | `ux` | Duration 150–300ms, motion conveys meaning, spatial continuity | Decorative-only, animating width/height, no reduced-motion |
+| **7** | Animation | 🟡 MEDIUM | `ux` | Duration 150-300ms, motion conveys meaning, spatial continuity | Decorative-only, animating width/height, no reduced-motion |
 | **8** | Forms & Feedback | 🟡 MEDIUM | `ux` | Visible labels, error near field, helper text, progressive disclosure | Placeholder-only label, errors only at top |
 | **9** | Navigation Patterns | 🟠 HIGH | `ux` | Predictable back, bottom nav ≤5, deep linking | Overloaded nav, broken back, no deep links |
 | **10** | Charts & Data | 🟢 LOW | `chart` | Legends, tooltips, accessible colors | Relying on color alone |
@@ -72,7 +72,7 @@ Règles clés (référence rapide) :
 | `form-labels` | `<label for>` |
 | `skip-links` | Skip to main content |
 | `heading-hierarchy` | h1→h6 séquentiel, no skip |
-| `color-not-only` | Ajouter icône/text — pas que la couleur |
+| `color-not-only` | Ajouter icône/text · pas que la couleur |
 | `dynamic-type` | Support system text scaling (Dynamic Type / MD) |
 | `reduced-motion` | Respecter `prefers-reduced-motion` |
 | `voiceover-sr` | Meaningful accessibilityLabel/Hint, logical reading order |

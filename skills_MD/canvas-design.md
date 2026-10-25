@@ -1,13 +1,13 @@
 ---
 name: canvas-design
-description: Skill officiel Anthropic — créer de l'art visuel original (.png ou .pdf) via philosophie de design. Workflow en 2 étapes : 1) écrire un manifeste d'aesthetic movement, 2) l'exprimer visuellement sur canvas. À déclencher quand l'utilisateur demande un poster, une œuvre, un design statique, une couverture, une affiche. Jamais copier le travail d'artistes existants.
+description: Skill officiel Anthropic · créer de l'art visuel original (.png ou .pdf) via philosophie de design. Workflow en 2 étapes : 1) écrire un manifeste d'aesthetic movement, 2) l'exprimer visuellement sur canvas. À déclencher quand l'utilisateur demande un poster, une œuvre, un design statique, une couverture, une affiche. Jamais copier le travail d'artistes existants.
 source: https://github.com/anthropics/skills (skills/canvas-design/SKILL.md)
-license: Anthropic — voir LICENSE.txt du repo source
+license: Anthropic · voir LICENSE.txt du repo source
 ---
 
-# Canvas Design — Skill réutilisable
+# Canvas Design · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Méthode artistique en 2 phases pour produire des œuvres visuelles statiques de qualité musée/magazine.
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Méthode artistique en 2 phases pour produire des œuvres visuelles statiques de qualité musée/magazine.
 
 ---
 
@@ -27,9 +27,9 @@ license: Anthropic — voir LICENSE.txt du repo source
 
 | | |
 |---|---|
-| **Ce qu'on reçoit** | Input/instructions subtiles de l'user — fondation, pas contrainte |
+| **Ce qu'on reçoit** | Input/instructions subtiles de l'user · fondation, pas contrainte |
 | **Ce qu'on crée** | Une philosophie de design / mouvement esthétique |
-| **Ce qui arrive ensuite** | La même version reçoit la philosophie et l'EXPRIME visuellement — œuvre 90 % design, 10 % texte essentiel |
+| **Ce qui arrive ensuite** | La même version reçoit la philosophie et l'EXPRIME visuellement · œuvre 90 % design, 10 % texte essentiel |
 
 **Approche mentale** :
 - Écrire un manifeste pour un mouvement artistique
@@ -39,7 +39,7 @@ license: Anthropic — voir LICENSE.txt du repo source
 
 ---
 
-## 📖 ÉTAPE 1 — Création de la philosophie de design
+## 📖 ÉTAPE 1 · Création de la philosophie de design
 
 ### Structure attendue
 
@@ -48,7 +48,7 @@ license: Anthropic — voir LICENSE.txt du repo source
 - "Chromatic Silence"
 - "Metabolist Dreams"
 
-**Articuler la philosophie** (4-6 paragraphes — concis mais complet).
+**Articuler la philosophie** (4-6 paragraphes · concis mais complet).
 
 Pour capturer l'essence VISUELLE, exprimer comment la philosophie se manifeste à travers :
 - Espace et forme
@@ -62,8 +62,8 @@ Pour capturer l'essence VISUELLE, exprimer comment la philosophie se manifeste �
 | Règle | Détail |
 |---|---|
 | **Éviter la redondance** | Chaque aspect mentionné UNE fois. Pas de répétitions sur color theory, spatial relationships, typo sans nouvelle profondeur |
-| **Insister sur le craftsmanship — PLUSIEURS FOIS** | La philosophie DOIT répéter que l'œuvre finale doit paraître avoir pris des heures, été travaillée avec soin, vient de quelqu'un au sommet de son art. Répéter : *"meticulously crafted"*, *"product of deep expertise"*, *"painstaking attention"*, *"master-level execution"* |
-| **Laisser de la place créative** | Direction esthétique spécifique mais concise — Claude suivant a de la marge pour ses choix interprétatifs (toujours top-tier) |
+| **Insister sur le craftsmanship · PLUSIEURS FOIS** | La philosophie DOIT répéter que l'œuvre finale doit paraître avoir pris des heures, été travaillée avec soin, vient de quelqu'un au sommet de son art. Répéter : *"meticulously crafted"*, *"product of deep expertise"*, *"painstaking attention"*, *"master-level execution"* |
+| **Laisser de la place créative** | Direction esthétique spécifique mais concise · Claude suivant a de la marge pour ses choix interprétatifs (toujours top-tier) |
 
 > ❗ La philosophie doit guider la version suivante à exprimer les idées **VISUELLEMENT, pas par le texte**. L'information vit dans le design, pas dans les paragraphes.
 
@@ -79,35 +79,35 @@ Pour capturer l'essence VISUELLE, exprimer comment la philosophie se manifeste �
 
 ### Principes essentiels
 
-- **PHILOSOPHIE VISUELLE** — créer une worldview esthétique à exprimer par design
-- **TEXTE MINIMAL** — toujours emphasis que texte = sparse, essential-only, intégré comme élément visuel — jamais long
-- **EXPRESSION SPATIALE** — idées communiquent par espace, forme, couleur, composition — pas paragraphes
-- **LIBERTÉ ARTISTIQUE** — la phase suivante interprète visuellement — laisser de la place
-- **PURE DESIGN** — c'est faire des OBJETS D'ART, pas des documents décorés
-- **CRAFTSMANSHIP EXPERT** — emphaser répétitivement que l'œuvre finale doit paraître méticuleusement crafted, labored over
+- **PHILOSOPHIE VISUELLE** · créer une worldview esthétique à exprimer par design
+- **TEXTE MINIMAL** · toujours emphasis que texte = sparse, essential-only, intégré comme élément visuel · jamais long
+- **EXPRESSION SPATIALE** · idées communiquent par espace, forme, couleur, composition · pas paragraphes
+- **LIBERTÉ ARTISTIQUE** · la phase suivante interprète visuellement · laisser de la place
+- **PURE DESIGN** · c'est faire des OBJETS D'ART, pas des documents décorés
+- **CRAFTSMANSHIP EXPERT** · emphaser répétitivement que l'œuvre finale doit paraître méticuleusement crafted, labored over
 
 > 📏 **Longueur** : 4-6 paragraphes substantiels. Output en `.md`. Garder générique (pas mentionner l'intention de l'art).
 
 ---
 
-## 🧬 ÉTAPE INTERMÉDIAIRE — Déduire la référence subtile
+## 🧬 ÉTAPE INTERMÉDIAIRE · Déduire la référence subtile
 
 > **CRITIQUE** : avant le canvas, identifier le **fil conceptuel subtil** depuis la requête originale.
 
 ### Le principe essentiel
 
-Le topic est une **référence subtile et niche** intégrée dans l'art lui-même — pas toujours littérale, toujours sophistiquée.
+Le topic est une **référence subtile et niche** intégrée dans l'art lui-même · pas toujours littérale, toujours sophistiquée.
 
 - Quelqu'un familier avec le sujet le **ressent intuitivement**
 - Les autres expérimentent simplement une composition abstraite magistrale
 - La philosophie de design = langage esthétique
-- Le topic déduit = l'âme — ADN conceptuel tissé invisiblement dans forme, couleur, composition
+- Le topic déduit = l'âme · ADN conceptuel tissé invisiblement dans forme, couleur, composition
 
-> **TRÈS IMPORTANT** : la référence doit être raffinée — enrichir la profondeur sans s'annoncer. Comme un musicien de jazz qui cite un autre morceau : seuls ceux qui savent captent, mais tout le monde apprécie la musique.
+> **TRÈS IMPORTANT** : la référence doit être raffinée · enrichir la profondeur sans s'annoncer. Comme un musicien de jazz qui cite un autre morceau : seuls ceux qui savent captent, mais tout le monde apprécie la musique.
 
 ---
 
-## 🎨 ÉTAPE 2 — Création du canvas
+## 🎨 ÉTAPE 2 · Création du canvas
 
 Avec philosophie + framework conceptuel établis, exprimer sur canvas.
 
@@ -152,13 +152,13 @@ Palette couleurs **limitée + intentionnelle + cohérente**.
 | **Variété de fonts** | Search `./canvas-fonts` directory pour des fonts différentes |
 | **Sophistication** | Non-négociable quel que soit l'approche |
 
-> Pour pousser : faire de la typo **partie de l'art** — si l'art est abstrait, amener la font sur le canvas (pas typeset digital).
+> Pour pousser : faire de la typo **partie de l'art** · si l'art est abstrait, amener la font sur le canvas (pas typeset digital).
 
 ### Quality bar
 
 > Pour atteindre une human-crafted quality (pas AI-generated), créer un travail qui semble avoir pris **countless hours**. Quelqu'un au top de son champ a laboré sur chaque détail avec painstaking care.
 
-- Composition, spacing, color, typo — tout doit screamer expert-level craftsmanship
+- Composition, spacing, color, typo · tout doit screamer expert-level craftsmanship
 - Double-check : rien ne se chevauche, formatting flawless, every detail perfect
 - Créer quelque chose qui pourrait être montré pour prouver une expertise
 
@@ -166,7 +166,7 @@ Palette couleurs **limitée + intentionnelle + cohérente**.
 
 ---
 
-## ✨ Final pass — REFINING
+## ✨ Final pass · REFINING
 
 > **IMPORTANT** : l'user a déjà dit : *"It isn't perfect enough. It must be pristine, a masterpiece of craftsmanship, as if about to be displayed in a museum."*
 

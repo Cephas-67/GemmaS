@@ -1,4 +1,4 @@
-/* Aurora — fond animé multi-blobs façon reactbits.
+/* Aurora · fond animé multi-blobs façon reactbits.
    3 blobs en mix-blend-screen sur fond sombre, dérivant en boucle.
    Pas de WebGL : transform + filter blur, GPU-friendly, sans coût bundle. */
 

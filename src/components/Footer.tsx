@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Linkedin, Twitter, Youtube, Instagram } from "lucide-react";
+import { Linkedin, Youtube, Instagram } from "lucide-react";
+import type { ReactNode, SVGProps } from "react";
 import { site } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/Logo";
@@ -103,10 +104,19 @@ function TorchWordmark() {
   );
 }
 
-// Mapping label → icône Lucide. Si pas d'icône, on garde le label texte.
-const socialIcons: Record<string, typeof Linkedin> = {
+// Lucide n'a plus que l'ancien oiseau de Twitter : le logo X est trace ici.
+function XIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.46 21H2.39l7.17-8.2L2 3h6.33l4.37 5.78L17.75 3Zm-1.08 16.2h1.7L7.4 4.73H5.58L16.67 19.2Z" />
+    </svg>
+  );
+}
+
+// Mapping label → icône. Si pas d'icône, on garde le label texte.
+const socialIcons: Record<string, (props: { className?: string }) => ReactNode> = {
   LinkedIn: Linkedin,
-  X: Twitter,
+  X: XIcon,
   Instagram: Instagram,
   YouTube: Youtube,
 };
@@ -119,7 +129,7 @@ export function Footer() {
         {/* Grille principale : identité + 3 colonnes de liens.
             Sur mobile 1 colonne, à partir de md 4 colonnes équilibrées. */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4 md:gap-10">
-          {/* COL 1 — identité */}
+          {/* COL 1 · identité */}
           <div>
             <Logo size="lg" />
             <p className="mt-6 text-sm text-foreground/65">
@@ -171,7 +181,9 @@ export function Footer() {
           </div>
 
           <ul className="flex items-center gap-5">
-            {site.socials.map((s) => {
+            {/* Un reseau sans adresse ("#") ouvrait un onglet vide : il ne
+                s'affiche qu'une fois son lien renseigne dans site.ts. */}
+            {site.socials.filter((s) => s.href !== "#").map((s) => {
               const Icon = socialIcons[s.label];
               return (
                 <li key={s.label}>
@@ -191,7 +203,7 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Wordmark collé au bord bas — padding latéral uniquement */}
+      {/* Wordmark collé au bord bas · padding latéral uniquement */}
       <div className="px-4 sm:px-6 lg:px-10">
         <TorchWordmark />
       </div>

@@ -1,13 +1,13 @@
 ---
 name: frontend-design
-description: Skill officiel Anthropic — créer des interfaces distinctives, production-grade, qui évitent l'esthétique "AI slop" générique. À déclencher quand l'utilisateur demande un composant, une page, un artifact, une landing, un dashboard, un poster ou tout UI web à designer / sublimer.
+description: Skill officiel Anthropic · créer des interfaces distinctives, production-grade, qui évitent l'esthétique "AI slop" générique. À déclencher quand l'utilisateur demande un composant, une page, un artifact, une landing, un dashboard, un poster ou tout UI web à designer / sublimer.
 source: https://github.com/anthropics/skills (skills/frontend-design/SKILL.md)
-license: Anthropic — voir LICENSE.txt du repo source
+license: Anthropic · voir LICENSE.txt du repo source
 ---
 
-# Frontend Design — Skill réutilisable
+# Frontend Design · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — aucune configuration projet requise. Complémentaire de `UI-UX.md` (qui couvre les règles de craft) et `SKILL.md` design (le point d'entrée du projet).
+> ✅ **Ce fichier est neutre** · aucune configuration projet requise. Complémentaire de `UI-UX.md` (qui couvre les règles de craft) et `SKILL.md` design (le point d'entrée du projet).
 
 ---
 
@@ -15,7 +15,7 @@ license: Anthropic — voir LICENSE.txt du repo source
 
 Sur toute demande de **création visuelle** : composant, page, landing, dashboard, artifact React, layout HTML/CSS, "rends ça plus beau", "design-moi…", etc.
 
-Objectif : générer du code **production-grade** + un **vrai parti pris esthétique** — pas un template recyclé.
+Objectif : générer du code **production-grade** + un **vrai parti pris esthétique** · pas un template recyclé.
 
 ---
 
@@ -30,7 +30,7 @@ S'engager sur une **direction esthétique forte** avant la 1re ligne de code :
 | **Constraints** | Stack imposée, perf, a11y |
 | **Differentiation** | Quelle est **LA** chose qu'on retiendra ? |
 
-> ⚠️ **Critique** : choisir une direction conceptuelle claire et l'exécuter avec précision. Le maximalisme audacieux et le minimalisme raffiné fonctionnent tous deux — la clé est l'**intentionnalité**, pas l'intensité.
+> ⚠️ **Critique** : choisir une direction conceptuelle claire et l'exécuter avec précision. Le maximalisme audacieux et le minimalisme raffiné fonctionnent tous deux · la clé est l'**intentionnalité**, pas l'intensité.
 
 Puis implémenter du code (HTML/CSS/JS, React, Vue…) qui est :
 - Production-grade et fonctionnel
@@ -40,7 +40,7 @@ Puis implémenter du code (HTML/CSS/JS, React, Vue…) qui est :
 
 ---
 
-## 🎨 Frontend Aesthetics — leviers à activer
+## 🎨 Frontend Aesthetics · leviers à activer
 
 ### Typographie
 - Polices **belles, uniques, intéressantes**
@@ -63,7 +63,7 @@ Puis implémenter du code (HTML/CSS/JS, React, Vue…) qui est :
 ### Composition spatiale
 - Layouts inattendus
 - **Asymétrie · overlap · diagonale · grid-breaking**
-- Negative space généreux **OU** densité contrôlée — pas l'entre-deux
+- Negative space généreux **OU** densité contrôlée · pas l'entre-deux
 
 ### Backgrounds & détails visuels
 Créer **atmosphère et profondeur**, pas des aplats unis. Outils :
@@ -77,7 +77,7 @@ Créer **atmosphère et profondeur**, pas des aplats unis. Outils :
 
 ---
 
-## 🚫 Interdits — l'esthétique "AI slop"
+## 🚫 Interdits · l'esthétique "AI slop"
 
 | Catégorie | À bannir |
 |---|---|
@@ -105,10 +105,10 @@ Créer **atmosphère et profondeur**, pas des aplats unis. Outils :
 
 | Skill | Rôle complémentaire |
 |---|---|
-| `SKILL.md` (design — entrée projet) | Point d'entrée + paths du projet + workflow obligatoire |
-| `UI-UX.md` | Règles de craft (typo, layout, anim, a11y, checklist) — le **comment construire** |
+| `SKILL.md` (design · entrée projet) | Point d'entrée + paths du projet + workflow obligatoire |
+| `UI-UX.md` | Règles de craft (typo, layout, anim, a11y, checklist) · le **comment construire** |
 | `COMPONENTS.md` | Catalogue de composants premium externes à intégrer |
-| **`frontend-design.md` (ce fichier)** | **Le pourquoi visuel + le parti pris esthétique** — à utiliser pour briefer la direction avant de coder |
+| **`frontend-design.md` (ce fichier)** | **Le pourquoi visuel + le parti pris esthétique** · à utiliser pour briefer la direction avant de coder |
 | `gsap-performance.md` | Quand on choisit du motion lourd, vérifier qu'il reste à 60 fps |
 
 ---

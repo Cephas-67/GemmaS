@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-// Sections WebGL (three + r3f / ogl) chargées en différé côté client uniquement —
+// Sections WebGL (three + r3f / ogl) chargées en différé côté client uniquement :
 // ssr:false évite tout crash sur `window` au rendu serveur,
 // et leur skeleton garde la place pendant le download du chunk.
 

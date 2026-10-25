@@ -46,7 +46,7 @@ const FAMILY_KEYS: Record<ServiceFamily["id"], { title: string; desc: string }> 
   impact: { title: "services.studio.title", desc: "services.studio.desc" },
 };
 
-// Flèche dégradée — bleu (--brand-blue) → bleu deep → orange (--brand-orange).
+// Flèche dégradée · bleu (--brand-blue) → bleu deep → orange (--brand-orange).
 // Translate-X au hover via la classe parente .group → group-hover:translate-x-1.
 function GradientArrow() {
   return (
@@ -157,7 +157,7 @@ export function Services() {
   const ys = [y0, y1, y2];
 
   // Index actif : 0 / 1 / 2 selon la progression. Seul ce visuel sera
-  // visible — pas de cross-fade continu, plus de "morphing" gênant.
+  // visible · pas de cross-fade continu, plus de "morphing" gênant.
   const [active, setActive] = useState(0);
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     const i = v < 1 / 3 ? 0 : v < 2 / 3 ? 1 : 2;
@@ -212,7 +212,7 @@ export function Services() {
               </div>
 
               {/* col droite : conteneur élargi (≈ 48rem × 44rem) et
-                  overflow-visible — les visuels peuvent déborder de la
+                  overflow-visible · les visuels peuvent déborder de la
                   colonne, pas confinés à une boîte stricte. */}
               <div className="relative mx-auto h-[44rem] w-full max-w-[48rem] overflow-visible">
                 {families.map((f, i) => (
@@ -226,7 +226,7 @@ export function Services() {
 
       {/* ────────────  MOBILE : stack simple  ────────────
           Rythme aligné sur le reste (py-20 sm:py-28), padding fluide
-          (px-4 sm:px-6) — même langage que Container.tsx. */}
+          (px-4 sm:px-6) · même langage que Container.tsx. */}
       <div className="md:hidden px-4 py-20 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-display text-[clamp(1.75rem,7vw,2.5rem)] font-normal leading-[1.15] tracking-[-0.02em] text-foreground">

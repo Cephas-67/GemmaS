@@ -1,14 +1,14 @@
 ---
 name: premium-frontend-ui
-description: Guide pour générer des expériences web premium immersive — au-delà du HTML/CSS fonctionnel. Cible Awwwards-level avec motion design system, typo cinematic, scroll narratives, magnetic interactions, perf strict (transform+opacity uniquement), eco de libs adapté React/Next ou Vanilla/Astro. À déclencher sur "premium landing page", "Awwwards-style", "immersive UI", "interactive portfolio".
+description: Guide pour générer des expériences web premium immersive · au-delà du HTML/CSS fonctionnel. Cible Awwwards-level avec motion design system, typo cinematic, scroll narratives, magnetic interactions, perf strict (transform+opacity uniquement), eco de libs adapté React/Next ou Vanilla/Astro. À déclencher sur "premium landing page", "Awwwards-style", "immersive UI", "interactive portfolio".
 source: https://github.com/github/awesome-copilot (skills/premium-frontend-ui/SKILL.md)
 author: Utkarsh Patrikar
 tags: premium, awwwards, immersive, motion, scroll-narrative, magnetic, typography
 ---
 
-# Premium Frontend UI — Skill réutilisable
+# Premium Frontend UI · Skill réutilisable
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Framework de génération pour expériences web tier Awwwards.
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Framework de génération pour expériences web tier Awwwards.
 
 > Rôle : architecter des **environnements digitaux immersifs**, pas générer du HTML/CSS fonctionnel.
 
@@ -24,7 +24,7 @@ tags: premium, awwwards, immersive, motion, scroll-narrative, magnetic, typograp
 
 ---
 
-## 🎨 Section 1 — Fondation créative
+## 🎨 Section 1 · Fondation créative
 
 Avant de générer du code de layout, comprendre la **résonance émotionnelle** cible. **Ne pas** default à du générique unopinionated.
 
@@ -39,14 +39,14 @@ S'engager sur une **identité visuelle forte** dans le CSS + component structure
 
 ---
 
-## 🏗️ Section 2 — Architecture immersive obligatoire
+## 🏗️ Section 2 · Architecture immersive obligatoire
 
 ### 2.1 Entry Sequence (Preloading & Init)
 
 > ❌ Une blank screen est **inacceptable**.
 
 - Generate **lightweight preloader** qui gère la résolution d'assets (fonts, initial images, 3D models)
-- Animation : transition fluide — **split-door reveal**, scale-up zoom, ou staggered text sweep
+- Animation : transition fluide · **split-door reveal**, scale-up zoom, ou staggered text sweep
 
 ### 2.2 Hero Architecture
 
@@ -60,13 +60,13 @@ S'engager sur une **identité visuelle forte** dans le CSS + component structure
 
 | Pattern | Détail |
 |---|---|
-| ❌ Pas de navbars statiques standard | — |
+| ❌ Pas de navbars statiques standard | · |
 | ✅ Sticky headers réactifs au scroll direction | Hide on scroll down, reveal on scroll up |
 | ✅ Hover states riches | Mega-menus avec image previews du link survolé |
 
 ---
 
-## 🌊 Section 3 — Motion Design System
+## 🌊 Section 3 · Motion Design System
 
 > Animation = **connective tissue** d'un site premium, pas afterthought.
 
@@ -92,7 +92,7 @@ Utiliser libs scroll modernes (GSAP ScrollTrigger…) pour tier animations au pr
 
 ---
 
-## 🅰️ Section 4 — Typography & Visual Texture
+## 🅰️ Section 4 · Typography & Visual Texture
 
 | Aspect | Règle |
 |---|---|
@@ -103,7 +103,7 @@ Utiliser libs scroll modernes (GSAP ScrollTrigger…) pour tier animations au pr
 
 ---
 
-## ⚡ Section 5 — Performance imperative
+## ⚡ Section 5 · Performance imperative
 
 > Un site beau qui stutter = un failure.
 
@@ -116,7 +116,7 @@ Utiliser libs scroll modernes (GSAP ScrollTrigger…) pour tier animations au pr
 
 ---
 
-## 📚 Section 6 — Implementation Ecosystem
+## 📚 Section 6 · Implementation Ecosystem
 
 ### Pour cibles React / Next.js
 
@@ -154,12 +154,12 @@ Sur prompt "Build a premium landing page" / "Awwwards-style" / "immersive UI", a
 |---|---|
 | `UI-UX` (projet) | Règles craft de base (typo, layout, anti-AI-slop) |
 | `frontend-design` (anthropics) | Vision esthétique (parti pris audacieux, anti-slop fontwise) |
-| `web-design-guidelines` (vercel) | Audit checklist (a11y, focus, perf) — file:line output |
+| `web-design-guidelines` (vercel) | Audit checklist (a11y, focus, perf) · file:line output |
 | `vercel-react-best-practices` | 70 règles perf React/Next.js (rerender, bundle, RSC…) |
 | `impeccable-animate` | Décisions générales motion (100/300/500 rule, easing, materials) |
 | `gsap-performance` | Implémentation GSAP perf-aware spécifiquement |
 | `high-end-visual-design` | Dogmatique agence tier $150k+ (variance engine, double-bezel, fonts/icons bannis) |
-| **`premium-frontend-ui`** (ce fichier) | **Spec d'architecture immersive complète** — preloader + hero + nav + scroll narratives + magnetic + typo + ecosystem libs |
-| `canvas-design` | Art statique (.png/.pdf), différent — sortie média pas web |
+| **`premium-frontend-ui`** (ce fichier) | **Spec d'architecture immersive complète** · preloader + hero + nav + scroll narratives + magnetic + typo + ecosystem libs |
+| `canvas-design` | Art statique (.png/.pdf), différent · sortie média pas web |
 
 Ce skill est **le plus complet pour l'architecture web premium** : il couvre tout le pipeline du preloader à la navigation, avec choix de libs explicites par stack. À utiliser pour scaffold un site Awwwards from scratch.

@@ -5,7 +5,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { forwardRef, useRef, useMemo, useLayoutEffect, type ForwardedRef } from "react";
 import { Color, Mesh, ShaderMaterial } from "three";
 
-// Silk — port TypeScript du shader reactbits.
+// Silk · port TypeScript du shader reactbits.
 // Plan WebGL plein écran avec un motif animé de "soie" + bruit fractal.
 
 type Uniforms = {
@@ -150,8 +150,13 @@ export function Silk({
 
   // dpr cap à 1 : le shader est volontairement flou (noise + sinus), rendre
   // au-delà du logical-pixel ne se voit pas et coûte 2-4x plus cher.
+  // En pause, la boucle s'arrête vraiment : avec "always", le plan plein écran
+  // était redessiné à chaque image même hors champ, le temps seul étant figé.
+  // Un canvas qu'on ne redessine plus garde sa dernière image affichée.
+  // "demand" plutôt que "never" : il dessine une fois au montage, ce qui
+  // compile le shader tout de suite et non à l'arrivée sur la section.
   return (
-    <Canvas dpr={1} frameloop="always">
+    <Canvas dpr={1} frameloop={paused ? "demand" : "always"}>
       <SilkPlane ref={meshRef} uniforms={uniforms} paused={paused} />
     </Canvas>
   );

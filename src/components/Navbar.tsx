@@ -22,7 +22,7 @@ export function Navbar() {
   const [hovered, setHovered] = useState(false);
   const lastY = useRef(0);
 
-  // Détecte la capacité hover. Lu une fois au mount — pas besoin d'écouter
+  // Détecte la capacité hover. Lu une fois au mount · pas besoin d'écouter
   // les changements (un device ne devient pas tactile en cours de session).
   const [supportsHover] = useState(() =>
     typeof window !== "undefined"
@@ -91,7 +91,7 @@ export function Navbar() {
           role={!expanded ? "button" : undefined}
           aria-label={!expanded ? t("nav.openMenu") : undefined}
         >
-          {/* Logo — ancre du morph. En mode bulle, on le positionne en absolute
+          {/* Logo · ancre du morph. En mode bulle, on le positionne en absolute
               au centre du carré pour un centrage pixel-exact (le flex flow
               de la pill expanded laisse un léger biais à gauche sur certaines
               tailles à cause du ratio du SVG). */}
@@ -105,7 +105,7 @@ export function Navbar() {
             <Logo showLabel={false} />
           </motion.div>
 
-          {/* Contenu expanded — apparaît/disparaît en fondu */}
+          {/* Contenu expanded · apparaît/disparaît en fondu */}
           <AnimatePresence initial={false}>
             {expanded && (
               <motion.div
@@ -134,7 +134,7 @@ export function Navbar() {
                   <LanguageToggle />
                 </div>
 
-                {/* Burger mobile — bouton plat, pas de carte glass derrière */}
+                {/* Burger mobile · bouton plat, pas de carte glass derrière */}
                 <button
                   type="button"
                   onClick={() => setOpen(true)}

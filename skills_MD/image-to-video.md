@@ -1,15 +1,15 @@
 ---
 name: image-to-video
-description: Animer une image fixe via RunComfy — router intelligent qui choisit le bon modèle i2v selon l'intention. HappyHorse 1.0 (Arena #1, audio natif, préservation identité) pour anim générale ; Wan 2.7 + audio_url pour lip-sync sur voiceover custom ; Seedance 2.0 Pro pour multi-modal (image + vidéo ref + audio ref). À déclencher sur "image to video", "i2v", "animate image", "make this move", "turn still into video".
+description: Animer une image fixe via RunComfy · router intelligent qui choisit le bon modèle i2v selon l'intention. HappyHorse 1.0 (Arena #1, audio natif, préservation identité) pour anim générale ; Wan 2.7 + audio_url pour lip-sync sur voiceover custom ; Seedance 2.0 Pro pour multi-modal (image + vidéo ref + audio ref). À déclencher sur "image to video", "i2v", "animate image", "make this move", "turn still into video".
 source: https://github.com/agentspace-so/runcomfy-agent-skills (image-to-video/SKILL.md)
 license: MIT
 required-cli: "@runcomfy/cli (npm i -g @runcomfy/cli)"
 required-env: RUNCOMFY_TOKEN (en CI/containers, sinon `runcomfy login`)
 ---
 
-# Image-to-Video — Pro Pack RunComfy
+# Image-to-Video · Pro Pack RunComfy
 
-> ✅ **Ce fichier est neutre** — pas de configuration projet requise. Nécessite le CLI `runcomfy` + un compte RunComfy.
+> ✅ **Ce fichier est neutre** · pas de configuration projet requise. Nécessite le CLI `runcomfy` + un compte RunComfy.
 
 ---
 
@@ -25,7 +25,7 @@ Le skill est un **router** : il classifie l'intent user puis choisit le bon mod�
 
 | Intent user | Modèle | Pourquoi |
 |---|---|---|
-| Animer un portrait — identité stable | **HappyHorse 1.0 I2V** | #1 Arena (Elo 1392), fidélité faciale forte |
+| Animer un portrait · identité stable | **HappyHorse 1.0 I2V** | #1 Arena (Elo 1392), fidélité faciale forte |
 | Reveal produit / 360 / macro motion | **HappyHorse 1.0 I2V** | Préservation géométrie + mouvements caméra fluides |
 | Audio ambiant natif synchronisé en 1 pass | **HappyHorse 1.0 I2V** | Synthèse audio in-pass |
 | Anim + **lip-sync sur voiceover custom** | **Wan 2.7 + `audio_url`** | Accepte ton MP3/WAV (3-30s, ≤15MB), pilote le lip-sync |
@@ -53,7 +53,7 @@ export RUNCOMFY_TOKEN="<token>"
 
 ---
 
-## 🐎 Route 1 — HappyHorse 1.0 I2V (default)
+## 🐎 Route 1 · HappyHorse 1.0 I2V (default)
 
 **Model** : `happyhorse/happyhorse-1-0/image-to-video` · **Arena rank** : #1 (Elo 1392)
 
@@ -61,10 +61,10 @@ export RUNCOMFY_TOKEN="<token>"
 
 | Champ | Type | Requis | Default | Notes |
 |---|---|---|---|---|
-| `image_url` | string | ✅ | — | JPEG/JPG/PNG/WEBP, min 300px, aspect 1:2.5–2.5:1, ≤10MB |
-| `prompt` | string | ✅ | — | ≤5000 non-CJK / 2500 CJK chars. **Motion / camera / lighting** |
+| `image_url` | string | ✅ | · | JPEG/JPG/PNG/WEBP, min 300px, aspect 1:2.5-2.5:1, ≤10MB |
+| `prompt` | string | ✅ | · | ≤5000 non-CJK / 2500 CJK chars. **Motion / camera / lighting** |
 | `resolution` | enum | ❌ | `1080P` | `720P` ou `1080P` |
-| `duration` | int | ❌ | 5 | 3–15 secondes |
+| `duration` | int | ❌ | 5 | 3-15 secondes |
 | `seed` | int | ❌ | 0 | Pour comparer variantes |
 | `watermark` | bool | ❌ | true | Watermark provider |
 
@@ -84,16 +84,16 @@ runcomfy run happyhorse/happyhorse-1-0/image-to-video \
 ### Prompting tips
 
 - **Commencer par les verbes de mouvement** : "drift", "dolly in", "orbit", "tilt up", "reveal", "blink", "breathe"
-- **Ne pas redécrire l'image** — le modèle la voit. Focus sur ce qui change
+- **Ne pas redécrire l'image** · le modèle la voit. Focus sur ce qui change
 - **Buts de préservation explicites** : "identity-stable features", "packaging unchanged", "background geometry stable"
 - **Évolution de l'éclairage** : "rim light intensifying", "shadows shortening as camera rises"
 - **Un seul beat par clip** : un seul mouvement primaire (orbit OU dolly OU tilt OU character action)
 
 ---
 
-## 🎙️ Route 2 — Wan 2.7 + `audio_url` (lip-sync custom)
+## 🎙️ Route 2 · Wan 2.7 + `audio_url` (lip-sync custom)
 
-**Model** : `wan-ai/wan-2-7/text-to-video` (PAS `/image-to-video` — c'est le t2v endpoint qui accepte `audio_url`)
+**Model** : `wan-ai/wan-2-7/text-to-video` (PAS `/image-to-video` · c'est le t2v endpoint qui accepte `audio_url`)
 
 > 💡 Pour de l'i2v pure (image animée par prompt seul), préférer **HappyHorse**. Wan 2.7 est utile uniquement quand le user a un audio track custom à lip-syncer.
 
@@ -101,13 +101,13 @@ runcomfy run happyhorse/happyhorse-1-0/image-to-video \
 
 | Champ | Type | Requis | Default | Notes |
 |---|---|---|---|---|
-| `prompt` | string | ✅ | — | ≤5000 chars. Décrit la prise talking-head : framing, lighting, motion |
-| `audio_url` | string | ✅ (pour lip-sync) | — | WAV/MP3, 3–30s, ≤15MB. **Pilote le lip-sync** |
+| `prompt` | string | ✅ | · | ≤5000 chars. Décrit la prise talking-head : framing, lighting, motion |
+| `audio_url` | string | ✅ (pour lip-sync) | · | WAV/MP3, 3-30s, ≤15MB. **Pilote le lip-sync** |
 | `aspect_ratio` | enum | ❌ | `16:9` | `16:9`, `9:16`, `1:1`, `4:3`, `3:4` |
 | `resolution` | enum | ❌ | `1080p` | `720p` ou `1080p` |
-| `duration` | enum | ❌ | `5` | 2–15 (secondes entières). **Match audio length** |
-| `negative_prompt` | string | ❌ | — | Issues concrètes à éviter (ex: "no subtitles, no flicker") |
-| `seed` | int | ❌ | — | Reproducibility |
+| `duration` | enum | ❌ | `5` | 2-15 (secondes entières). **Match audio length** |
+| `negative_prompt` | string | ❌ | · | Issues concrètes à éviter (ex: "no subtitles, no flicker") |
+| `seed` | int | ❌ | · | Reproducibility |
 
 ### Invocation
 
@@ -124,14 +124,14 @@ runcomfy run wan-ai/wan-2-7/text-to-video \
 
 ### Prompting tips
 
-- **Décrire la prise talking-head** — framing, lighting, lens feel. L'audio pilote le lip-sync, le prompt construit le frame
-- **`duration` matche la durée audio** — silence après si trop long
+- **Décrire la prise talking-head** · framing, lighting, lens feel. L'audio pilote le lip-sync, le prompt construit le frame
+- **`duration` matche la durée audio** · silence après si trop long
 - **`negative_prompt`** pour les bugs : `"no subtitles, no flicker, no distorted hands"`
 - **Multi-langue** : même prompt, swap `audio_url`. Lock seed pour cohérence visuelle
 
 ---
 
-## 🎬 Route 3 — Seedance 2.0 Pro (multi-modal)
+## 🎬 Route 3 · Seedance 2.0 Pro (multi-modal)
 
 **Model** : `bytedance/seedance-v2/pro`
 
@@ -141,15 +141,15 @@ runcomfy run wan-ai/wan-2-7/text-to-video \
 
 | Champ | Type | Requis | Default | Notes |
 |---|---|---|---|---|
-| `prompt` | string | ✅ | — | CN ≤500 chars OU EN ≤1000 mots |
-| `image_url` | array | ✅ (i2v) | `[]` | 0–9 images. **Premier = sujet principal** |
-| `video_url` | array | ❌ | `[]` | 0–3 clips ref (MP4/MOV), 2–15s chacun |
-| `audio_url` | array | ❌ | `[]` | 0–3 audios ref (WAV/MP3), 2–15s, <15MB chacun |
+| `prompt` | string | ✅ | · | CN ≤500 chars OU EN ≤1000 mots |
+| `image_url` | array | ✅ (i2v) | `[]` | 0-9 images. **Premier = sujet principal** |
+| `video_url` | array | ❌ | `[]` | 0-3 clips ref (MP4/MOV), 2-15s chacun |
+| `audio_url` | array | ❌ | `[]` | 0-3 audios ref (WAV/MP3), 2-15s, <15MB chacun |
 | `aspect_ratio` | enum | ❌ | `adaptive` | `adaptive`, `16:9`, `9:16`, `4:3`, `3:4`, `1:1`, `21:9` |
-| `duration` | int | ❌ | 5 | 4–15 (secondes entières) |
+| `duration` | int | ❌ | 5 | 4-15 (secondes entières) |
 | `resolution` | enum | ❌ | `720p` | `480p` ou `720p` |
 | `generate_audio` | bool | ❌ | true | Speech/SFX/music synchronisé in-pass |
-| `seed` | int | ❌ | — | Reproducibility |
+| `seed` | int | ❌ | · | Reproducibility |
 
 ### Invocation
 
@@ -168,8 +168,8 @@ runcomfy run bytedance/seedance-v2/pro \
 ### Prompting tips
 
 - **Division image vs texte** : `image_url` pour ce qui doit rester stable (visage, costume, brand), `prompt` pour ce qui doit évoluer (action, mood, lighting)
-- **Numéroter les refs** : `"subject from image 1, lighting from video 1, voice from audio 1"` — Seedance route correctement
-- **Specs media ref** : vidéos / audios 2–15s, audio <15MB
+- **Numéroter les refs** : `"subject from image 1, lighting from video 1, voice from audio 1"` · Seedance route correctement
+- **Specs media ref** : vidéos / audios 2-15s, audio <15MB
 - **Pas de styles radicalement différents** entre les refs (watercolor vs photoreal → output drift)
 
 ---
