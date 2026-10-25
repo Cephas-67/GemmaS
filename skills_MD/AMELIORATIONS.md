@@ -47,6 +47,7 @@ Journal ouvert : 2026-06-23
 - Valeurs : les arcs ne sont plus placés en pourcentages fixes (et cachés sous lg). Ils se calculent sur la position réelle des cercles : sur une même ligne, par le dessus puis par le dessous ; si le cercle suivant passe à la ligne d'en dessous (mobile, 2 + 1), l'arc descend et vient le prendre par le côté.
 - Piège : chaque cercle est dans le conteneur de son apparition, qui sert de repère à ses offsets. Il faut remonter la chaîne des `offsetParent` jusqu'au cadre commun, sinon tous les cercles se lisent à 0 et les arcs se réduisent à deux points.
 - Vérifié : planche à 390, 640, 768, 1024 et 1440 px, arcs à 0,5, 0,75 et 1. Fluidité : le mot vertical ne change rien au relevé sur mobile (mesuré avec et sans).
+- Arcs circulaires : les courbes de Bézier s'aplatissaient en ovale. Chaque arc est désormais une vraie portion de cercle (commande `A` du SVG), centrée au milieu des deux cartes, de rayon égal au leur plus un quart de leur écart ; il les rejoint sur leur bord, en biais. Quand la carte suivante passe à la ligne, le rayon se resserre (huit centièmes de l'écart) pour que l'arc ne sorte pas de l'écran.
 
 ### [2026-10-25] · Silk : une vraie pause, et un montage hors défilement
 

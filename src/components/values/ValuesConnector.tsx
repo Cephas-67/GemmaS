@@ -33,29 +33,48 @@ function avancementFige(): number | null {
 }
 
 /**
- * L'arc entre deux cercles. Sur une même ligne, il part du haut (ou du bas) du
- * premier et retombe sur le haut (ou le bas) du second, bombé d'un quart de
- * leur écart, comme le dessin d'origine. Si le second est sur la ligne
- * d'en dessous, l'arc descend du premier et vient le prendre par le côté.
+ * L'arc entre deux cercles : une vraie portion de cercle, pas une courbe de
+ * Bézier (qui s'aplatit en ovale). Son centre est au milieu des deux cartes,
+ * son rayon dépasse le leur d'un quart de leur écart : il les rejoint sur leur
+ * bord, en biais, et bombe du côté voulu (au-dessus pour le premier, en
+ * dessous pour le second). Quand la carte suivante passe à la ligne, le même
+ * calcul le fait bomber vers l'extérieur.
  */
 function arcEntre(a: Cercle, b: Cercle, parDessous: boolean): Trace {
   const point = Math.max(3.5, a.r * 0.036);
-  if (Math.abs(a.y - b.y) < a.r * 0.5) {
-    const sens = parDessous ? 1 : -1;
-    const depart = { x: a.x, y: a.y + sens * a.r };
-    const fin = { x: b.x, y: b.y + sens * b.r };
-    const bombe = 0.27 * Math.abs(fin.x - depart.x) * 1.33 * sens;
-    return {
-      d: `M${depart.x} ${depart.y}C${depart.x} ${depart.y + bombe} ${fin.x} ${fin.y + bombe} ${fin.x} ${fin.y}`,
-      fin,
-      point,
-    };
-  }
-  const cote = Math.sign(a.x - b.x) || 1;
-  const depart = { x: a.x, y: a.y + a.r };
-  const fin = { x: b.x + cote * b.r, y: b.y };
+  const centre = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  const ecart = Math.hypot(b.x - a.x, b.y - a.y);
+  // Le côté où l'arc bombe : perpendiculaire à la ligne des centres.
+  let normale = { x: -(b.y - a.y) / ecart, y: (b.x - a.x) / ecart };
+  if (normale.y * (parDessous ? 1 : -1) < 0) normale = { x: -normale.x, y: -normale.y };
+  // Sur une même ligne, le dôme monte d'un quart de l'écart. Quand la carte
+  // suivante passe à la ligne, l'arc bombe vers le bord de l'écran : on le
+  // resserre pour qu'il y reste.
+  const memeLigne = Math.abs(a.y - b.y) < a.r * 0.5;
+  const rayon = (a.r + b.r) / 2 + (memeLigne ? 0.25 : 0.08) * ecart;
+
+  // Où le grand cercle croise une carte, du côté où il bombe.
+  const croisement = (c: Cercle) => {
+    const d = Math.hypot(c.x - centre.x, c.y - centre.y);
+    const le = (rayon * rayon - c.r * c.r + d * d) / (2 * d);
+    const haut = Math.sqrt(Math.max(0, rayon * rayon - le * le));
+    const u = { x: (c.x - centre.x) / d, y: (c.y - centre.y) / d };
+    const pied = { x: centre.x + le * u.x, y: centre.y + le * u.y };
+    const p1 = { x: pied.x - haut * u.y, y: pied.y + haut * u.x };
+    const p2 = { x: pied.x + haut * u.y, y: pied.y - haut * u.x };
+    const cote = (p: { x: number; y: number }) => (p.x - centre.x) * normale.x + (p.y - centre.y) * normale.y;
+    return cote(p1) > cote(p2) ? p1 : p2;
+  };
+  const depart = croisement(a);
+  const fin = croisement(b);
+  // Le petit arc entre les deux points passe par le sommet : on le parcourt
+  // dans le sens où l'angle tourne de l'un à l'autre.
+  const vecteur = (p: { x: number; y: number }) => ({ x: p.x - centre.x, y: p.y - centre.y });
+  const u = vecteur(depart);
+  const v = vecteur(fin);
+  const sens = u.x * v.y - u.y * v.x > 0 ? 1 : 0;
   return {
-    d: `M${depart.x} ${depart.y}C${depart.x} ${depart.y + 0.6 * (fin.y - depart.y)} ${fin.x + 0.6 * (depart.x - fin.x)} ${fin.y} ${fin.x} ${fin.y}`,
+    d: `M${depart.x} ${depart.y}A${rayon} ${rayon} 0 0 ${sens} ${fin.x} ${fin.y}`,
     fin,
     point,
   };
