@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "GemmaS · Référence africaine du numérique",
   description:
-    "Agence digitale fondée à Cotonou, GemmaS conçoit des sites web, applications mobiles natives, logiciels sur mesure et solutions d'intelligence artificielle pour les structures qui veulent une présence numérique sérieuse, ancrée dans la réalité africaine et portée par une vision de long terme.",
+    "Agence digitale fondée au Bénin, GemmaS conçoit des sites web, applications mobiles natives, logiciels sur mesure et solutions d'intelligence artificielle pour les structures qui veulent une présence numérique sérieuse, ancrée dans la réalité africaine et portée par une vision de long terme.",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },

@@ -2,15 +2,15 @@
 export const site = {
   name: "GemmaS",
   wordmark: "GEMMAS",
-  tagline: "Référence africaine du numérique. Conçue et livrée depuis Cotonou.",
+  tagline: "Référence africaine du numérique. Conçue et livrée depuis le Bénin.",
   description:
-    "GemmaS est une agence digitale fondée à Cotonou. Elle conçoit, depuis l'Afrique, des sites web, applications mobiles natives, logiciels sur mesure et solutions d'intelligence artificielle pour les entreprises, institutions et porteurs de projets qui visent une présence numérique sérieuse.",
+    "GemmaS est une agence digitale fondée au Bénin. Elle conçoit, depuis l'Afrique, des sites web, applications mobiles natives, logiciels sur mesure et solutions d'intelligence artificielle pour les entreprises, institutions et porteurs de projets qui visent une présence numérique sérieuse.",
   country: "Bénin",
   year: new Date().getFullYear(),
   contact: {
     email: "gemmas.pro@gmail.com",
     phone: "+229 00 00 00 00",
-    address: "Sèmè-Kpodji, Bénin",
+    address: "Bénin",
   },
   nav: [
     { label: "Services", href: "#services" },
@@ -62,7 +62,7 @@ export const site = {
 export const stats = [
   { value: "5", suffix: "j", label: "Délai moyen site vitrine" },
   { value: "5", suffix: "", label: "Co-fondateurs engagés" },
-  { value: "100", suffix: "%", label: "Basés à Cotonou" },
+  { value: "100", suffix: "%", label: "Basés au Bénin" },
   { value: "0", suffix: "", label: "Bug critique toléré" },
 ];
 

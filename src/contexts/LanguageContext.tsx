@@ -91,6 +91,15 @@ const dictionaries: Record<Lang, Dict> = {
     "impact.sector.6": "Cabinets de conseil",
     "impact.sector.7": "Indépendants & cabinets libéraux",
     "impact.sector.8": "Porteurs de projets",
+    "impact.title": "Pour celles et ceux qui bâtissent ici, et d'ici.",
+    "impact.phrase.1": "Vous avez grandi plus vite que vos outils. Nous rattrapons le retard sans arrêter la machine.",
+    "impact.phrase.2": "Le premier client n'attend pas la version parfaite. Le millième ne pardonne pas une version fragile.",
+    "impact.phrase.3": "Un formulaire que l'on remplit du premier coup, c'est une file d'attente de moins devant le guichet.",
+    "impact.phrase.4": "Ce que vos équipes notent au village doit arriver au rapport sans être recopié trois fois.",
+    "impact.phrase.5": "Vous êtes loin, votre projet est au pays. Nous le menons sur place, et vous le voyez avancer d'où que vous soyez.",
+    "impact.phrase.6": "Vos consultants facturent leur expertise, pas les heures passées à recopier des chiffres d'un fichier à l'autre.",
+    "impact.phrase.7": "Votre réputation se fait de bouche à oreille. Votre site doit la confirmer, pas la contredire.",
+    "impact.phrase.8": "Vous avez l'idée et l'énergie. Il manque quelqu'un pour dire ce qu'on construit d'abord, et ce qu'on garde pour plus tard.",
 
     // Contact
     "contact.eyebrow": "Contact",
@@ -249,6 +258,15 @@ const dictionaries: Record<Lang, Dict> = {
     "impact.sector.6": "Consulting firms",
     "impact.sector.7": "Independents & professional practices",
     "impact.sector.8": "Project leaders",
+    "impact.title": "For those building here, and from here.",
+    "impact.phrase.1": "You've outgrown your tools. We help you catch up without stopping the machine.",
+    "impact.phrase.2": "Your first customer won't wait for the perfect version. Your thousandth won't forgive a fragile one.",
+    "impact.phrase.3": "A form people get right the first time is one less queue at the counter.",
+    "impact.phrase.4": "What your teams write down in the field should reach the report without being retyped three times.",
+    "impact.phrase.5": "You're far away, your project is back home. We run it on the ground, and you watch it move forward wherever you are.",
+    "impact.phrase.6": "Your consultants bill for their expertise, not for the hours spent copying figures from one spreadsheet to another.",
+    "impact.phrase.7": "Your reputation travels by word of mouth. Your website should confirm it, not contradict it.",
+    "impact.phrase.8": "You have the idea and the drive. What's missing is someone to say what gets built first, and what can wait.",
 
     // Contact
     "contact.eyebrow": "Contact",

@@ -28,6 +28,27 @@ Journal ouvert : 2026-06-23
 
 ## Entrées
 
+### [2026-10-26] · Impact : la bande défilante devient « Nous construisons pour »
+
+**Contexte** : la bande de publics en défilement continu ne disait jamais pourquoi ces mots étaient là, et on ne lisait qu'un mot à la fois.
+
+**Ce qui a été fait** :
+- Une phrase d'ouverture, puis les huit publics sur deux colonnes (une sur mobile), chacun avec une phrase qui dit ce que le studio fait pour lui (FR et EN dans `LanguageContext`).
+- Mouvement : chaque bloc remonte ligne par ligne de sous son masque quand son sommet passe aux trois quarts de l'écran, le nom puis sa phrase (1 s par ligne, 0,1 s entre deux lignes, courbe `cubic-bezier(0.16, 1, 0.3, 1)`). Il se range une fois sorti par le bas et se rejoue à la redescente. Composant réutilisable : `src/components/effects/LignesQuiRemontent.tsx`.
+- `react-fast-marquee` retiré des dépendances.
+
+**Erreurs / pièges** :
+- Le découpage en lignes remplace le texte rendu par React : sans clé liée au texte, un changement de langue réécrivait un nœud disparu. La clé suit le texte.
+- Les lignes dépendent de la largeur et de la police réelles : découpage refait au redimensionnement et à l'arrivée des polices.
+- Le masque coupait les jambages : marge basse de 0,12 em rendue aussitôt.
+
+**Vérifié** : séquence avant, pendant (lignes à mi-masque) et posée ; reprise après remontée ; bascule FR vers EN sans erreur ; mobile. Fluidité sur build de production : mobile vert, ordinateur 5 à 6 images lourdes sur 160 au premier passage.
+
+**Fichiers** : `src/components/sections/Impact.tsx`, `src/components/effects/LignesQuiRemontent.tsx`, `src/contexts/LanguageContext.tsx`, `package.json`, `package-lock.json`
+
+**Réécriture des textes** : la première version suivait un même moule (« telle chose, et telle autre ») et décrivait ce que le studio livre. Chaque phrase part désormais d'une scène que le public reconnaît, la promesse en filigrane, au rythme varié. Titre : « Pour celles et ceux qui bâtissent ici, et d'ici. » Aucun lieu ni client cité tant qu'aucun projet livré ne le soutient (la diaspora est dite « loin », le projet « au pays »). L'anglais est réécrit, pas traduit.
+- Les titres portent des espaces insécables (« ici, et d'ici », « and from here ») pour couper au bon endroit ; le découpage en lignes ne coupe que sur les espaces ordinaires et les respecte. Ne pas les remplacer par des espaces simples.
+
 ### [2026-10-25] · Pôles : un seul mot GemmaS à travers les cartes ; Valeurs : arcs tracés au défilement
 
 **Pôles** : les trois G placés à la main sont remplacés par un seul mot GemmaS (`/wordmark-gemmas.svg` en masque), large comme toute la rangée et visible seulement dans les cartes. Chaque carte porte la même bande décalée de sa position, en CSS pur (bordure de 1 px comprise). Sur mobile, chaque carte montre son tiers (Ge, mm, aS). Les trois cartes ont désormais la même hauteur, condition pour que le mot reste aligné.

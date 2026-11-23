@@ -1,42 +1,45 @@
 "use client";
 
-import Marquee from "react-fast-marquee";
 import { useLang } from "@/contexts/LanguageContext";
+import LignesQuiRemontent from "@/components/effects/LignesQuiRemontent";
 
-// Secteurs cibles · bandeau marquee en grand display, sans cadre.
-// Pleine largeur, dégradés gauche/droite pour fondre les extrémités.
+// Pour qui GemmaS construit : une phrase d'ouverture, puis chaque public avec
+// ce que le studio fait pour lui. Au défilement, chaque bloc remonte ligne par
+// ligne de sous son masque, le nom puis sa phrase ; tout se rejoue quand on
+// remonte au-dessus de la section et qu'on redescend.
 // Les libellés sont résolus via t() pour suivre la langue active.
-const SECTOR_KEYS = [
-  "impact.sector.1",
-  "impact.sector.2",
-  "impact.sector.3",
-  "impact.sector.4",
-  "impact.sector.5",
-  "impact.sector.6",
-  "impact.sector.7",
-  "impact.sector.8",
-] as const;
+const PUBLICS = [1, 2, 3, 4, 5, 6, 7, 8] as const;
 
 export function Impact() {
   const { t } = useLang();
-  const sectors = SECTOR_KEYS.map((k) => t(k as never));
 
   return (
-    <section id="impact" className="relative overflow-hidden bg-background py-10 sm:py-14 lg:py-16">
-      <div className="relative">
-        <Marquee gradient={false} speed={45} pauseOnHover>
-          {sectors.map((s, i) => (
-            <span
-              key={`${SECTOR_KEYS[i]}-${s}`}
-              className="mx-6 font-display text-[clamp(2.25rem,5vw,4.25rem)] font-semibold tracking-tight text-foreground/25 hover:text-foreground transition-colors duration-500"
-            >
-              {s}
-            </span>
-          ))}
-        </Marquee>
+    <section id="impact" className="relative bg-background py-20 sm:py-24 lg:py-28">
+      <div className="mx-auto w-full max-w-page px-5 sm:px-8 lg:px-12">
+        <LignesQuiRemontent
+          as="h2"
+          texte={t("impact.title" as never)}
+          className="font-display text-[clamp(2.25rem,5vw,4.25rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-foreground"
+        />
 
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent sm:w-32" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent sm:w-32" />
+        <ul className="mt-12 grid gap-x-12 gap-y-10 sm:mt-16 md:grid-cols-2 lg:gap-x-20 lg:gap-y-14">
+          {PUBLICS.map((n, i) => (
+            <li key={n} className="border-t border-border pt-6">
+              <LignesQuiRemontent
+                as="h3"
+                delai={(i % 2) * 0.1}
+                texte={t(`impact.sector.${n}` as never)}
+                className="font-display text-[clamp(1.5rem,2.6vw,2.25rem)] font-semibold leading-[1.1] tracking-[-0.02em] text-foreground"
+              />
+              <LignesQuiRemontent
+                as="p"
+                delai={(i % 2) * 0.1 + 0.15}
+                texte={t(`impact.phrase.${n}` as never)}
+                className="mt-3 max-w-[34rem] text-base leading-relaxed text-muted-foreground"
+              />
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
