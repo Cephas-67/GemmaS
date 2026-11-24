@@ -72,7 +72,7 @@ export const mentionsLegales: LegalPageData = {
           valueEn: "RB/PNO/26 A 128959, dated September 14, 2026",
         },
         { label: "Numéro IFU", labelEn: "IFU (tax ID) number", value: "0202438400014", valueEn: "0202438400014" },
-        { label: "Adresse", labelEn: "Address", dynamic: "address" },
+        { label: "Adresse", labelEn: "Address", value: "Sèmè-Podji, Ouémé, Bénin", valueEn: "Sèmè-Podji, Ouémé, Benin" },
         { label: "Email", labelEn: "Email", dynamic: "email" },
         {
           label: "Téléphone",
