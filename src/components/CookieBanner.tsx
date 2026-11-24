@@ -31,7 +31,10 @@ export function CookieBanner() {
       <div
         className={cn(
           "pointer-events-auto flex items-center gap-3",
-          "rounded-full bg-black/90 text-white backdrop-blur-md",
+          // Fond plein plutôt que noir translucide flouté : à 90 % d'opacité le
+          // flou ne se voyait pas, mais il recalculait l'arrière-plan à chaque
+          // image du défilement. Même rendu, sans ce coût.
+          "rounded-full bg-[#0b0b0b] text-white",
           "border border-white/10 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.5)]",
           "min-h-11 py-1.5 pl-4 pr-1.5",
         )}

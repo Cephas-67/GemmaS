@@ -3,13 +3,16 @@ export type Project = {
   name: string;
   image: string;
   href?: string;
+  /** Pas encore en ligne : l'image est floutée jusqu'à ne plus rien montrer,
+   *  la carte porte la mention « bientôt » et ne mène nulle part. */
+  bientot?: boolean;
 };
 
 // Le premier projet est mis en avant (grande carte), les suivants
-// alimentent la colonne de miniatures. e-freeshop.com est notre seul
-// produit propre en ligne à ce jour, mis en avant en featured avec un lien
-// et un visuel réels ; les autres restent des placeholders picsum
-// (href="#") en attendant les vraies réalisations clients.
+// alimentent la colonne de miniatures. e-freeshop.com est en ligne, avec son
+// lien et son visuel réels. Les trois autres sont de vrais projets du studio,
+// pas encore sortis : leurs images ne servent que de matière de couleur sous
+// le flou, rien ne doit s'y reconnaître.
 export const defaultProjects: Project[] = [
   {
     id: "e-freeshop",
@@ -18,27 +21,21 @@ export const defaultProjects: Project[] = [
     href: "https://e-freeshop.com",
   },
   {
-    id: "finn7",
-    name: "Finn7",
-    image: "https://picsum.photos/seed/gemmas-finn7/1200/675",
-    href: "#",
+    id: "god2",
+    name: "GOD2",
+    image: "/images/projects/bientot-god2.jpg",
+    bientot: true,
   },
   {
-    id: "hindsloop-focus",
-    name: "Hindsloop · Focus",
-    image: "https://picsum.photos/seed/gemmas-hindsloop-focus/600/300",
-    href: "#",
+    id: "raven",
+    name: "R.A.V.E.N",
+    image: "/images/projects/bientot-raven.jpg",
+    bientot: true,
   },
   {
-    id: "hindsloop-copilot",
-    name: "Hindsloop · Co-Pilot",
-    image: "https://picsum.photos/seed/gemmas-hindsloop-copilot/600/300",
-    href: "#",
-  },
-  {
-    id: "hindsloop-mindful",
-    name: "Hindsloop · Mindful",
-    image: "https://picsum.photos/seed/gemmas-hindsloop-mindful/600/300",
-    href: "#",
+    id: "event-guru",
+    name: "Event GURU",
+    image: "/images/projects/bientot-event-guru.jpg",
+    bientot: true,
   },
 ];

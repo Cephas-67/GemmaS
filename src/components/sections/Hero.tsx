@@ -58,6 +58,22 @@ export function Hero() {
 
 
 
+      {/* Mode clair seulement : un fond gris de studio, plus sombre vers les
+          bords, sur lequel les néons se lisent comme de la lumière. Il se
+          fond dans le blanc en bas, la section suivante s'enchaîne sans
+          cassure. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 dark:hidden"
+        style={{
+          background: "radial-gradient(ellipse 70% 60% at 50% 50%, #f6f6f4 0%, #e7e7e4 55%, #d2d2ce 100%)",
+          // Le fondu ne prend que le dernier dixième : plus tôt, il blanchissait
+          // tout le bas du hero et les néons y perdaient leur fond sombre.
+          maskImage: "linear-gradient(to bottom, #000 90%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, #000 90%, transparent 100%)",
+        }}
+      />
+
       <div className="absolute w-[50vw] h-screen flex flex-col items-center justify-center z-0 right-0 translate-x-[80%] md:translate-x-1/2" aria-hidden>
         {/* Profondeur : les neons descendent moins vite que la page, le titre
             un peu moins encore, et l'ecran se lit en plans. */}
@@ -91,7 +107,9 @@ export function Hero() {
       {/* z-[2] · voile bas pour amener le trait décoratif et asseoir le CTA */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-b from-background/0 via-background/0 to-background/50"
+        // En sombre seulement : en clair, ce voile vers le fond blanc
+        // délavait le studio gris sur lequel les néons se lisent.
+        className="pointer-events-none absolute inset-0 z-[2] hidden bg-gradient-to-b from-background/0 via-background/0 to-background/50 dark:block"
       />
 
       {/* CONTENU · Mobile-first :

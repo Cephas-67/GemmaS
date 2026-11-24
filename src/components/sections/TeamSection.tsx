@@ -1,121 +1,174 @@
 "use client";
 
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
+import { CTAButton } from "@/components/ui/CTAButton";
 import { cn } from "@/lib/utils";
-import { team } from "@/data/team";
-import { TeamCircle } from "../team/TeamCircle";
-import { TeamMemberCard } from "../team/TeamMemberCard";
+import { team, type TeamMember } from "@/data/team";
 import { useLang } from "@/contexts/LanguageContext";
 import SplitText from "@/components/effects/SplitText";
 
-const SPRING = { type: "spring", stiffness: 300, damping: 30, mass: 0.9 } as const;
-const LAYOUT_TRANSITION = { layout: SPRING };
+// Une rangée de portraits ronds. Au survol, le rond grandit, reprend sa
+// couleur et le prénom se lève lettre par lettre. Au clic, le rond choisi
+// devient la carte du membre, à droite, et les autres se rangent en colonne
+// à gauche (en ligne dessous sur téléphone).
+//
+// Chaque membre est une seule boîte posée en absolu. Toute la mise en place
+// est une fonction de (largeur, choisi, survol) : les boîtes reçoivent leur
+// géométrie, une transition CSS fait le trajet. Pas de `layout` Framer ici :
+// son FLIP passe par un scale qui écrase les ronds en ellipses pendant le
+// trajet, alors que largeur et hauteur animées gardent le rond rond.
 
-// Piège vérifié : ne JAMAIS mettre une classe Tailwind `transition-transform`
-// (ou toute transition CSS sur `transform`) sur un élément `layout`. Framer
-// pilote déjà `transform` en JS pour le FLIP ; une transition CSS sur la même
-// propriété se déclenche à chaque frame où Framer la modifie et casse la
-// trajectoire (mesuré image par image : l'élément saute à la bonne position
-// puis en dérive avant d'y revenir, quel que soit le spring/tween demandé).
-// Le survol se fait donc via `whileHover`, pas via une classe CSS.
+const COURBE = "cubic-bezier(0.16, 1, 0.3, 1)";
+const TRAJET = `left 0.8s ${COURBE}, top 0.8s ${COURBE}, width 0.8s ${COURBE}, height 0.8s ${COURBE}, border-radius 0.8s ${COURBE}`;
 
-// Un seul noeud motion par membre, jamais démonté/remonté : c'est LUI qui
-// grandit et change de forme (rond → card), pas un second élément qui
-// apparaît à côté. Le contenu interne (rond vide vs card) se fond en fondu
-// séparément, pendant que la boîte elle-même s'agrandit via `layout` · d'où
-// l'impression d'un seul objet qui se transforme plutôt que d'une card qui
-// "pop" à côté du rond.
-const CONTENT_FADE = { duration: 0.2 };
+type Boite = { l: number; t: number; w: number; h: number };
+type Etiquette = { l: number; t: number; w: number };
 
-// Tout est positionné en absolu dans un même repère plutôt que via un flex
-// qui bascule row → column : laisser flex re-fluer fait bouger la boîte
-// PARENTE (large et courte → étroite et haute), et Framer Motion compense ce
-// changement par un scale non-uniforme le temps de la transition, ce qui
-// écrase les ronds en ellipses au passage. En donnant à chaque rond une
-// position absolue propre (qui ne bouge que par translation), il n'y a plus
-// de parent à re-scaler : juste des translations, donc plus de déformation.
-// Deux jeux de mesures : a 390 px de large, la rangee de six ronds de 64 px
-// faisait 504 px et sortait de l'ecran. Le jeu compact tient dans 350 px,
-// rangee comme carte ouverte.
-const MESURES = {
-  large: { CIRCLE: 64, ROW_GAP: 24, COL_GAP: 20, CARD_WIDTH: 256, CARD_TO_STACK_GAP: 40 },
-  compact: { CIRCLE: 48, ROW_GAP: 12, COL_GAP: 12, CARD_WIDTH: 256, CARD_TO_STACK_GAP: 24 },
-};
-
-function mesuresDeScene(compact: boolean) {
-  const { CIRCLE, ROW_GAP, COL_GAP, CARD_WIDTH, CARD_TO_STACK_GAP } = compact ? MESURES.compact : MESURES.large;
-  const rowWidth = team.length * CIRCLE + (team.length - 1) * ROW_GAP;
-  const stackHeight = (team.length - 1) * CIRCLE + (team.length - 2) * COL_GAP;
-  const stageWidth = Math.max(rowWidth, CARD_WIDTH + CARD_TO_STACK_GAP + CIRCLE);
-  const rowTop = (stackHeight - CIRCLE) / 2;
-  return { CIRCLE, ROW_GAP, COL_GAP, CARD_WIDTH, CARD_TO_STACK_GAP, rowWidth, stackHeight, stageWidth, rowTop };
+function rangee(W: number, etroit: boolean, survol: number | null) {
+  const base = etroit ? Math.min(64, (W - 48) / 5) : 160;
+  const grand = etroit ? base : 240;
+  const ecart = etroit ? 12 : 32;
+  const tailles = team.map((_, i) => (i === survol ? grand : base));
+  let x = (W - tailles.reduce((a, b) => a + b, 0) - ecart * (team.length - 1)) / 2;
+  const milieu = grand / 2;
+  const boites: Boite[] = [];
+  const etiquettes: Etiquette[] = [];
+  tailles.forEach((t, i) => {
+    boites[i] = { l: x, t: milieu - t / 2, w: t, h: t };
+    const lw = etroit ? t + 20 : 180;
+    etiquettes[i] = { l: x + t / 2 - lw / 2, t: milieu + t / 2 + 14, w: lw };
+    x += t + ecart;
+  });
+  return { boites, etiquettes, hauteur: grand + (etroit ? 40 : 90) };
 }
 
-function useEcranEtroit() {
-  const [etroit, setEtroit] = useState(false);
-  useEffect(() => {
-    const requete = window.matchMedia("(max-width: 639px)");
-    const suivre = () => setEtroit(requete.matches);
-    suivre();
-    requete.addEventListener("change", suivre);
-    return () => requete.removeEventListener("change", suivre);
-  }, []);
-  return etroit;
+function disposer(W: number, choisi: number | null, survol: number | null) {
+  const etroit = W < 640;
+  let boites: Boite[] = [];
+  // Les étiquettes gardent toujours leur place de rangée : à l'ouverture
+  // elles s'effacent sur place. Sans position, elles sautaient toutes dans
+  // le coin de la scène et s'y superposaient le temps de leur fondu.
+  const { etiquettes, ...repos } = rangee(W, etroit, choisi === null ? survol : null);
+  let hauteur: number;
+  // Hauteur calée sur la phrase la plus longue (quatre lignes) plus le bouton.
+  let carte = { w: 460, h: 590 };
+
+  if (choisi === null) {
+    boites = repos.boites;
+    hauteur = repos.hauteur;
+  } else {
+    const autres = team.map((_, i) => i).filter((i) => i !== choisi);
+    if (!etroit) {
+      const c = 72, g = 16, ecart = 48;
+      const x0 = (W - (c + ecart + carte.w)) / 2;
+      const haut = (carte.h - (autres.length * c + (autres.length - 1) * g)) / 2;
+      autres.forEach((i, k) => (boites[i] = { l: x0, t: haut + k * (c + g), w: c, h: c }));
+      boites[choisi] = { l: x0 + c + ecart, t: 0, w: carte.w, h: carte.h };
+      hauteur = carte.h;
+    } else {
+      const c = 56, g = 14;
+      // La photo est en 4/3 sur toute la largeur moins la marge : la carte
+      // prend sa hauteur, plus la place du texte et du bouton.
+      carte = { w: W, h: Math.round((W - 32) * 0.75) + 210 };
+      const x0 = (W - (autres.length * c + (autres.length - 1) * g)) / 2;
+      boites[choisi] = { l: 0, t: 0, w: carte.w, h: carte.h };
+      autres.forEach((i, k) => (boites[i] = { l: x0 + k * (c + g), t: carte.h + 24, w: c, h: c }));
+      hauteur = carte.h + 24 + c;
+    }
+  }
+  return { etroit, boites, etiquettes, hauteur, carte };
 }
+
+// Le prénom qui se lève : chaque lettre monte de sous sa fenêtre, le milieu
+// du mot d'abord, les bords ensuite.
+function PrenomQuiSeLeve({ prenom, leve, delai = 0 }: { prenom: string; leve: boolean; delai?: number }) {
+  const lettres = [...prenom];
+  const milieu = (lettres.length - 1) / 2;
+  return (
+    <span aria-hidden="true" className="inline-flex overflow-hidden pb-[0.15em] leading-[1.05]">
+      {lettres.map((lettre, i) => (
+        <span
+          key={i}
+          className="inline-block motion-reduce:!transition-none"
+          style={{
+            transform: leve ? "translateY(0)" : "translateY(110%)",
+            transition: `transform 0.7s ${COURBE} ${delai + Math.round(Math.abs(i - milieu)) * 0.035}s`,
+          }}
+        >
+          {lettre}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+const cadrage = (member: TeamMember) =>
+  cn(
+    "object-cover",
+    member.focus === "top" && "object-top",
+    member.focus === "topZoom" && "object-top scale-125",
+    member.focus === "center" && "object-center",
+  );
 
 export function TeamSection() {
   const { t, lang } = useLang();
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  // Ordre persistant de la pile (tout le monde sauf la card), mis à jour de
-  // proche en proche plutôt que recalculé depuis l'ordre `team.ts` à chaque
-  // clic : sinon les ronds du milieu de pile retombaient à leur position
-  // d'origine au lieu de suivre la rotation, donnant l'impression d'un
-  // simple échange entre le premier et le dernier rond.
-  const [stackOrder, setStackOrder] = useState<string[]>([]);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const selected = team.find((member) => member.id === selectedId) ?? null;
-  const { CIRCLE, ROW_GAP, COL_GAP, CARD_WIDTH, CARD_TO_STACK_GAP, rowWidth, stackHeight, stageWidth, rowTop } =
-    mesuresDeScene(useEcranEtroit());
+  const scene = useRef<HTMLDivElement>(null);
+  const [largeur, setLargeur] = useState(0);
+  const [choisi, setChoisi] = useState<number | null>(null);
+  const [survol, setSurvol] = useState<number | null>(null);
+  // Pas de transition tant que la scène n'a pas été mesurée une première fois :
+  // sinon les ronds glisseraient depuis le coin au chargement.
+  const [pret, setPret] = useState(false);
 
-  // Clic en dehors de la zone (ronds + card) → referme, retour à l'état
-  // idle.
+  useLayoutEffect(() => {
+    const element = scene.current;
+    if (!element) return;
+    const mesurer = () => setLargeur(element.clientWidth);
+    mesurer();
+    const observateur = new ResizeObserver(mesurer);
+    observateur.observe(element);
+    return () => observateur.disconnect();
+  }, []);
+
   useEffect(() => {
-    if (!selectedId) return;
+    if (!largeur || pret) return;
+    const image = requestAnimationFrame(() => requestAnimationFrame(() => setPret(true)));
+    return () => cancelAnimationFrame(image);
+  }, [largeur, pret]);
 
-    function handlePointerDown(e: PointerEvent) {
-      if (stageRef.current && !stageRef.current.contains(e.target as Node)) {
-        setSelectedId(null);
-      }
-    }
+  // ?equipe=n ouvre le membre n au chargement, pour regarder la carte sans clic.
+  useEffect(() => {
+    const n = new URLSearchParams(location.search).get("equipe");
+    if (n !== null && team[Number(n)]) setChoisi(Number(n));
+  }, []);
 
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [selectedId]);
+  // Un clic hors de la scène, ou Échap, et tout revient en rangée.
+  useEffect(() => {
+    if (choisi === null) return;
+    const dehors = (e: PointerEvent) => {
+      if (scene.current && !scene.current.contains(e.target as Node)) setChoisi(null);
+    };
+    const echap = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape") setChoisi(null);
+    };
+    document.addEventListener("pointerdown", dehors);
+    document.addEventListener("keydown", echap);
+    return () => {
+      document.removeEventListener("pointerdown", dehors);
+      document.removeEventListener("keydown", echap);
+    };
+  }, [choisi]);
 
-  const otherIds = selected ? stackOrder : [];
+  const choisir = (i: number) => {
+    if (i === choisi) return;
+    setChoisi(i);
+    setSurvol(null);
+  };
 
-  function selectMember(id: string) {
-    if (id === selectedId) return;
-
-    if (selectedId === null) {
-      // Première sélection : pas encore de pile, on la construit dans
-      // l'ordre `team.ts` (tout le monde sauf le membre cliqué).
-      setStackOrder(team.filter((m) => m.id !== id).map((m) => m.id));
-    } else {
-      // Rond du haut cliqué → la carte quittée part en bas de la pile, le
-      // reste remonte d'un cran (vraie rotation, ordre de pile préservé).
-      // Tout autre rond cliqué → comportement d'origine, la carte quittée
-      // remonte en haut.
-      const wasTop = stackOrder[0] === id;
-      const rest = stackOrder.filter((memberId) => memberId !== id);
-      setStackOrder(wasTop ? [...rest, selectedId] : [selectedId, ...rest]);
-    }
-
-    setSelectedId(id);
-  }
+  const { etroit, boites, etiquettes, hauteur, carte } = disposer(largeur || 1, choisi, survol);
+  const transition = pret ? TRAJET : "none";
 
   return (
     <section
@@ -131,140 +184,158 @@ export function TeamSection() {
           >
             <SplitText text={t("team.title")} />
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-            {t("team.intro")}
-          </p>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">{t("team.intro")}</p>
         </div>
 
         <div
-          ref={stageRef}
-          className="relative mx-auto mt-16"
-          style={{ width: stageWidth, height: stackHeight }}
+          ref={scene}
+          className={cn("relative mt-16 sm:mt-[72px]", !largeur && "invisible")}
+          style={{ height: hauteur, transition: pret ? `height 0.8s ${COURBE}` : "none" }}
+          onPointerLeave={() => setSurvol(null)}
         >
-          {team.map((member) => {
-            const isSelected = member.id === selectedId;
-            const idleIndex = team.findIndex((m) => m.id === member.id);
-            const stackIndex = otherIds.indexOf(member.id);
+          {team.map((member, i) => {
+            const ouvert = i === choisi;
+            const actif = choisi === null && i === survol;
+            const b = boites[i];
+            const portfolio = member.portfolioUrl && member.portfolioUrl !== "#";
 
-            const box = isSelected
-              ? { top: 0, left: 0, width: CARD_WIDTH, height: "auto" as const }
-              : selected
-                ? {
-                    top: stackIndex * (CIRCLE + COL_GAP),
-                    left: CARD_WIDTH + CARD_TO_STACK_GAP,
-                    width: CIRCLE,
-                    height: CIRCLE,
-                  }
-                : {
-                    top: rowTop,
-                    left: idleIndex * (CIRCLE + ROW_GAP),
-                    width: CIRCLE,
-                    height: CIRCLE,
-                  };
-
-            function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
-              if (isSelected) return;
+            function auClavier(e: KeyboardEvent<HTMLDivElement>) {
+              if (ouvert) return;
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                selectMember(member.id);
+                choisir(i);
               }
             }
 
             return (
-              <motion.div
+              <div
                 key={member.id}
-                layoutId={member.id}
-                layout
-                transition={LAYOUT_TRANSITION}
-                whileHover={!isSelected ? { scale: 1.05 } : undefined}
-                onClick={() => selectMember(member.id)}
-                onKeyDown={handleKeyDown}
-                role={!isSelected ? "button" : undefined}
-                tabIndex={!isSelected ? 0 : undefined}
-                aria-label={
-                  !isSelected
-                    ? lang === "en"
-                      ? `View ${member.name}'s profile`
-                      : `Voir le profil de ${member.name}`
-                    : undefined
-                }
-                style={{ position: "absolute", ...box }}
+                role={ouvert ? undefined : "button"}
+                tabIndex={ouvert ? undefined : 0}
+                aria-label={ouvert ? undefined : lang === "en" ? `View ${member.name}'s profile` : `Voir le profil de ${member.name}`}
+                onPointerEnter={() => choisi === null && !etroit && setSurvol(i)}
+                onClick={() => choisir(i)}
+                onKeyDown={auClavier}
                 className={cn(
-                  "overflow-hidden transition-colors duration-300",
-                  isSelected
-                    ? "cursor-default rounded-[28px] border border-border bg-card"
-                    : "cursor-pointer rounded-full bg-transparent",
+                  "group absolute overflow-hidden border border-border bg-card",
+                  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground",
+                  ouvert ? "cursor-default" : "cursor-pointer",
                 )}
+                style={{
+                  left: b.l,
+                  top: b.t,
+                  width: b.w,
+                  height: b.h,
+                  borderRadius: ouvert ? 28 : 9999,
+                  transition,
+                }}
               >
-                <AnimatePresence mode="wait" initial={false}>
-                  {isSelected ? (
-                    <motion.div
-                      key="card"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={CONTENT_FADE}
-                    >
-                      <TeamMemberCard member={member} />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="circle"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={CONTENT_FADE}
-                      className="h-full w-full"
-                    >
-                      <TeamCircle className="h-full w-full" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Miniature statique, enfant du noeud `layout` plutôt qu'un
-                    frère positionné en double : ainsi elle suit gratuitement
-                    tout déplacement pur (translation) du rond, sans code de
-                    synchronisation, sans jamais avoir sa propre transition.
-                    Elle ne se déforme pas non plus pendant le FLIP rond→card
-                    puisqu'elle est démontée (`!isSelected`) avant même que
-                    ce changement de taille ne démarre. */}
-                {!isSelected && (
+                {/* Le rond : le portrait seul, en gris au repos sur ordinateur. */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 transition-opacity duration-300"
+                  style={{ opacity: ouvert ? 0 : 1 }}
+                >
                   <Image
                     src={member.avatar}
                     alt=""
                     fill
-                    sizes="4rem"
-                    aria-hidden="true"
+                    sizes="240px"
                     className={cn(
-                      "pointer-events-none absolute inset-0 object-cover",
-                      member.focus === "top" && "object-top",
-                      member.focus === "topZoom" && "object-top scale-125",
-                      member.focus === "center" && "object-center",
+                      cadrage(member),
+                      "transition-[filter,transform] duration-500",
+                      !etroit && !actif && "grayscale brightness-[0.8] group-hover:grayscale-0 group-hover:brightness-100",
+                      choisi !== null && "group-hover:scale-[1.08]",
                     )}
                   />
-                )}
-              </motion.div>
+                </div>
+
+                {/* La carte : posée à sa taille finale dès le départ, la boîte qui
+                    grandit la découvre. Inerte tant qu'elle est fermée. */}
+                <div
+                  inert={!ouvert}
+                  className="absolute left-0 top-0 flex flex-col gap-[18px] p-4"
+                  style={{
+                    width: carte.w,
+                    height: carte.h,
+                    opacity: ouvert ? 1 : 0,
+                    transition: ouvert ? "opacity 0.5s ease 0.3s" : "opacity 0.2s ease",
+                  }}
+                >
+                  <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-[18px]">
+                    <Image src={member.avatar} alt={member.name} fill sizes="(max-width: 639px) 100vw, 430px" className={cadrage(member)} />
+                    <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <span className="absolute bottom-3.5 left-5 z-[1] font-display text-[clamp(2.25rem,4vw,3rem)] font-medium tracking-[-0.03em] text-white">
+                      <PrenomQuiSeLeve prenom={member.name} leve={ouvert} delai={0.35} />
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col gap-2.5 px-1 pb-1">
+                    <p className="text-sm text-muted-foreground">{lang === "en" ? member.roleEn : member.role}</p>
+                    <p className="text-base leading-[1.45] tracking-[-0.01em] text-foreground sm:text-lg">
+                      {t(`team.phrase.${member.id}` as Parameters<typeof t>[0])}
+                    </p>
+                    {portfolio ? (
+                      <CTAButton as="a" href={member.portfolioUrl} target="_blank" rel="noopener noreferrer" className="mt-auto">
+                        {t("teamCard.portfolio")}
+                      </CTAButton>
+                    ) : (
+                      <span className="mt-auto self-start rounded-full border border-border px-5 py-3 text-sm text-muted-foreground">
+                        {t("teamCard.soon")}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
             );
           })}
 
-          {!selected && (
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute hidden lg:block"
-              style={{ left: 0, top: rowTop + CIRCLE + 24, width: rowWidth }}
-            >
-              <p className="text-center text-sm text-muted-foreground">
-                {t("team.hint")}
-              </p>
-              <Image
-                src="/shapes/team-hint-arrow.svg"
-                alt=""
-                width={141}
-                height={60}
-                className="absolute left-10 top-2 h-auto"
-              />
-            </div>
-          )}
+          {/* Prénom et rôle sous chaque rond, en rangée seulement. Au survol le
+              prénom gris monte et cède la place au prénom qui se lève. */}
+          {team.map((member, i) => {
+            const e = etiquettes[i];
+            const actif = choisi === null && i === survol;
+            const style: CSSProperties = { left: e.l, top: e.t, width: e.w, opacity: choisi === null ? 1 : 0 };
+            return (
+              <div
+                key={member.id}
+                aria-hidden="true"
+                onClick={() => choisir(i)}
+                className={cn("absolute cursor-pointer text-center", choisi !== null && "pointer-events-none")}
+                style={{
+                  ...style,
+                  // Sortie rapide au clic, retour après que les ronds ont repris leur place.
+                  transition: !pret
+                    ? "none"
+                    : `left 0.8s ${COURBE}, top 0.8s ${COURBE}, ${choisi === null ? "opacity 0.4s ease 0.4s" : "opacity 0.15s ease"}`,
+                }}
+              >
+                <div
+                  className={cn(
+                    // Fenêtre assez haute pour les jambages (le y de Gaby).
+                    "relative h-[1.35em] w-full overflow-hidden font-medium leading-[1.2] tracking-[-0.02em]",
+                    etroit ? "text-[13px]" : "text-[22px]",
+                  )}
+                >
+                  <span
+                    className="absolute left-1/2 top-0 whitespace-nowrap text-muted-foreground motion-reduce:!transition-none"
+                    style={{
+                      transform: actif ? "translate(-50%, -110%)" : "translate(-50%, 0)",
+                      transition: `transform 0.7s ${COURBE}`,
+                      display: etroit ? "none" : undefined,
+                    }}
+                  >
+                    {member.name}
+                  </span>
+                  <span className="absolute left-1/2 top-0 -translate-x-1/2 whitespace-nowrap text-foreground">
+                    <PrenomQuiSeLeve prenom={member.name} leve={actif || etroit} />
+                  </span>
+                </div>
+                {!etroit && (
+                  <p className="-mt-0.5 min-h-[2.7em] pt-2 text-[13px] leading-[1.35] text-muted-foreground">{lang === "en" ? member.roleEn : member.role}</p>
+                )}
+              </div>
+            );
+          })}
         </div>
       </Container>
     </section>

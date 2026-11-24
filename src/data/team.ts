@@ -7,6 +7,7 @@ export type TeamMember = {
   id: string;
   name: string;
   role: string;
+  roleEn: string;
   avatar: string;
   focus: TeamFocus;
   portfolioUrl: string;
@@ -18,7 +19,8 @@ export const team: TeamMember[] = [
   {
     id: "duvalier",
     name: "Duvalier",
-    role: "CSO · Commercial & Clients",
+    role: "Co-fondateur · Creative Developer",
+    roleEn: "Co-founder · Creative Developer",
     avatar: "/founders/DuvIllustrated.png",
     focus: "top",
     portfolioUrl: "https://duvaliersewade.vercel.app/",
@@ -26,7 +28,8 @@ export const team: TeamMember[] = [
   {
     id: "enock",
     name: "Enock",
-    role: "CTO · Tech & IA",
+    role: "Co-fondateur · Développeur Full Stack",
+    roleEn: "Co-founder · Full Stack Developer",
     avatar: "/founders/MarthIllustrated.png",
     focus: "top",
     portfolioUrl: "https://portfolio-ely514.vercel.app/",
@@ -34,7 +37,8 @@ export const team: TeamMember[] = [
   {
     id: "prudence",
     name: "Prudence",
-    role: "CEO · Vision & Stratégie",
+    role: "Co-fondateur · CEO",
+    roleEn: "Co-founder · CEO",
     avatar: "/founders/PrudenceIllustrated.png",
     focus: "center",
     portfolioUrl: "#",
@@ -42,7 +46,8 @@ export const team: TeamMember[] = [
   {
     id: "simeon",
     name: "Siméon",
-    role: "CMO · Marketing & Contenu",
+    role: "Co-fondateur · Frontend Engineer",
+    roleEn: "Co-founder · Frontend Engineer",
     avatar: "/founders/simeonillustrated.jpg",
     focus: "center",
     portfolioUrl: "http://simeonamoussou.com/",
@@ -50,7 +55,8 @@ export const team: TeamMember[] = [
   {
     id: "gaby",
     name: "Gaby",
-    role: "COO · Opérations & Process",
+    role: "Co-fondateur · Software Developer",
+    roleEn: "Co-founder · Software Developer",
     avatar: "/founders/gabyillustrated.jpg",
     focus: "topZoom",
     portfolioUrl: "http://dossagaby.vercel.app/",

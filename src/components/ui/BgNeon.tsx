@@ -32,20 +32,25 @@ const BgNeon: React.FC = () => {
   const radius76 = Math.max(15, size * 0.068); // 5.8% of container
 
   // Layer configuration (Rendered from back to front)
+  // Mode clair, « le studio » : une lumière ne se voit que sur plus sombre
+  // qu'elle. Le hero clair pose un fond gris de studio (voir Hero), et les
+  // halos y gardent le rendu du sombre : blanc en plus-lighter au milieu,
+  // bleu et ambre en mélange normal autour, car plus-lighter n'ajoute rien de
+  // visible à une teinte déjà claire.
   const layers = [
     {
       id: 'rectangle-9',
       width: '90%',
-      color: darkMode ? 'rgba(49, 230, 57, 0.3)' : 'rgba(49, 230, 57, 0)',
+      color: darkMode ? 'rgba(49, 230, 57, 0.3)' : 'rgba(61, 113, 232, 0.22)',
       blur: '50px',
       radius: radius100,
-      mixBlend: 'plus-lighter',
+      mixBlend: darkMode ? 'plus-lighter' : '',
       transitionDelay: 0.2, // Slowest glow
     },
     {
       id: 'rectangle-10',
       width: '83.3%',
-      color: darkMode ? 'rgba(61, 113, 232, 0.5)' : 'rgba(61, 113, 232, 0)',
+      color: darkMode ? 'rgba(61, 113, 232, 0.5)' : 'rgba(255, 255, 255, 0.9)',
       blur: '45px',
       radius: radius100,
       mixBlend: 'plus-lighter',
@@ -54,7 +59,7 @@ const BgNeon: React.FC = () => {
     {
       id: 'rectangle-12',
       width: '67.5%',
-      color: darkMode ? 'white' : 'rgba(255, 255, 255, 0)',
+      color: 'white',
       blur: '35px',
       radius: radius100,
       mixBlend: 'plus-lighter',
@@ -63,25 +68,28 @@ const BgNeon: React.FC = () => {
     {
       id: 'rectangle-14',
       width: '67.5%',
-      color: darkMode ? 'rgba(255, 217, 105, 0.8)' : 'rgba(255, 217, 105, 0)',
+      color: darkMode ? 'rgba(255, 217, 105, 0.8)' : 'rgba(255, 217, 105, 0.7)',
       blur: '25px',
       radius: radius76,
-      mixBlend: 'plus-lighter',
+      mixBlend: darkMode ? 'plus-lighter' : '',
       transitionDelay: 0.0, // Closest to tube, lights up first
     },
   ];
+  // La clé suit le thème : à chaque bascule les halos repartent de zéro et
+  // se rallument du tube vers l'extérieur, comme au chargement.
+  const theme = mounted ? (darkMode ? 'sombre' : 'clair') : 'attente';
 
   return (
     <div
       ref={containerRef}
       className="relative w-full flex flex-col items-center justify-center aspect-square"
     >
-      {/* Render the back glow halos (Only visible in Dark Mode) */}
+      {/* Les halos, allumés dans les deux thèmes une fois le thème connu. */}
       <AnimatePresence>
-        {layers.map((layer) => (
+        {mounted && layers.map((layer) => (
           <motion.div
-            key={layer.id}
-            className={`absolute aspect-square ${darkMode ? layer.mixBlend : ''}`}
+            key={`${layer.id}-${theme}`}
+            className={`absolute aspect-square ${layer.mixBlend}`}
             style={{
               width: layer.width,
               border: `${borderSize}px solid ${layer.color}`,
@@ -91,12 +99,10 @@ const BgNeon: React.FC = () => {
             }}
             // START FROM 0 opacity and 0.8 scale on mount
             initial={{ opacity: 0 }}
-            animate={{
-              opacity: darkMode ? 1 : 0,
-              scale: darkMode ? 1 : 0.95,
-            }}
-            // When darkMode turns off, we want 0 opacity/scale
-            exit={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            // À la bascule, l'ancienne lumière s'éteint vite : c'est la
+            // nouvelle qui doit se voir monter, pas un fondu enchaîné.
+            exit={{ opacity: 0, transition: { duration: 0.3, ease: 'easeOut' } }}
             transition={{
               opacity: {
                 duration: 1.8,
@@ -128,12 +134,12 @@ const BgNeon: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1, // Always visible once mounted
-          borderColor: `${darkMode ? '#ffffff' : '#efefef'}`,
+          borderColor: '#ffffff',
           boxShadow: darkMode
             ? '0 0 30px rgba(255, 217, 105, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.3)'
-            : 'inset 6px 6px 10px rgba(0,0,0,0.12), inset 2px 2px 10px rgba(255,255,255,1), 0 8px 25px rgba(0,0,0,0.12)',
-          backgroundColor: darkMode ? 'transparent' : 'rgba(255, 255, 255, 0.4)',
-          filter: darkMode ? 'blur(1px)' : 'blur(0px)',
+            : '0 0 30px rgba(255, 217, 105, 0.55), inset 0 0 15px rgba(255, 255, 255, 0.6)',
+          backgroundColor: 'rgba(255, 255, 255, 0)',
+          filter: darkMode ? 'blur(1px)' : 'blur(0.6px)',
         }}
         transition={{
           duration: 1.2,
@@ -154,12 +160,12 @@ const BgNeon: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1, // Always visible once mounted
-          borderColor: `${darkMode ? '#ffffff' : '#e5e7eb'}`,
+          borderColor: '#ffffff',
           boxShadow: darkMode
             ? '0 0 30px rgba(255, 217, 105, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.3)'
-            : 'inset 6px 6px 6px rgba(0,0,0,0.05), inset 2px 2px 10px rgba(255,255,255,1), 0 8px 25px rgba(0,0,0,0.12)',
-          backgroundColor: darkMode ? 'transparent' : 'rgba(255, 255, 255, 0.4)',
-          filter: darkMode ? 'blur(1px)' : 'blur(0px)',
+            : '0 0 30px rgba(255, 217, 105, 0.55), inset 0 0 15px rgba(255, 255, 255, 0.6)',
+          backgroundColor: 'rgba(255, 255, 255, 0)',
+          filter: darkMode ? 'blur(1px)' : 'blur(0.6px)',
         }}
         transition={{
           duration: 1.2,

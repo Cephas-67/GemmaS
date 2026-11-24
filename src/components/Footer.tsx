@@ -15,14 +15,16 @@ type FooterCol = { headingKey: string; links: { labelKey: string; href: string }
 
 // Préfixées par `/` : voir la note équivalente dans Navbar.tsx, même raison
 // (Footer est monté sur toutes les routes, pas seulement `/`).
+// Les services mènent tous au contact par mail : il n'y a pas de page par
+// service, et c'est la seule porte d'entrée d'un projet.
 const FOOTER_COLS: FooterCol[] = [
   {
     headingKey: "footer.col.services",
     links: [
-      { labelKey: "footer.link.web", href: "/#services" },
-      { labelKey: "footer.link.mobile", href: "/#services" },
-      { labelKey: "footer.link.custom", href: "/#services" },
-      { labelKey: "footer.link.aiAuto", href: "/#services" },
+      { labelKey: "footer.link.web", href: `mailto:${site.contact.email}` },
+      { labelKey: "footer.link.mobile", href: `mailto:${site.contact.email}` },
+      { labelKey: "footer.link.custom", href: `mailto:${site.contact.email}` },
+      { labelKey: "footer.link.aiAuto", href: `mailto:${site.contact.email}` },
     ],
   },
   {

@@ -9,7 +9,7 @@ export const site = {
   year: new Date().getFullYear(),
   contact: {
     email: "gemmas.pro@gmail.com",
-    phone: "+229 00 00 00 00",
+    phone: "+229 01 57 03 58 70 / +229 01 66 68 68 66",
     address: "Bénin",
   },
   nav: [

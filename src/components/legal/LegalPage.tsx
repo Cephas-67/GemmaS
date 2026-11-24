@@ -37,6 +37,7 @@ export function LegalPage({ page }: { page: LegalPageData }) {
         <h1 className="font-display text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em]">
           {isEn ? page.titleEn : page.title}
         </h1>
+        <p className="mt-3 text-sm text-muted-foreground">{isEn ? page.miseAJourEn : page.miseAJour}</p>
 
         {page.sections.map((section) => {
           const paragraphs = isEn ? section.paragraphsEn : section.paragraphs;

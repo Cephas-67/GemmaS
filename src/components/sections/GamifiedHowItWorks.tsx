@@ -26,7 +26,9 @@ const WORLD_W = 1200
 const WORLD_H = 949
 const BALL_R = 30       // ball radius in world-px
 const BALL_X = 200      // ball fixed x in world coords
-const FLAG_X = 1371   // green flag pole x
+// La balle s'arrête au pied du drapeau d'arrivée (mât dessiné à x = 1261,5),
+// son bord juste avant le mât. 1371 la faisait passer au-delà du drapeau.
+const FLAG_X = 1222
 const TOTAL_SHIFT = FLAG_X - BALL_X   // 1061.5 world-px
 
 const STEPS_COUNT = 3
@@ -74,15 +76,15 @@ const ShadowSVG = () => (
 const TrackSVGBack = () => (
     <svg
         className="absolute top-0 left-0"
-        width="2300" height="949"
-        viewBox="0 0 2300 949"
+        width="4200" height="949"
+        viewBox="0 0 4200 949"
         fill="none"
     >
         {/* back-layer left/right extensions */}
-        <path d="M1300 108 H2280 L2300 124.136 V933 H1300 Z" fill="#F5F5F5" />
+        <path d="M1300 108 H4200 V933 H1300 Z" fill="var(--piste-arriere)" />
 
         {/* original back layer */}
-        <path d="M316 167C237 171.5 0 167 0 167V933H1342L1370.5 124L1342 109C1342 109 1257.51 102.625 1204 109C1107.12 120.542 1049.29 137.039 968 191C850.5 269 850.225 431.77 718 421C561.628 408.263 703.614 76.9681 548 57.0001C448.546 44.2383 413.284 142.714 316 167Z" fill="#F5F5F5" />
+        <path d="M316 167C237 171.5 0 167 0 167V933H1342L1370.5 124L1342 109C1342 109 1257.51 102.625 1204 109C1107.12 120.542 1049.29 137.039 968 191C850.5 269 850.225 431.77 718 421C561.628 408.263 703.614 76.9681 548 57.0001C448.546 44.2383 413.284 142.714 316 167Z" fill="var(--piste-arriere)" />
 
         {/* post shadows */}
         <path d="M115.409 230.139L17.7289 173.328C16.8644 172.825 16.5627 171.355 17.2569 170.161C17.951 168.968 19.3782 168.503 20.2426 169.006L117.923 225.817C118.788 226.32 118.657 227.539 117.963 228.732C117.269 229.926 116.274 230.642 115.409 230.139Z" fill="black" fillOpacity="0.07" />
@@ -96,10 +98,10 @@ const TrackSVGBack = () => (
 
         <defs>
             <linearGradient id="paint0_linear_0_1" x1="14" y1="128" x2="25" y2="128" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#E4E4E4" /><stop offset="1" stopColor="#F5F5F5" />
+                <stop stopColor="var(--mat-a)" /><stop offset="1" stopColor="var(--mat-b)" />
             </linearGradient>
             <linearGradient id="paint1_linear_0_1" x1="1256.5" y1="71" x2="1267.5" y2="71" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#E4E4E4" /><stop offset="1" stopColor="#F5F5F5" />
+                <stop stopColor="var(--mat-a)" /><stop offset="1" stopColor="var(--mat-b)" />
             </linearGradient>
         </defs>
     </svg>
@@ -108,23 +110,23 @@ const TrackSVGBack = () => (
 const TrackSVGFront = () => (
     <svg
         className="absolute top-0 left-0"
-        width="2300" height="949"
-        viewBox="0 0 2300 949"
+        width="4200" height="949"
+        viewBox="0 0 4200 949"
         fill="none"
     >
 
         {/* front-layer left/right extensions */}
-        <path d="M1371 124.136 H2629 V948.136 H1371 Z" fill="#E4E4E4" />
+        <path d="M1371 124.136 H4200 V948.136 H1371 Z" fill="var(--piste-avant)" />
 
         {/* original front layer */}
-        <path d="M345 182.136C266 186.636 29 182.136 29 182.136V948.136H1371V124.136C1371 124.136 1286.51 117.761 1233 124.136C1136.12 135.678 1078.29 152.174 997 206.136C879.5 284.136 879.225 446.906 747 436.136C590.628 423.399 732.614 92.1039 577 72.1359C477.546 59.3741 442.284 157.849 345 182.136Z" fill="#E4E4E4" />
+        <path d="M345 182.136C266 186.636 29 182.136 29 182.136V948.136H1371V124.136C1371 124.136 1286.51 117.761 1233 124.136C1136.12 135.678 1078.29 152.174 997 206.136C879.5 284.136 879.225 446.906 747 436.136C590.628 423.399 732.614 92.1039 577 72.1359C477.546 59.3741 442.284 157.849 345 182.136Z" fill="var(--piste-avant)" />
 
         <defs>
             <linearGradient id="paint0_linear_0_1" x1="14" y1="128" x2="25" y2="128" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#E4E4E4" /><stop offset="1" stopColor="#F5F5F5" />
+                <stop stopColor="var(--mat-a)" /><stop offset="1" stopColor="var(--mat-b)" />
             </linearGradient>
             <linearGradient id="paint1_linear_0_1" x1="1256.5" y1="71" x2="1267.5" y2="71" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#E4E4E4" /><stop offset="1" stopColor="#F5F5F5" />
+                <stop stopColor="var(--mat-a)" /><stop offset="1" stopColor="var(--mat-b)" />
             </linearGradient>
         </defs>
     </svg>
@@ -194,7 +196,10 @@ function StepItem({ step, index, scrollYProgress }: {
     const fadeOutStart = start + seg * 0.8
     const end = start + seg
 
-    const opacity = useTransform(scrollYProgress, [start, fadeInEnd, fadeOutStart, end], [0, 1, 1, 0])
+    // La dernière étape reste affichée : à l'arrivée au drapeau, la section
+    // se termine sur elle au lieu d'une piste vide.
+    const derniere = index === STEPS_COUNT - 1
+    const opacity = useTransform(scrollYProgress, [start, fadeInEnd, fadeOutStart, end], [0, 1, 1, derniere ? 1 : 0])
     const y = useTransform(scrollYProgress, [start, fadeInEnd], [40, 0])
 
     return (
@@ -205,6 +210,45 @@ function StepItem({ step, index, scrollYProgress }: {
                 <h3 className="text-2xl leading-tight md:text-4xl">{title}</h3>
                 <p className="mt-2 text-base md:text-xl">{content}</p>
             </div>
+        </motion.div>
+    )
+}
+
+/* ─── Arrivée ───────────────────────────────────────────────────────────────
+ *
+ * Une fois la balle au drapeau, la section se termine sur une action : la
+ * phrase et le bouton occupent la moitié droite, en face du texte de
+ * l'étape 3 (en bas de la scène sur mobile, sous la piste).
+ */
+function Arrivee({ course }: { course: MotionValue<number> }) {
+    const { t } = useLang()
+    // `course` est la progression amortie, celle qui pousse la balle : le
+    // message arrive avec elle, juste avant qu'elle touche le drapeau. Une
+    // valeur liée directement au défilement serait confiée par framer-motion
+    // au navigateur (ScrollTimeline), qui ne la rendait pas ici.
+    const opacity = useTransform(course, [0.86, 0.97], [0, 1])
+    const y = useTransform(course, [0.86, 0.97], [16, 0])
+    // Invisible, le bouton ne se clique pas et sort de la tabulation.
+    const pointerEvents = useTransform(opacity, (o) => (o > 0.5 ? 'auto' : 'none'))
+    const visibility = useTransform(opacity, (o) => (o > 0.01 ? 'visible' : 'hidden'))
+
+    return (
+        <motion.div
+            style={{ opacity, y, pointerEvents, visibility }}
+            className="absolute bottom-8 left-6 right-6 z-20 flex flex-col items-start gap-4 md:bottom-auto md:left-1/2 md:right-12 md:top-2 md:gap-5"
+        >
+            <p className="max-w-[420px] text-2xl font-medium leading-tight md:text-4xl">{t('workflow.arrivee')}</p>
+            <a
+                href="mailto:gemmas.pro@gmail.com"
+                className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-foreground py-1 pl-5 pr-1 text-sm font-medium text-background transition-all duration-300 ease-smooth hover:gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground sm:text-base"
+            >
+                {t('hero.cta')}
+                <span aria-hidden className="flex h-9 w-9 items-center justify-center rounded-full bg-background text-foreground transition-transform group-hover:scale-110 sm:h-10 sm:w-10">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M7 17 17 7M8 7h9v9" />
+                    </svg>
+                </span>
+            </a>
         </motion.div>
     )
 }
@@ -283,12 +327,20 @@ export default function GamifiedHowItWorks() {
         const el = stageRef.current
         if (!el) return
         const update = () => {
-            // Sur un ecran etroit, caler le monde sur la largeur le rendait
-            // minuscule (0,33 a 390 px) : on garde un plancher et un plafond, et la piste
-            // deborde a droite, ce qui ne gene pas puisqu'elle defile vers la gauche.
-            const s = clamp(el.clientWidth / WORLD_W, 0.6, 1)
+            // Le monde se règle sur la largeur ET sur la hauteur. Sa partie
+            // utile va du plat de départ (y = 60) au fond de la vallée, balle
+            // comprise (y = 470) : 410 unités. Elle se pose sous le texte des
+            // étapes et doit finir avant le bas de la scène, sinon sur un écran
+            // bas la balle descendait hors de vue. Sur un écran étroit, on
+            // garde un plancher : la piste déborde à droite, ce qui ne gêne pas
+            // puisqu'elle défile vers la gauche.
+            const largeur = el.clientWidth
+            const hauteur = el.clientHeight
+            const texte = largeur < 768 ? 190 : 240
+            const parLaHauteur = (hauteur - 16 - texte) / 410
+            const s = clamp(Math.min(largeur / WORLD_W, parLaHauteur), 0.5, 1)
             setScale(s)
-            setWorldTop(el.clientHeight * 0.45 - 60 * s)
+            setWorldTop(texte - 60 * s)
         }
         update()
         const ro = new ResizeObserver(update)
@@ -301,15 +353,21 @@ export default function GamifiedHowItWorks() {
             id="how"
             ref={containerRef}
             style={{ height: `calc(100vh + ${TOTAL_SCROLL}px)` }}
-            className="relative w-full bg-white text-black"
+            // La section suit le thème du site : piste claire sur blanc en
+            // clair, piste sombre sur noir en sombre (version E retenue).
+            className="relative w-full bg-white text-black [--piste-arriere:#F5F5F5] [--piste-avant:#E4E4E4] dark:bg-black dark:text-white dark:[--piste-arriere:#111111] dark:[--piste-avant:#1c1c1c] [--mat-a:#E4E4E4] [--mat-b:#F5F5F5] dark:[--mat-a:#d4d4d4] dark:[--mat-b:#8a8a8a]"
         >
 
             {/* La scene prend toute la largeur : un padding horizontal sur ce
                 conteneur retrecissait le monde et coupait la piste avant le
                 bord droit. Seuls le titre et le texte des etapes sont en retrait. */}
-            <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-start pt-24 md:pt-40 gap-8 md:gap-12 overflow-hidden">
+            {/* La scène prend toute la hauteur laissée par le titre (flex-1),
+                au lieu d'une hauteur fixe en vh qui coupait la vallée sur les
+                écrans bas. Le haut suit la hauteur d'écran, sous la barre de
+                navigation. */}
+            <div className="sticky top-0 h-[100dvh] w-full flex flex-col items-center justify-start pt-[max(6rem,12vh)] gap-6 md:gap-8 overflow-hidden">
                 <h2 className="px-6 text-center text-3xl font-medium">{t("workflow.title")}</h2>
-                <div ref={stageRef} className="relative w-full h-[55vh] md:h-[50vh]">
+                <div ref={stageRef} className="relative w-full min-h-0 flex-1">
                     {/* Step text overlay */}
                     <div className="absolute inset-y-0 left-0 right-0 z-10 mx-auto max-w-page px-6 md:px-12 pointer-events-none">
                         <div className="relative h-full">
@@ -323,6 +381,8 @@ export default function GamifiedHowItWorks() {
                         ))}
                         </div>
                     </div>
+
+                    <Arrivee course={smooth} />
 
                     {/* World coordinate system (scaled to stage width) */}
                     <div

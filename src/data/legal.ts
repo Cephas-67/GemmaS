@@ -1,12 +1,11 @@
 // Contenu des 3 pages légales, structuré et bilingue (même pattern que
 // PoleExcellence/ValueItem : un champ `*En` par texte, résolu via useLang()
-// dans src/components/legal/LegalPage.tsx). Les valeurs marquées
-// [À COMPLÉTER] / [TO BE COMPLETED] demandent une information juridique
-// réelle que je n'ai pas et que je ne dois pas inventer sur une page à
-// valeur légale.
-
-const TBD_FR = "[À COMPLÉTER]";
-const TBD_EN = "[TO BE COMPLETED]";
+// dans src/components/legal/LegalPage.tsx).
+//
+// Les données d'identification (RCCM, IFU, forme, exploitant) reprennent
+// l'annonce légale, l'attestation IFU et la déclaration d'établissement du
+// 14 septembre 2026. Elles ne s'inventent pas : toute modification part de
+// ces documents.
 
 export type LegalField = {
   label: string;
@@ -33,23 +32,54 @@ export type LegalSection = {
 export type LegalPageData = {
   title: string;
   titleEn: string;
+  /** Date affichée sous le titre : une page légale dit de quand elle date. */
+  miseAJour: string;
+  miseAJourEn: string;
   sections: LegalSection[];
 };
+
+const MISE_A_JOUR = "Dernière mise à jour : 24 novembre 2026";
+const MISE_A_JOUR_EN = "Last updated: November 24, 2026";
 
 export const mentionsLegales: LegalPageData = {
   title: "Mentions légales",
   titleEn: "Legal notice",
+  miseAJour: MISE_A_JOUR,
+  miseAJourEn: MISE_A_JOUR_EN,
   sections: [
     {
       heading: "Éditeur du site",
       headingEn: "Site publisher",
       fields: [
-        { label: "Dénomination", labelEn: "Legal name", dynamic: "denomination" },
-        { label: "Forme juridique", labelEn: "Legal form", value: "Établissement", valueEn: "Établissement (sole proprietorship)" },
-        { label: "Numéro RCCM", labelEn: "RCCM number", value: "RB/PNO/26 A 128959", valueEn: "RB/PNO/26 A 128959" },
-        { label: "Numéro IFU", labelEn: "IFU number", value: "02024384000142", valueEn: "02024384000142" },
-        { label: "Siège social", labelEn: "Registered address", dynamic: "address" },
+        { label: "Nom commercial", labelEn: "Trade name", dynamic: "denomination" },
+        {
+          label: "Forme juridique",
+          labelEn: "Legal form",
+          value: "Établissement (entreprise individuelle, personne physique)",
+          valueEn: "Établissement (sole proprietorship, natural person)",
+        },
+        { label: "Exploitant", labelEn: "Owner", value: "Siméon Cephas AMOUSSOU", valueEn: "Siméon Cephas AMOUSSOU" },
+        {
+          label: "Activité",
+          labelEn: "Business activity",
+          value: "Activités informatiques et activités connexes",
+          valueEn: "IT and related activities",
+        },
+        {
+          label: "Numéro RCCM",
+          labelEn: "RCCM number",
+          value: "RB/PNO/26 A 128959 du 14 septembre 2026",
+          valueEn: "RB/PNO/26 A 128959, dated September 14, 2026",
+        },
+        { label: "Numéro IFU", labelEn: "IFU (tax ID) number", value: "0202438400014", valueEn: "0202438400014" },
+        { label: "Adresse", labelEn: "Address", dynamic: "address" },
         { label: "Email", labelEn: "Email", dynamic: "email" },
+        {
+          label: "Téléphone",
+          labelEn: "Phone",
+          value: "+229 01 57 03 58 70 / +229 01 66 68 68 66",
+          valueEn: "+229 01 57 03 58 70 / +229 01 66 68 68 66",
+        },
       ],
     },
     {
@@ -60,29 +90,31 @@ export const mentionsLegales: LegalPageData = {
     {
       heading: "Hébergement",
       headingEn: "Hosting",
-      fields: [
-        {
-          label: "Hébergeur",
-          labelEn: "Host",
-          value: "Vercel Inc.",
-          valueEn: "Vercel Inc.",
-        },
-        {
-          label: "Adresse",
-          labelEn: "Address",
-          value: "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
-          valueEn: "440 N Barranca Ave #4133, Covina, CA 91723, USA",
-        },
+      paragraphs: [
+        "Le site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis. Site : vercel.com.",
+      ],
+      paragraphsEn: [
+        "The site is hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA. Website: vercel.com.",
       ],
     },
     {
       heading: "Propriété intellectuelle",
       headingEn: "Intellectual property",
       paragraphs: [
-        "L'ensemble des contenus présents sur ce site (textes, visuels, logos, code) est la propriété de GemmaS ou de ses partenaires, sauf mention contraire. Toute reproduction ou représentation, totale ou partielle, sans autorisation préalable est interdite.",
+        "Les textes, visuels, logos et le code de ce site appartiennent à GemmaS ou à ses partenaires, sauf mention contraire. Les marques et logos des clients présentés restent la propriété de leurs titulaires. Toute reproduction ou représentation, totale ou partielle, sans autorisation écrite préalable est interdite.",
       ],
       paragraphsEn: [
-        "All content on this site (text, visuals, logos, code) is the property of GemmaS or its partners, unless otherwise stated. Any reproduction or representation, in whole or in part, without prior authorization is prohibited.",
+        "The text, visuals, logos and code of this site belong to GemmaS or its partners, unless otherwise stated. The brands and logos of clients shown remain the property of their owners. Any reproduction or representation, in whole or in part, without prior written permission is prohibited.",
+      ],
+    },
+    {
+      heading: "Données personnelles",
+      headingEn: "Personal data",
+      paragraphs: [
+        "Le site ne collecte aucune donnée personnelle : il ne comporte ni formulaire, ni compte utilisateur, ni cookie, ni outil de mesure d'audience. L'usage que nous faisons des emails que vous nous envoyez est décrit dans la politique de confidentialité.",
+      ],
+      paragraphsEn: [
+        "The site collects no personal data: it has no form, no user account, no cookies and no audience measurement tool. How we use the emails you send us is described in the privacy policy.",
       ],
     },
     {
@@ -97,17 +129,55 @@ export const mentionsLegales: LegalPageData = {
 export const politiqueConfidentialite: LegalPageData = {
   title: "Politique de confidentialité",
   titleEn: "Privacy policy",
+  miseAJour: MISE_A_JOUR,
+  miseAJourEn: MISE_A_JOUR_EN,
   sections: [
     {
-      heading: "Données collectées via le formulaire de contact",
-      headingEn: "Data collected through the contact form",
+      heading: "Qui est responsable",
+      headingEn: "Who is responsible",
       paragraphs: [
-        "Le formulaire de contact du site demande votre nom, votre email, votre organisation (optionnel) et un message. Ces informations servent uniquement à répondre à votre demande.",
-        "• Base légale : Intérêt légitime (répondre à vos demandes de renseignements) et mesures précontractuelles.\n• Destinataires : L'équipe interne de GemmaS (gemmas.pro@gmail.com).\n• Durée de conservation : 3 ans maximum à compter de votre dernier échange.",
+        "Le responsable est GemmaS, établissement exploité par Siméon Cephas AMOUSSOU, immatriculé au RCCM sous le numéro RB/PNO/26 A 128959. Pour toute question sur vos données, écrivez à gemmas.pro@gmail.com.",
+        "Cette politique est établie au regard du Code du numérique de la République du Bénin (loi n° 2017-20). Elle ne restreint en rien les droits que vous tenez des règles de votre pays de résidence, notamment le RGPD dans l'Union européenne ou la Loi 25 au Québec.",
       ],
       paragraphsEn: [
-        "The site's contact form asks for your name, email, organization (optional) and a message. This information is used solely to respond to your request.",
-        "• Legal basis: Legitimate interest (responding to your inquiries) and pre-contractual measures.\n• Recipients: GemmaS internal team (gemmas.pro@gmail.com).\n• Retention period: Maximum of 3 years from your last interaction.",
+        "The party responsible is GemmaS, a business owned by Siméon Cephas AMOUSSOU, registered with the RCCM under number RB/PNO/26 A 128959. For any question about your data, write to gemmas.pro@gmail.com.",
+        "This policy is drawn up with regard to the Digital Code of the Republic of Benin (Law No. 2017-20). It does not limit the rights you hold under the rules of your country of residence, in particular the GDPR in the European Union or Law 25 in Quebec.",
+      ],
+    },
+    {
+      heading: "Ce que nous recevons",
+      headingEn: "What we receive",
+      paragraphs: [
+        "Le site ne collecte aucune donnée : il ne comporte ni formulaire de contact, ni compte utilisateur. Nous ne recevons que ce que vous choisissez de nous envoyer par email : votre adresse, votre nom, le contenu de votre message et ses pièces jointes éventuelles.",
+        "Ces emails servent à une seule chose : l'échange que vous avez ouvert avec nous. Nous les lisons pour vous répondre, comprendre votre besoin et vous faire une proposition adaptée, puis, si nous travaillons ensemble, pour mener le projet.",
+        "En dehors de cet échange, nous n'en faisons rien : aucun fichier de prospects ou de clients n'est constitué à partir de ces messages, aucune analyse ni aucun profilage n'en est tiré, aucune liste de diffusion n'est alimentée, et rien n'est vendu, loué ou cédé à qui que ce soit. Nous ne vous écrivons que pour répondre à ce que vous nous avez demandé.",
+        "• Fondement : votre propre demande, puis, le cas échéant, le contrat qui nous lie.\n• Conservation : vos emails restent dans notre messagerie au plus 3 ans après notre dernier échange si aucun projet n'en découle. Pour un client, pendant la relation, puis pendant la durée imposée par la loi pour les documents comptables et contractuels. Vous pouvez demander leur suppression plus tôt.",
+      ],
+      paragraphsEn: [
+        "The site collects no data: it has no contact form and no user account. We only receive what you choose to send us by email: your address, your name, the content of your message and any attachments.",
+        "These emails serve one purpose only: the exchange you opened with us. We read them to answer you, understand your need and make you a suitable proposal, then, if we work together, to run the project.",
+        "Outside that exchange, we do nothing with them: no prospect or client file is built from these messages, no analysis or profiling is drawn from them, no mailing list is fed, and nothing is sold, rented or passed on to anyone. We only write to you to answer what you asked us.",
+        "• Basis: your own request, then, where applicable, the contract between us.\n• Retention: your emails stay in our mailbox for at most 3 years after our last exchange if no project follows. For a client, for the duration of the relationship, then for the period required by law for accounting and contractual records. You can ask for them to be deleted sooner.",
+      ],
+    },
+    {
+      heading: "Données techniques de l'hébergeur",
+      headingEn: "Hosting provider's technical data",
+      paragraphs: [
+        "Comme tout hébergeur, Vercel enregistre des journaux techniques lors de vos visites (adresse IP, type de navigateur, page demandée, date et heure). Ils servent au fonctionnement et à la sécurité du site, relèvent de Vercel et ne nous servent pas à vous identifier. Le site n'utilise aucun outil de mesure d'audience ni de publicité.",
+      ],
+      paragraphsEn: [
+        "Like any hosting provider, Vercel records technical logs when you visit (IP address, browser type, requested page, date and time). They are used to keep the site running and secure, belong to Vercel and are not used by us to identify you. The site uses no audience measurement or advertising tool.",
+      ],
+    },
+    {
+      heading: "Qui y a accès",
+      headingEn: "Who has access",
+      paragraphs: [
+        "Vos messages ne sont lus que par l'équipe GemmaS. Deux prestataires techniques interviennent : Google, qui fournit notre messagerie, et Vercel, qui héberge le site. Leurs serveurs peuvent se trouver hors du Bénin, notamment aux États-Unis. Aucun autre tiers n'y a accès.",
+      ],
+      paragraphsEn: [
+        "Your messages are read only by the GemmaS team. Two technical providers are involved: Google, which provides our email, and Vercel, which hosts the site. Their servers may be located outside Benin, in particular in the United States. No other third party has access to them.",
       ],
     },
     {
@@ -115,19 +185,35 @@ export const politiqueConfidentialite: LegalPageData = {
       headingEn: "Cookies and local storage",
       id: "cookies",
       paragraphs: [
-        "Le site n'utilise aucun cookie publicitaire ou traceur tiers (pas d'outil d'analyse d'audience à ce jour). Il stocke uniquement, dans le stockage local de votre navigateur (localStorage), votre préférence de langue, votre préférence d'affichage clair/sombre, et le fait que vous ayez fermé ce bandeau d'information. Ces préférences restent sur votre appareil et ne sont jamais transmises à GemmaS.",
+        "Le site n'utilise aucun cookie. Il garde seulement, dans le stockage local de votre navigateur, votre langue, votre choix d'affichage clair ou sombre, et le fait que vous ayez fermé le bandeau d'information. Ces préférences restent sur votre appareil et ne nous sont jamais transmises. Vous pouvez les effacer à tout moment depuis les réglages de votre navigateur.",
       ],
       paragraphsEn: [
-        "The site does not use any advertising cookie or third-party tracker (no audience analytics tool at this time). It only stores, in your browser's local storage (localStorage), your language preference, your light/dark display preference, and whether you closed this information banner. These preferences stay on your device and are never transmitted to GemmaS.",
+        "The site uses no cookies. It only keeps, in your browser's local storage, your language, your light or dark display choice, and whether you closed the information banner. These preferences stay on your device and are never sent to us. You can clear them at any time from your browser settings.",
       ],
     },
     {
       heading: "Vos droits",
       headingEn: "Your rights",
-      contactIntro:
-        "Vous pouvez demander l'accès, la rectification ou la suppression des informations que vous nous avez transmises via le formulaire de contact, en écrivant à",
-      contactIntroEn:
-        "You can request access to, correction of, or deletion of the information you have submitted through the contact form, by writing to",
+      paragraphs: [
+        "Vous pouvez demander à accéder à vos données, à les faire corriger ou supprimer, vous opposer à leur usage ou en demander la limitation. Lorsque le RGPD s'applique, vous pouvez aussi en demander une copie dans un format réutilisable. Nous vous répondons dans les délais prévus par la loi qui vous protège.",
+        "Si notre réponse ne vous satisfait pas, vous pouvez saisir l'Autorité de Protection des Données à caractère Personnel (APDP) du Bénin, ou l'autorité de votre pays : la CNIL en France, l'Autorité de protection des données en Belgique, la Commission d'accès à l'information au Québec.",
+      ],
+      paragraphsEn: [
+        "You can ask to access your data, have it corrected or deleted, object to its use or ask for it to be restricted. Where the GDPR applies, you can also ask for a copy in a reusable format. We answer within the time limits set by the law that protects you.",
+        "If our answer does not satisfy you, you can contact Benin's personal data protection authority (APDP), or the authority in your country: the CNIL in France, the Data Protection Authority in Belgium, the Commission d'accès à l'information in Quebec.",
+      ],
+      contactIntro: "Pour exercer ces droits, écrivez à",
+      contactIntroEn: "To exercise these rights, write to",
+    },
+    {
+      heading: "Modifications",
+      headingEn: "Changes",
+      paragraphs: [
+        "Si le site venait à collecter des données (un formulaire, un outil de mesure d'audience), cette politique serait mise à jour avant leur mise en service. La date de dernière mise à jour figure en haut de cette page.",
+      ],
+      paragraphsEn: [
+        "Should the site ever collect data (a form, an audience measurement tool), this policy would be updated before they go live. The date of the last update is shown at the top of this page.",
+      ],
     },
   ],
 };
@@ -135,25 +221,27 @@ export const politiqueConfidentialite: LegalPageData = {
 export const termsOfUse: LegalPageData = {
   title: "Conditions d'utilisation",
   titleEn: "Terms of use",
+  miseAJour: MISE_A_JOUR,
+  miseAJourEn: MISE_A_JOUR_EN,
   sections: [
     {
       heading: "Article 1. Objet du site",
       headingEn: "1. Purpose of the website",
       paragraphs: [
-        "Ce site a un objet principalement informationnel et vitrine : il présente GemmaS, ses activités, son équipe et ses réalisations. Il ne constitue pas, à lui seul, une plateforme de vente en ligne.",
+        "Ce site présente GemmaS, ses activités, son équipe et ses réalisations. Il ne vend rien en ligne : toute prestation fait l'objet d'une proposition et d'un accord écrits, distincts des présentes conditions.",
       ],
       paragraphsEn: [
-        "This site is primarily informational and serves as a showcase: it presents GemmaS, its activities, team and work. It does not, by itself, constitute an online sales platform.",
+        "This site presents GemmaS, its activities, team and work. It sells nothing online: every service is subject to a written proposal and agreement, separate from these terms.",
       ],
     },
     {
       heading: "Article 2. Acceptation des conditions",
       headingEn: "2. Acceptance of the Terms",
       paragraphs: [
-        "En accédant à ce site ou en l'utilisant, vous acceptez les présentes conditions d'utilisation dans leur intégralité. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser ce site.",
+        "En accédant à ce site ou en l'utilisant, vous acceptez les présentes conditions d'utilisation dans leur intégralité. Si vous ne les acceptez pas, veuillez ne pas utiliser ce site.",
       ],
       paragraphsEn: [
-        "By accessing or using this site, you agree to these terms of use in their entirety. If you do not accept these terms, please do not use this site.",
+        "By accessing or using this site, you agree to these terms of use in their entirety. If you do not accept them, please do not use this site.",
       ],
     },
     {
@@ -170,50 +258,50 @@ export const termsOfUse: LegalPageData = {
       heading: "Article 4. Propriété intellectuelle",
       headingEn: "4. Intellectual property",
       paragraphs: [
-        "L'ensemble des contenus présents sur ce site (textes, visuels, logos, code) est la propriété de GemmaS ou de ses partenaires, sauf mention contraire. Toute reproduction, représentation, modification, redistribution ou exploitation commerciale, totale ou partielle, sans autorisation écrite préalable, est interdite.",
+        "Les textes, visuels, logos et le code de ce site appartiennent à GemmaS ou à ses partenaires, sauf mention contraire. Toute reproduction, représentation, modification, redistribution ou exploitation commerciale, totale ou partielle, sans autorisation écrite préalable, est interdite.",
       ],
       paragraphsEn: [
-        "All content on this site (text, visuals, logos, code) is the property of GemmaS or its partners, unless otherwise stated. Any reproduction, representation, modification, redistribution or commercial use, in whole or in part, without prior written authorization, is prohibited.",
+        "The text, visuals, logos and code of this site belong to GemmaS or its partners, unless otherwise stated. Any reproduction, representation, modification, redistribution or commercial use, in whole or in part, without prior written permission, is prohibited.",
       ],
     },
     {
       heading: "Article 5. Contenu du site",
       headingEn: "5. Website content",
       paragraphs: [
-        "Les informations publiées sur ce site sont fournies à titre indicatif et général. GemmaS s'efforce d'en assurer l'exactitude, mais ne peut garantir l'absence d'erreurs, d'omissions ou d'informations devenues obsolètes. Ces informations peuvent être corrigées ou mises à jour à tout moment, sans préavis.",
+        "Les informations publiées sur ce site sont données à titre indicatif. Les délais et exemples cités ne valent pas engagement : seul l'accord écrit conclu pour un projet engage GemmaS. Nous veillons à l'exactitude de ces informations, sans pouvoir garantir l'absence d'erreur ou d'information devenue obsolète, et pouvons les corriger à tout moment.",
       ],
       paragraphsEn: [
-        "Information published on this site is provided for general, indicative purposes. GemmaS strives to ensure its accuracy but cannot guarantee the absence of errors, omissions or outdated information. This information may be corrected or updated at any time, without notice.",
+        "Information published on this site is indicative. The timelines and examples given are not commitments: only the written agreement made for a project binds GemmaS. We take care that this information is accurate, without being able to guarantee it is free of errors or outdated content, and may correct it at any time.",
       ],
     },
     {
       heading: "Article 6. Disponibilité du site",
       headingEn: "6. Website availability",
       paragraphs: [
-        "GemmaS s'efforce d'assurer l'accès au site en continu, mais ne garantit pas une disponibilité ininterrompue. Le site peut être temporairement indisponible pour maintenance, mise à jour, ou en raison de problèmes techniques indépendants de notre volonté.",
+        "GemmaS s'efforce de garder le site accessible en continu, sans garantir une disponibilité ininterrompue. Il peut être momentanément indisponible pour maintenance, mise à jour, ou en raison de problèmes techniques indépendants de notre volonté.",
       ],
       paragraphsEn: [
-        "GemmaS strives to keep the site accessible at all times but does not guarantee uninterrupted availability. The site may be temporarily unavailable for maintenance, updates, or due to technical issues beyond our control.",
+        "GemmaS strives to keep the site accessible at all times, without guaranteeing uninterrupted availability. It may be temporarily unavailable for maintenance, updates, or due to technical issues beyond our control.",
       ],
     },
     {
       heading: "Article 7. Liens externes",
       headingEn: "7. External links",
       paragraphs: [
-        "Ce site peut contenir des liens vers des sites tiers (réseaux sociaux, portfolios, e-freeshop.com...). GemmaS ne contrôle pas ces sites et n'est pas responsable de leur contenu, de leur politique de confidentialité ou de leurs pratiques. L'inclusion d'un lien ne vaut pas approbation de son contenu.",
+        "Ce site contient des liens vers des sites tiers (réseaux sociaux, portfolios de l'équipe, e-freeshop.com). GemmaS ne contrôle pas ces sites et n'est pas responsable de leur contenu ni de leurs pratiques en matière de données. Un lien ne vaut pas approbation de son contenu.",
       ],
       paragraphsEn: [
-        "This site may contain links to third-party websites (social media, portfolios, e-freeshop.com...). GemmaS does not control these sites and is not responsible for their content, privacy practices, or policies. The inclusion of a link does not imply endorsement of its content.",
+        "This site contains links to third-party websites (social media, team portfolios, e-freeshop.com). GemmaS does not control these sites and is not responsible for their content or their data practices. A link does not imply endorsement of its content.",
       ],
     },
     {
-      heading: "Article 8. Contenu soumis par l'utilisateur",
-      headingEn: "8. User-submitted content",
+      heading: "Article 8. Messages que vous nous envoyez",
+      headingEn: "8. Messages you send us",
       paragraphs: [
-        "Le formulaire de contact vous permet de nous transmettre des informations (nom, email, organisation, message). Vous vous engagez à ne soumettre que des informations exactes et à ne pas transmettre de contenu illégal, diffamatoire ou portant atteinte aux droits de tiers. Le traitement de ces données est détaillé dans notre politique de confidentialité.",
+        "Le site ne comporte pas de formulaire : vous nous écrivez par email. Vous vous engagez à ne transmettre que des informations exactes, et aucun contenu illégal, diffamatoire ou portant atteinte aux droits de tiers. Ce que nous faisons de ces messages est décrit dans la politique de confidentialité.",
       ],
       paragraphsEn: [
-        "The contact form lets you send us information (name, email, organization, message). You agree to submit only accurate information and not to submit content that is illegal, defamatory, or infringes on third-party rights. The handling of this data is detailed in our privacy policy.",
+        "The site has no form: you write to us by email. You agree to send only accurate information, and no content that is illegal, defamatory or infringes the rights of others. What we do with these messages is described in the privacy policy.",
       ],
     },
     {
@@ -230,10 +318,10 @@ export const termsOfUse: LegalPageData = {
       heading: "Article 10. Modification des conditions",
       headingEn: "10. Changes to the Terms",
       paragraphs: [
-        "GemmaS se réserve le droit de modifier les présentes conditions d'utilisation à tout moment. Les modifications prennent effet dès leur publication sur cette page. Il vous appartient de consulter régulièrement cette page pour prendre connaissance des éventuelles mises à jour.",
+        "GemmaS peut modifier les présentes conditions à tout moment. Les modifications prennent effet dès leur publication sur cette page, dont la date de dernière mise à jour figure en haut.",
       ],
       paragraphsEn: [
-        "GemmaS reserves the right to modify these terms of use at any time. Changes take effect as soon as they are published on this page. It is your responsibility to check this page regularly for any updates.",
+        "GemmaS may modify these terms at any time. Changes take effect as soon as they are published on this page, whose last update date is shown at the top.",
       ],
     },
     {
@@ -244,33 +332,33 @@ export const termsOfUse: LegalPageData = {
           label: "Droit applicable",
           labelEn: "Governing law",
           value:
-            "\nLes présentes Conditions Générales ainsi que l'utilisation du site web et des services fournis par GemmaS sont régies, interprétées et exécutées conformément au droit béninois et au cadre juridique des affaires de l'OHADA. Dans le cadre des prestations de services B2B réalisées pour des clients internationaux (notamment situés au Canada, en France, en Belgique ou en Suisse), les présentes dispositions s'appliquent à titre de loi d'autonomie choisie par les parties, sous réserve d'un accord contractuel spécifique écrit conclu entre GemmaS et son client.",
+            "\nLes présentes conditions et l'utilisation du site sont régies par le droit béninois et par le droit des affaires de l'OHADA. Pour les prestations réalisées pour des clients étrangers (notamment au Canada, en France, en Belgique ou en Suisse), le même droit s'applique, sauf stipulation contraire du contrat écrit conclu entre GemmaS et son client.",
           valueEn:
-            "\nThese General Terms and Conditions, as well as the use of the website and services provided by GemmaS, are governed by, construed, and enforced in accordance with Beninese law and the OHADA legal framework. For B2B service engagements provided to international clients (in particular those located in Canada, France, Belgium, or Switzerland), these provisions apply as the governing law chosen by the parties, subject to any specific written contractual agreement executed between GemmaS and its client.",
+            "\nThese terms and the use of the site are governed by Beninese law and OHADA business law. For services provided to clients abroad (in particular in Canada, France, Belgium or Switzerland), the same law applies, unless the written contract between GemmaS and its client provides otherwise.",
         },
         {
           label: "Procédure de règlement amiable",
           labelEn: "Amicable settlement procedure",
           value:
-            "\nEn cas de différend, contestation ou réclamation découlant de l'interprétation, de la validité, de la conclusion ou de l'exécution des présentes conditions ou des services fournis par GemmaS, les parties s'engagent prioritairement à chercher une solution amiable de bonne foi.\n\nToute réclamation doit être notifiée par écrit à GemmaS (à l'adresse gemmas.pro@gmail.com). À compter de la réception de cette notification, les parties disposent d'un délai de trente (30) jours calendaires pour mener des négociations amiables.",
+            "\nEn cas de différend sur l'interprétation, la validité ou l'exécution des présentes conditions ou des services fournis par GemmaS, les parties cherchent d'abord une solution amiable, de bonne foi.\n\nToute réclamation est adressée par écrit à gemmas.pro@gmail.com. À compter de sa réception, les parties disposent de trente (30) jours calendaires pour négocier.",
           valueEn:
-            "\nIn the event of any dispute, controversy, or claim arising out of or relating to the interpretation, validity, performance, or termination of these terms or the services provided by GemmaS, the parties agree to first attempt to settle the matter amicably in good faith.\n\nAny claim must be submitted in writing to GemmaS (at gemmas.pro@gmail.com). From the date of receipt of such notice, the parties shall have a period of thirty (30) calendar days to engage in good-faith negotiations.",
+            "\nIn the event of a dispute about the interpretation, validity or performance of these terms or of the services provided by GemmaS, the parties first seek an amicable solution, in good faith.\n\nAny claim is sent in writing to gemmas.pro@gmail.com. From its receipt, the parties have thirty (30) calendar days to negotiate.",
         },
         {
           label: "Juridiction compétente et arbitrage",
           labelEn: "Competent jurisdiction and arbitration",
           value:
-            "\nÀ défaut d'accord amiable dans le délai de trente (30) jours prévu ci-dessus :\n\n- Juridiction de droit commun (B2B) : Tout litige sera soumis à la compétence exclusive des tribunaux compétents du ressort du siège social de GemmaS (Cotonou, République du Bénin).\n\n- Option d'arbitrage (Litiges internationaux) : Pour les relations d'affaires et contrats transfrontaliers, GemmaS se réserve la faculté, ou les parties peuvent convenir d'un commun accord, de soumettre le litige à un arbitrage définitif conformément au règlement d'arbitrage du Centre d'Arbitrage, de Médiation et de Conciliation (CAMEC) de Cotonou ou de la Cour Commune de Justice et d'Arbitrage (CCJA) de l'OHADA. La sentence arbitrale sera finale et exécutoire pour l'ensemble des parties.",
+            "\nÀ défaut d'accord amiable dans ce délai :\n\n- Entre professionnels : tout litige relève de la compétence exclusive des tribunaux de Cotonou, République du Bénin, ville où l'équipe de GemmaS exerce son activité.\n\n- Litiges internationaux : pour les contrats transfrontaliers, les parties peuvent convenir de soumettre le litige à un arbitrage définitif, selon le règlement du Centre d'Arbitrage, de Médiation et de Conciliation (CAMeC) de la Chambre de Commerce et d'Industrie du Bénin ou de la Cour Commune de Justice et d'Arbitrage (CCJA) de l'OHADA. La sentence arbitrale est définitive et s'impose aux parties.\n\n- Si vous agissez en tant que consommateur, ces clauses ne vous privent pas de la protection des règles impératives de votre pays de résidence, ni de la possibilité de saisir le tribunal que ces règles désignent.",
           valueEn:
-            "\nFailing an amicable resolution within the thirty (30) day period specified above:\n\n- Standard Jurisdiction (B2B): Any dispute shall be subject to the exclusive jurisdiction of the competent courts within the territorial jurisdiction of GemmaS's registered office (Cotonou, Republic of Benin).\n\n- Arbitration Option (International Disputes): For cross-border business relations and contracts, GemmaS reserves the right, or the parties may mutually agree, to submit the dispute to binding arbitration in accordance with the Arbitration Rules of the Center for Arbitration, Mediation and Conciliation (CAMEC) of Cotonou or the Common Court of Justice and Arbitration (CCJA) of OHADA. The arbitral award shall be final and binding on all parties.",
+            "\nFailing an amicable agreement within that period:\n\n- Between businesses: any dispute falls under the exclusive jurisdiction of the courts of Cotonou, Republic of Benin, the city where the GemmaS team carries out its work.\n\n- International disputes: for cross-border contracts, the parties may agree to submit the dispute to binding arbitration under the rules of the Center for Arbitration, Mediation and Conciliation (CAMeC) of the Benin Chamber of Commerce and Industry or of the OHADA Common Court of Justice and Arbitration (CCJA). The arbitral award is final and binding on the parties.\n\n- If you act as a consumer, these clauses do not deprive you of the protection of the mandatory rules of your country of residence, nor of the right to bring a claim before the court those rules designate.",
         },
         {
-          label: "Conformité et protection des données personnelles",
-          labelEn: "Compliance and personal data protection",
+          label: "Protection des données personnelles",
+          labelEn: "Personal data protection",
           value:
-            "\nBien que le présent contrat soit soumis au droit béninois, GemmaS s'engage à respecter les réglementations d'ordre public relatives à la protection des données personnelles en fonction des marchés desservis :\n\n- Union Européenne (France, Belgique) : Traitement des données à caractère personnel réalisé en conformité avec le Règlement Général sur la Protection des Données (RGPD).\n\n- Canada et Québec : Respect des exigences légales relatives à la protection des renseignements personnels du secteur privé (Loi 25 au Québec) et à la réglementation anti-pourriel (LCAP).",
+            "\nLe site ne collecte aucune donnée personnelle. Les emails que vous nous adressez ne servent qu'à vous répondre, dans les conditions décrites par la politique de confidentialité. Nous ne vous adressons aucun message commercial non sollicité, et les règles impératives de votre pays de résidence (notamment le RGPD, la Loi 25 au Québec et la loi canadienne anti-pourriel) restent applicables.",
           valueEn:
-            "\nAlthough this agreement is governed by Beninese law, GemmaS undertakes to comply with mandatory public policy regulations regarding personal data protection in the markets served:\n\n- European Union (France, Belgium): Personal data processing complies with the General Data Protection Regulation (GDPR).\n\n- Canada and Quebec: Compliance with statutory obligations regarding the protection of personal information in the private sector (Act 25 in Quebec) and anti-spam legislation (CASL).",
+            "\nThe site collects no personal data. The emails you send us are only used to answer you, under the conditions set out in the privacy policy. We send you no unsolicited commercial messages, and the mandatory rules of your country of residence (in particular the GDPR, Quebec's Law 25 and Canada's Anti-Spam Legislation) remain applicable.",
         },
       ],
     },

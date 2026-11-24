@@ -2,18 +2,17 @@
 
 import { useState } from "react";
 import { Container } from "@/components/ui/Container";
-import { CTAButton } from "@/components/ui/CTAButton";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { ProjectPagination } from "@/components/projects/ProjectPagination";
 import { defaultProjects, type Project } from "@/data/projects";
 import { useLang } from "@/contexts/LanguageContext";
 import SplitText from "@/components/effects/SplitText";
 
+// Plus de bouton sous la grille : il menait vers « # », et les projets se
+// consultent déjà dans la grille elle-même.
 type RecentProjectsProps = {
   title?: string;
   projects?: Project[];
-  ctaLabel?: string;
-  ctaHref?: string;
 };
 
 // Section "Projets récents" · une seule ProjectCard par projet visible,
@@ -26,12 +25,9 @@ type RecentProjectsProps = {
 export default function RecentProjects({
   title,
   projects = defaultProjects,
-  ctaLabel,
-  ctaHref = "#",
 }: RecentProjectsProps) {
   const { t } = useLang();
   const resolvedTitle = title ?? t("recentProjects.title");
-  const resolvedCtaLabel = ctaLabel ?? t("recentProjects.cta");
   const [featuredId, setFeaturedId] = useState(projects[0]?.id);
   const [thumbIds, setThumbIds] = useState(() => projects.slice(1, 4).map((p) => p.id));
 
@@ -86,16 +82,6 @@ export default function RecentProjects({
             label={featured.name}
             style={{ gridArea: "pagination", order: 1 }}
           />
-        </div>
-
-        <div className="mt-10 flex w-full gap-5">
-          <CTAButton
-            as="a"
-            href={ctaHref}
-            className="mt-1 ml-auto bg-brand-green text-white hover:bg-brand-green-deep"
-          >
-            {resolvedCtaLabel}
-          </CTAButton>
         </div>
       </Container>
     </section>

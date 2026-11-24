@@ -21,8 +21,8 @@ export const faqs: FAQItem[] = [
     aEn: "5 days on average once we have the content. Our modern toolchain lets us ship in a week what a traditional agency takes three to deliver.",
   },
   {
-    q: "Vous travaillez avec qui ?",
-    qEn: "Who are your clients?",
+    q: "Avec qui travaillez-vous ?",
+    qEn: "Who do you work with?",
     a: "PME béninoises, startups, indépendants, diaspora africaine, ONG. Toute structure qui veut une présence numérique sérieuse, sans usine à gaz.",
     aEn: "Beninese SMEs, startups, freelancers, African diaspora, NGOs. Anyone who wants a serious digital presence without the bloat.",
   },
@@ -33,8 +33,8 @@ export const faqs: FAQItem[] = [
     aEn: "Modern stack: React, Next.js, TypeScript for web, React Native for mobile, Python and Supabase on the backend. The choice depends on context, never trends.",
   },
   {
-    q: "Vous faites aussi de l'IA ?",
-    qEn: "Do you work with AI?",
+    q: "Faites-vous aussi de l'IA ?",
+    qEn: "Do you also do AI?",
     a: "Oui, c'est même un de nos pôles. Agents conversationnels, automatisations n8n, intégrations OpenAI ou Anthropic dans vos outils internes.",
     aEn: "Yes, it's one of our core areas. Chatbots, n8n automations, OpenAI or Anthropic integrations into your internal tools.",
   },

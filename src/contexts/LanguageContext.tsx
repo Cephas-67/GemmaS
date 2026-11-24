@@ -51,11 +51,11 @@ const dictionaries: Record<Lang, Dict> = {
     // Recherche & R&D
     "research.eyebrow": "Recherche & R&D",
     "research.title": "Comprendre les outils avant de les déployer.",
-    "research.lead": "L'IA évolue plus vite que les méthodes pour l'utiliser. GemmaS évalue, mesure et compare les modèles disponibles pour ne déployer que ceux qui apportent une vraie valeur. La même exigence s'applique à la modélisation 3D : logos, objets, drones, robots, prototypes virtuels. Chaque outil est testé, scoré et documenté avant d'arriver dans un livrable client.",
+    "research.lead": "L'IA évolue plus vite que les méthodes pour l'utiliser. GemmaS évalue, mesure et compare les modèles disponibles pour ne déployer que ceux qui apportent une vraie valeur. La même exigence s'applique à la 3D et au WebGL : logos, prototypes visuels et design. Chaque outil est testé, scoré et documenté avant d'arriver dans un livrable client.",
     "research.axis1.title": "Évaluation des modèles d'IA",
     "research.axis1.desc": "Benchmarks maison, tests sur cas d'usage réels, comparaison des coûts d'inférence et de la latence. Aucun modèle ne passe en production sans avoir prouvé sa pertinence sur le terrain.",
-    "research.axis2.title": "Modélisation 3D",
-    "research.axis2.desc": "Identités visuelles en volume, prototypes d'objets, drones et robots, rendus photoréalistes. Du croquis au support de pitch, brevet ou campagne, tout est conçu en interne.",
+    "research.axis2.title": "3D et WebGL",
+    "research.axis2.desc": "Logos en volume, prototypes visuels, scènes WebGL et rendus pour le web. Du croquis au support de pitch ou de campagne, tout est conçu en interne.",
     "research.axis3.title": "Limites du numérique africain",
     "research.axis3.desc": "Connexion lente, devices d'entrée de gamme, coûts d'infrastructure. Travailler ces contraintes réelles, c'est repousser les limites de ce que le numérique peut faire sur le continent.",
 
@@ -64,8 +64,8 @@ const dictionaries: Record<Lang, Dict> = {
 
     // Human brilliance · section juste avant le footer
     "brilliance.eyebrow": "Notre cap",
-    "brilliance.title": "Human brilliance is more important than ever.",
-    "brilliance.subtitle": "L'IA n'est pas la vedette. Elle est l'outil. La vedette, c'est la réflexion humaine qu'elle libère.",
+    "brilliance.title": "Human Brilliance has never been more essential.",
+    "brilliance.subtitle": "L'IA n'est pas la vedette, c'est l'outil. La vraie valeur, c'est la réflexion humaine qu'elle libère.",
     "brilliance.body": "GemmaS construit une communauté où chaque tâche se rend à la perfection : la pensée humaine au centre, les outils d'IA à disposition. Notre engagement va au-delà des services rendus. Il s'agit de permettre aux Africains de profiter de solutions locales, adaptées au marché, à des coûts réalistes, et de former à l'usage des outils du 21e siècle pour débloquer la créativité augmentée par l'IA.",
     "brilliance.quote": "Les meilleurs savent se procurer et se servir des bons outils.",
     "brilliance.cta": "Démarrer un projet",
@@ -156,14 +156,19 @@ const dictionaries: Record<Lang, Dict> = {
     "theme.toDark": "Activer le mode sombre",
 
     // Équipe (TeamSection)
-    "team.title": "Cinq fondateurs. Un seul studio.",
-    "team.intro": "Cinq fondateurs, un seul studio : stratégie, tech, IA, business et opérations réunis sous un même toit, pour livrer vos projets avec la même exigence que nos propres produits.",
-    "team.hint": "Cliquez pour en voir plus",
+    "team.title": "Ceux qui portent GemmaS.",
+    "team.intro": "Avant les outils, il y a des gens. Nous partons du problème, pas d'une solution toute faite : on observe, on prototype, on teste, on recommence, jusqu'à trouver ce qui marche vraiment. C'est ce génie humain qui fait avancer GemmaS, projet après projet, vers l'écosystème que nous voulons bâtir.",
     "teamCard.portfolio": "Visiter le portfolio",
+    "teamCard.soon": "Portfolio à venir",
+    "team.phrase.duvalier": "Des expériences web rares et immersives : 3D, WebGL et mouvement, pour qu'un site se vive au lieu de se lire.",
+    "team.phrase.enock": "Des idées transformées en produits concrets, utiles et élégants, du serveur jusqu'à l'écran, avec un œil sur l'IA.",
+    "team.phrase.prudence": "Des automatisations et des agents IA qui font gagner du temps et de l'argent, construits pour tourner en conditions réelles.",
+    "team.phrase.simeon": "Autant de design que de frontend : des interfaces soignées, de la maquette Figma jusqu'au SaaS en production.",
+    "team.phrase.gaby": "Des applications web propres, rapides et pensées pour ceux qui s'en servent, avec un faible pour les projets d'ici, comme Plume, pour la littérature africaine.",
 
     // Projets récents
     "recentProjects.title": "Projets récents",
-    "recentProjects.cta": "Explorer le portfolio",
+    "projects.soon": "Bientôt disponible",
 
     // Valeurs
     "values.title": "L'exigence de la performance",
@@ -177,6 +182,7 @@ const dictionaries: Record<Lang, Dict> = {
 
     // Workflow gamifié
     "workflow.title": "Notre méthode, en trois temps",
+    "workflow.arrivee": "Votre projet est le prochain sur la piste.",
   },
   en: {
     // Navigation
@@ -218,11 +224,11 @@ const dictionaries: Record<Lang, Dict> = {
     // Research & R&D
     "research.eyebrow": "Research & R&D",
     "research.title": "Understand the tools before deploying them.",
-    "research.lead": "AI evolves faster than the methods to use it. GemmaS evaluates, measures and compares available models to deploy only those that bring real value. The same rigor applies to 3D modeling: logos, objects, drones, robots, virtual prototypes. Each tool is tested, scored and documented before it ever reaches a client deliverable.",
+    "research.lead": "AI evolves faster than the methods to use it. GemmaS evaluates, measures and compares available models to deploy only those that bring real value. The same rigor applies to 3D and WebGL: logos, visual prototypes and design. Each tool is tested, scored and documented before it ever reaches a client deliverable.",
     "research.axis1.title": "AI model evaluation",
     "research.axis1.desc": "In-house benchmarks, real use-case testing, comparing inference cost and latency. No model goes to production without first proving its worth in the field.",
-    "research.axis2.title": "3D modeling",
-    "research.axis2.desc": "Volumetric visual identities, object prototypes, drones and robots, photorealistic renders. From sketch to pitch deck, patent file or campaign asset, all designed in-house.",
+    "research.axis2.title": "3D and WebGL",
+    "research.axis2.desc": "Logos in volume, visual prototypes, WebGL scenes and renders for the web. From sketch to pitch deck or campaign asset, all designed in-house.",
     "research.axis3.title": "African digital limits",
     "research.axis3.desc": "Slow connections, entry-level devices, infrastructure costs. Working with these real constraints is how we push the limits of what digital can achieve on the continent.",
 
@@ -231,8 +237,8 @@ const dictionaries: Record<Lang, Dict> = {
 
     // Human brilliance · section right above the footer
     "brilliance.eyebrow": "Our north star",
-    "brilliance.title": "Human brilliance is more important than ever.",
-    "brilliance.subtitle": "AI is not the star of the show. It is the tool. The star is the human thinking it sets free.",
+    "brilliance.title": "Human Brilliance has never been more essential.",
+    "brilliance.subtitle": "AI is not the star, it is the tool. The real value is the human thinking it sets free.",
     "brilliance.body": "GemmaS is building a community where every task is brought to perfection: human reflection at the center, AI tools at hand. Our commitment goes beyond the services we sell. It is about giving Africans access to local solutions that fit the market, at realistic costs, and training people to use 21st-century tools to unlock AI-augmented creativity.",
     "brilliance.quote": "The best know how to acquire and wield the right tools.",
     "brilliance.cta": "Start a project",
@@ -323,14 +329,19 @@ const dictionaries: Record<Lang, Dict> = {
     "theme.toDark": "Switch to dark mode",
 
     // Team (TeamSection)
-    "team.title": "Five founders. One studio.",
-    "team.intro": "Five founders, one studio: strategy, tech, AI, business and operations under one roof, delivering your projects with the same standard as our own products.",
-    "team.hint": "Click to see more",
+    "team.title": "The people carrying GemmaS.",
+    "team.intro": "Before the tools, there are people. We start from the problem, not from a ready-made answer: we observe, prototype, test and start again until we find what actually works. That human brilliance is what moves GemmaS forward, project after project, toward the ecosystem we mean to build.",
     "teamCard.portfolio": "Visit the portfolio",
+    "teamCard.soon": "Portfolio coming soon",
+    "team.phrase.duvalier": "Rare, immersive web experiences: 3D, WebGL and motion, so a site is lived rather than read.",
+    "team.phrase.enock": "Ideas turned into concrete, useful and elegant products, from the server to the screen, with an eye on AI.",
+    "team.phrase.prudence": "Automations and AI agents that save time and money, built to run in real conditions.",
+    "team.phrase.simeon": "Equal parts design and frontend: polished interfaces, from the Figma mockup to the SaaS in production.",
+    "team.phrase.gaby": "Clean, fast web applications built for the people who use them, with a soft spot for local projects like Plume, for African literature.",
 
     // Recent projects
     "recentProjects.title": "Recent projects",
-    "recentProjects.cta": "Explore the portfolio",
+    "projects.soon": "Coming soon",
 
     // Values
     "values.title": "The pursuit of performance",
@@ -344,6 +355,7 @@ const dictionaries: Record<Lang, Dict> = {
 
     // Gamified workflow
     "workflow.title": "Our method, in three steps",
+    "workflow.arrivee": "Your project is next on the track.",
   },
 };
 
